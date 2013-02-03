@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Hank Lin]]></title>
-  <link href="http://hanklin.github.com/atom.xml" rel="self"/>
-  <link href="http://hanklin.github.com/"/>
-  <updated>2013-02-03T12:05:00+08:00</updated>
-  <id>http://hanklin.github.com/</id>
+  <link href="http://hanklin.com/atom.xml" rel="self"/>
+  <link href="http://hanklin.com/"/>
+  <updated>2013-02-03T13:08:08+08:00</updated>
+  <id>http://hanklin.com/</id>
   <author>
     <name><![CDATA[Hank Lin]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Octopress blogging]]></title>
-    <link href="http://hanklin.github.com/blog/2013/02/02/octopress-blogging/"/>
+    <link href="http://hanklin.com/blog/2013/02/02/octopress-blogging/"/>
     <updated>2013-02-02T16:16:00+08:00</updated>
-    <id>http://hanklin.github.com/blog/2013/02/02/octopress-blogging</id>
+    <id>http://hanklin.com/blog/2013/02/02/octopress-blogging</id>
     <content type="html"><![CDATA[<p>中文啦</p>
 ]]></content>
   </entry>

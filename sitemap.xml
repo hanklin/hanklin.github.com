@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://hanklin.github.com/blog/2013/02/02/octopress-blogging/</loc>
+        <loc>http://hanklin.com/blog/2013/02/02/octopress-blogging/</loc>
         <lastmod>2013-02-02T17:11:45+08:00</lastmod>
     </url>
     <url>
-        <loc>http://hanklin.github.com/blog/archives/</loc>
+        <loc>http://hanklin.com/blog/archives/</loc>
         <lastmod>2013-02-02T17:11:45+08:00</lastmod>
     </url>
     <url>
-        <loc>http://hanklin.github.com/</loc>
+        <loc>http://hanklin.com/</loc>
         <lastmod>2013-02-02T17:11:45+08:00</lastmod>
     </url>
     <url>
-        <loc>http://hanklin.github.com/robots.txt</loc>
+        <loc>http://hanklin.com/robots.txt</loc>
         <lastmod>2013-02-02T14:58:46+08:00</lastmod>
     </url>
 </urlset>
