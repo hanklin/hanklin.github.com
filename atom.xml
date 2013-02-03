@@ -4,7 +4,7 @@
   <title><![CDATA[Hank Lin]]></title>
   <link href="http://hanklin.com/atom.xml" rel="self"/>
   <link href="http://hanklin.com/"/>
-  <updated>2013-02-04T02:12:02+08:00</updated>
+  <updated>2013-02-04T02:14:26+08:00</updated>
   <id>http://hanklin.com/</id>
   <author>
     <name><![CDATA[Hank Lin]]></name>
@@ -121,7 +121,8 @@
 
 
 <p>執行<code>rake setup_github_pages</code>用來告訴octopress我們要使用的GitHub的Repository資訊，格式是:<code>git@github.com:your_username/your_projectname</code>。<br />
-<code>rake deploy</code>這個指令就真的會把網頁傳上GitHub了。在這一步我在Windows上又有問題，我用GitHub for Windows的Git Shell去執行這個指令才能傳上GitHub。</p>
+<code>rake deploy</code>這個指令就真的會把網頁傳上GitHub了。在這一步我在Windows上又有問題，我用GitHub for Windows的Git Shell去執行這個指令才能傳上GitHub。<br />
+如果是產生第一次的網頁，GitHub可能會10分鐘才初始化好環境。但是初始化好之後，隨時佈署上GitHub，看到的就都是最新的內容。</p>
 ]]></content>
   </entry>
   
