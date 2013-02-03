@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="Blog Archive 2013 Octopress blogging
-Feb 02 2013 Recent Posts Octopress blogging GitHub Repos Status updating... @hanklin on GitHub $.domReady( &hellip;">
+Feb 02 2013 Recent Posts Octopress blogging Latest Tweets Status updating... $.domReady(function(){ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -38,7 +38,7 @@ Feb 02 2013 Recent Posts Octopress blogging GitHub Repos Status updating... @han
   <header role="banner"><hgroup>
   <h1><a href="/">Hank Lin</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>A new blog</h2>
   
 </hgroup>
 
@@ -104,35 +104,6 @@ Feb 02 2013 Recent Posts Octopress blogging GitHub Repos Status updating... @han
       </li>
     
   </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/hanklin">@hanklin</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'hanklin',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
