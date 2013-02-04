@@ -176,10 +176,25 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ rake new_post["hello world"]</span></code></pre></td></tr></table></div></figure>
 
 
-<p>這樣會產生一個<code>octopress/source/_posts/yyyy-MM-dd-hello-world.markdown</code>檔案，在裡面寫些markdown吧。<br />寫好了之後，可以用以下的指令先看看成果
-<code>rake generate</code>會產生最後的網頁檔案，而<br />
-<code>rake watch</code>會持續觀察<code>source</code>及<code>sass</code>目錄下檔案的變化，並主動regenerate成果。<br />
-<code>rake preview</code>會開一個伺服器，讓你可以在<code>http://localhost:4000/</code><br />瀏覽自己的作品。</p>
+<p>這樣會產生一個<code>octopress/source/_posts/yyyy-MM-dd-hello-world.markdown</code>檔案，在裡面寫些markdown吧。<br />寫好了之後，可以用以下的指令先看看成果</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會產生最後的網頁檔案，而<br /></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake watch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會持續觀察<code>source</code>及<code>sass</code>目錄下檔案的變化，並主動regenerate成果。<br /></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake preview</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會開一個伺服器，讓你可以在<code>http://localhost:4000/</code><br />瀏覽自己的作品。</p>
 
 <h2>丟上GitHub</h2>
 
