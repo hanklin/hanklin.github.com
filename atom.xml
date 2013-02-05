@@ -4,7 +4,7 @@
   <title><![CDATA[Hank Lin]]></title>
   <link href="http://hanklin.com/atom.xml" rel="self"/>
   <link href="http://hanklin.com/"/>
-  <updated>2013-02-04T10:23:34+08:00</updated>
+  <updated>2013-02-05T09:16:28+08:00</updated>
   <id>http://hanklin.com/</id>
   <author>
     <name><![CDATA[Hank Lin]]></name>
@@ -15,13 +15,13 @@
   
   <entry>
     <title type="html"><![CDATA[Octopress blogging]]></title>
-    <link href="http://hanklin.com/blog/2013/02/02/octopress-blogging/"/>
+    <link href="http://hanklin.com/blog/2013/02/02/octopress-blogging"/>
     <updated>2013-02-02T16:16:00+08:00</updated>
     <id>http://hanklin.com/blog/2013/02/02/octopress-blogging</id>
     <content type="html"><![CDATA[<h2>Octopress - A blogging framework for hackers</h2>
 
 
-<p>Octopress是一套基於Jekyll的blogging framework，概念是產生靜態的網頁，然後用Github幫你服務網頁。<br /> 如他的副標題所說的，是一套「給hackers用的blogging framework」。雖然沒真的那麼誇張，但是仍然要熟悉命令列、github、ruby、markdown、 html等等。但是熟悉了之後，效率會很高。<br />  現在我也試著從原本的wordpress改成Octopress，以前的舊文章也會慢慢轉過來。<br /><!-- more -->
+<p><a href="http://octopress.org/">Octopress</a>是一套基於<a href="http://jekyllrb.com/">Jekyll</a>的blogging framework，概念是產生靜態的網頁，然後用Github幫你服務網頁。<br /> 如他的副標題所說的，是一套「給hackers用的blogging framework」。雖然沒真的那麼誇張，但是仍然要熟悉命令列、github、ruby、markdown、 html等等。但是熟悉了之後，效率會很高。<br />  現在我也試著從原本的wordpress改成Octopress，以前的舊文章也會慢慢轉過來。<br /><!-- more -->
 以下是我的筆記，由於因緣際會我現在只有Windows電腦，所以下面都是Windows的作法，Mac或Linux之後再試試。<br /></p>
 
 <h2>準備環境</h2>
