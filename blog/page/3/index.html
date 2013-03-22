@@ -1,0 +1,913 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="今天應該是正式出版日，我已經看到有很多線上通路都有出現這本書了，要接受現實的考驗啦。如果你對這本書有興趣，但是不知道內容適不適合的人，可以參考一下我對這本書的想法。
+一開始我和編輯討論了很多次，互相瞭解這本書應該的走向。編輯認為不用把每個功能、每個細節都講到，而是要注重在最重要、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/page/3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/25/aws-bible">自評AWS雲端企業實戰聖經</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-25T20:23:42+08:00" pubdate data-updated="true">2011-03-25</time>
+        
+         | <a href="/blog/2011/03/25/aws-bible#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天應該是正式出版日，我已經看到有很多線上通路都有出現這本書了，要接受現實的考驗啦。如果你對這本書有興趣，但是不知道內容適不適合的人，可以參考一下我對這本書的想法。
+一開始我和編輯討論了很多次，互相瞭解這本書應該的走向。編輯認為不用把每個功能、每個細節都講到，而是要注重在最重要、最有需求的AWS特色上面。而且是台灣第一本AWS的書，如果太厚或是太難，可能沒辦法推廣。我也認為是這樣，因為AWS的功能和細節真的太多啦，如果全部每個功能都說明，從我這本書的成品來推算，大概可以超過1,000頁。但是這就變成一個比較難的寫法，就是要打破依AWS服務來分別說明的方式，重新用系統架構的方式去看AWS如何使用。所以我不是把每一個AWS服務，裡面每一個功能從頭到尾教你怎麼用。而是先有一個系統的需求，依這個需求可能會用到的AWS服務去介紹。裡面當然都是我實際使用的經驗，和對系統的想法，所產生出來我認為最理想的作法。每個系統的要求不同，所以組合當然就千變萬化。實際要使用AWS的話，一定還會需要參考AWS的文件，AWS的文件的問題不是寫得不好，而是內容實在太多，又全都是英文。不過如果照這本書走過一次，再來看文件，一定可以很快就找到你要的東西。
+最後出來的成品，雖然因為篇幅太長，被刪除了不少內容和說明圖片(哈哈! 我一定要出賣編輯!)，整體的觀點還算完整。不過為了盡量塞下內容，可以看到完全沒有空白頁(驚!)。我是自我要求滿高的人，但是還是覺得有達到滿意的標準。有一些錯字、美編或排版的錯誤，就請多多包涵嘿。內容因為出版權的關係我不能自己寫，所以以下是目錄可以參考。</p>
+
+<p>第一章：誰應該使用雲端運算
+1-1 因應網路未來的雲端運算
+1-2 雲端運算的具體服務內容
+1-3 雲端運算帶來的優勢競爭力
+1-4 使用雲端運算的風險評估
+1-5 適合使用雲端運算的情境</p>
+
+<p>第二章：雲端運算領導者AWS
+2-1 AWS是什麼？
+2-2 案例：採用AWS創造更多利潤
+2-3 如何開始使用AWS
+2-4 AWS上使用的憑證和識別碼</p>
+
+<p>第三章：AWS上手必備工具
+3-1 AWS服務快速比較
+3-2 使用AWS的一般注意事項
+3-3 AWS圖形介面工具
+3-4 AWS應用程式介面
+3-5 AWS SDK（開發套件）
+3-6 AWS的其它資源</p>
+
+<p>第四章：AWS基礎：S3與雲端儲存務
+4-1 AWS的儲存功能
+4-2 一般性的儲存功能：S3
+4-3 簡單資料庫：SimpleDB
+4-4 資料庫的另一選擇：RDS</p>
+
+<p>第五章：AWS核心：EC2與其相關服務
+5-1 什麼是EC2？
+5-2 EC2虛擬機器的基礎結構
+5-3 EC2虛擬機器的延伸結構
+5-4 EC2的一些延伸問題與解決
+5-5 EC2開機操作實戰範例</p>
+
+<p>第六章：AWS進階：實作EC2佈署策略
+6-1 使用公開EBS-backed AMI
+6-2 建立S3-backed AMI
+6-3 AMI實作疑難問題解決
+6-4 AMI有效實戰策略分析
+6-5 EC2自動初始化機制</p>
+
+<p>第七章：AWS架構關鍵1：組建高延展性系統
+7-1 高延展性和雲端運算
+7-2 達成負載平衡的作法
+7-3 彈性負載平衡（ELB）
+7-4 自動延展（Auto Scaling）</p>
+
+<p>第八章：AWS架構關鍵2：非同步訊息建構策略
+8-1 什麼是非同步訊息傳遞？
+8-2 AWS的簡單佇列服務（SQS）
+8-3 AWS的簡單通知服務（SNS）</p>
+
+<p>第九章：AWS架構關鍵3：高可用性的雲端運算
+9-1 為何高可用性重要
+9-2 達成高可用性的基本AWS應用
+9-3 EC2虛擬機器掛掉了如何處理？
+9-4 CloudFront改進用戶體驗
+9-5 管理動態IP位址的方法
+9-6 用Amazon CloudWatch監視系統健康</p>
+
+<p>第十章：AWS活用策略：企業雲端優化方案
+10-1 保護你的雲端資料安全
+10-2 如何善用花在AWS每塊錢
+10-3 用分散式運算處理大量資料
+10-4 用虛擬私有雲擴張既有系統</p>
+
+<p>有什麼問題也可以留言給我啊，咱們下次見(進廣告)。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/21/%25e5%25ad%25b8%25e7%25bf%2592s3-api">學習S3 API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-21T22:13:43+08:00" pubdate data-updated="true">2011-03-21</time>
+        
+         | <a href="/blog/2011/03/21/%25e5%25ad%25b8%25e7%25bf%2592s3-api#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很久以前看過一篇文章：<a href="http://gladinet.blogspot.com/2010/11/why-amazon-compatible-api-is-not-good.html">Why Amazon Compatible API is not a Good Idea</a> ，主要內容是說如果你要做一個網路儲存服務，你不應該&#8221;S3 API-Compatible&#8221;。作者的建議是使用<a href ="http://www.openstack.org/">OpenStack</a> 的API，也就是試著和OpenStack Object Storage的API compatible。
+我個人是沒有細看OpenStack的Object Storage API，所以不會比較兩者的高下。我認為S3(或整個AWS服務)的最大優勢，就是它是從真正的使用需求發展出來的(也就是Amazon網站的需求)，和從頭開始設計有很大的不同。也就是說如果你相信Amazon是很大的網站，也run的很成功，你就很大程度可以信任AWS。以我看S3的經驗也是這樣覺得，S3的API使用起來很簡單，可是功能又很強，要快，要scalable，要HA，這是很不容易作到的。也許你確實不應該宣告你的系統是S3 API-Compatible的，因為你無法完全實作出S3的所有功能，(實際上是真的很難，S3的功能真的很多，更新又快)。但是我還是認為S3 API是一個很好的學習對象，直接把你覺得好的拿來用就對了。
+以實際的工作來考量，完全複製S3 API也是一個不錯的作法，(當然只複製我們要實作的功能)。因為S3已經有非常多的工具可以使用了，大概連測試腳本都可以找得到。我的考量是應該不要花太多功夫在設計API上，因為S3已經是一套很棒的API了。軟體開發的真理就是: 變是久遠的不變，所以真的要改變的時候，再來變吧。我的經驗也是這樣，常常設想了很多式樣，但是需求一改，還是得從底層砍掉重練。</p>
+
+<p>好啦，以上還是沒什麼內容，只是試著把一些想法提出來，讓我的blog更新快一些。以下就是廣告內容啦，要轉台的可以轉啦! AWS的新書名稱: &#8220;AWS雲端企業實戰聖經：Amazon Web Services改造企業IT體質&#8221;，ISBN: 9789861992792 。書名很狂妄啊! 希望不要被一堆有&#8221;雲端&#8221;這個字眼的書給淹沒了，我這本書是真的雲端運算嘿。出版日期好像是2011年3月25日，要買的時候要認明，黃底、大大的AWS黑字就對啦。
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/03/aws-book-cover.jpg" alt="aws-book-cover" title="aws-book-cover" width="452" height="500"/></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/14/%25e9%259d%259c%25e5%25a4%259c%25e6%2580%259d">AWS新書消息</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-14T09:02:13+08:00" pubdate data-updated="true">2011-03-14</time>
+        
+         | <a href="/blog/2011/03/14/%25e9%259d%259c%25e5%25a4%259c%25e6%2580%259d#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>蕭美女放首頁真是賞心悅目啊，一放就放了快二個月，捨不得擠下來啊。好啦，蕭美女放夠久了，其實是我太久沒更新了。本來以為可以好好喘口氣的，休息一下，但是我計算了一下，如果要補回之前的睡眠，必需要連續半年，每天至少睡12個小時才夠。那我看是沒辦法了。再加上各種需求，分別襲來！每天還是有做不完的事，蠟蠋多頭燒啊。<br/>
+我這個人咧，最大的問題就是廢話不多。我講的話常常和別人搭不上，但是等別人講完時，說的就是我剛剛講的話。（不過也可能是沒有人想鳥我，哼！）所以當我決定要寫blog的時候，簡直是要我的命，因為寫技術文章可不是文思泉湧就成一篇，而是要札實的理解和整體的視野，才能把一個主題有組織地寫出來。一般上班就很累了，回到家忙完生活索事，還得花時間來看書、看新消息充實知識。要有熱情才能維持下去。所以我很配服能寫技術blog文章的人。我自己是更新很慢咩，但是希望可以漸漸多產一點。<br/>
+我的新書即將在3月底出版（希望不要再延了，哈！），雖然這本書是把我的經驗整理出來，但是要在茫茫AWS海，把AWS的服務有一個系統的介紹出來，還是很難啊！AWS的文件，已經多到我不太敢看了，實在太多啦。要簡單說明一個主題，更是不容易，有一些背景知識常常不知道該不該寫。（其實常常是我懶得寫，因為我只想往後躺就睡著啊）AWS的每個主題常常互相關連，我認為對新手來說很不好理解。所以我算是用我的方式，把AWS服務作最簡明的介紹。其實要學雲端運算買我這本書就對啦，因為AWS是雲端運算的大頭目啊，AWS的服務都很不錯的。
+好啦，以上沒什麼內容，其實就是希望讀者去買我的書。希望銷售量不要太差啊&#8230;(fade out)<br/></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/01/25/sleep-for-an-hour">Sleep for an Hour</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-25T06:14:33+08:00" pubdate data-updated="true">2011-01-25</time>
+        
+         | <a href="/blog/2011/01/25/sleep-for-an-hour#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>每天只睡一小時</h2>
+
+
+<p><a href="http://www.youtube.com/watch?v=DyeyNaWIw-E" target="_blank"><img src="http://hanklin.com/blog/wp-content/uploads/2011/01/sk-2.png" alt="" title="sk-2" class="alignnone size-full wp-image-90" /></a>
+有一點年紀的人(自爆年紀了), 都知道蕭薔有一個SK-II的廣告, 裡面最重要的一句台詞就是: &#8220;我每天只睡一小時!&#8221;, 那時年紀輕輕的我只覺得：這絕對是在唬爛! 怎麼可能有人每天只睡一小時! 就算是傳說中的拿破崙每天只睡五小時,我也覺得很不可能啊. 沒想到我一但有責任在身上的時候, 我竟然也可以逼近蕭薔的功力! 話說我在寫AWS新書的5個多月以來, 每天過得是<span style="text-decoration:line-through">魂不附體</span> 無比充實的日子, 寫稿子寫一寫就有漫步在雲端的感覺啊! 雖然說我也覺得睡覺有點浪費生命,但是有充足睡眠感覺比較能健康的活下去啊! 我在熬夜寫稿的時候, 真的有那種燃燒生命的感覺啊! 有點怕突然就倒下了, 掛掉了怎麼辦. 那時的作息是星期一到星期五是早上5點睡, 8點起來, 去上班. 星期六日則是睡8個小時, 平均每天是睡4.5小時. 雖然星期一到五是平均睡3小時, 但是和沒睡感覺差不多. 這樣子搞了幾個月, 身體覺得非常的差, 我覺得再不交稿我就要掛了. 偏偏AWS的服務越更新越快, 真的是寫了前面顧不了後面. 好在, 在5個多月的夜以繼日, 焚膏繼晷, 我終於交稿啦! 哈哈!
+不過這一個月來, 我還是沒有積極更新我的blog, 因為實在是太累啦! 好想睡它個1個月, 每天睡16個小時!! 不過現實是殘酷的啦, 面對我是窮忙一族的事實吧! 目前AWS新書正在編輯中, 希望過年後就可以接近出版的程度了. 有新的消息我會隨時更新在Blog. AWS增加新功能的速度非常的快, 所以一定有落後的資訊, 這個問題我想也是先把新的資訊更新在Blog.</p>
+
+<h2>Intro to AWS slides</h2>
+
+
+<p>前幾天, 我追隨了<a href="http://mrjamie.cc/">Mr.Jamie</a>的精神, 把&#8221;Intro to Amazon Web Services&#8221;的投影片更新了. 新的投影片沒什麼字, 可以說全部都是圖片, 所以內容全部在我的presentation裡, 沒有聽到的人就sorry啦! 有興趣可以先看一下我的新的投影片:</p>
+
+<div style="width:425px" id="__ss_4406139"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/aws-introduction" title="Intro to Amazon Web Services">Intro to Amazon Web Services</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/4406139" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/01/01/aws-news-2010-12">AWS News 2010-12</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-01T03:39:51+08:00" pubdate data-updated="true">2011-01-01</time>
+        
+         | <a href="/blog/2011/01/01/aws-news-2010-12#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Auto Scaling</h2>
+
+
+
+
+<h3>CloudWatch monitoring</h3>
+
+
+<p>現在可以用CloudWatch去monitor AutoScalingGroup裡面的機器數目，launched和terminated機器數目，以及其它的group activities。</p>
+
+<h3>Percent Of Capacity</h3>
+
+
+<p>在scaling policy多了一個屬性: AdjustmentType。原本的AdjustmentType都會是&#8221;ChangeInCapacity&#8221;，也就是ScalingAdjustment的數值是固定的數字。例如&#8221;-1&#8221;代表減少一台，&#8221;2&#8221;代表增加二台。 Type可以改用&#8221;PercentOfCapacity&#8221;，也就是相對於機器數目的百分比。例如&#8221;-10&#8221;代表減少10%的機器。&#8221;20&#8221;代表增加20%的機器。這個對設定scaling increment比較方便，因為不論是大或小的叢集，使用百分比來設定可以讓機器數目成比例增加，不必擔心設太大或太小。</p>
+
+<h3>Scheduled Update Group Action</h3>
+
+
+<p>Auto Scaling依據CloudWatch的資訊來自動scale in/out，但是這有時候不太足夠。例如，我已經知道星期一到星期五的流量是週末的三倍，或是晚上8點到12點是流量最高的時候，我希望能夠主動的scale in/out，讓使用者有更好的使用經驗，更快的符合實際的流量。現在Auto Scaling又推出了&#8221;scheduled actions&#8221;，可以讓你設定在末來的時間，叢集的&#8221;desired size&#8221;。</p>
+
+<h3>Suspend/Resume</h3>
+
+
+<p>有時候我希望Auto Scaing的trigger能夠先暫停一下，不要觸發scaling activities。例如我要佈署新版本，可能要關掉一半的機器，不希望Auto Scaling又自動幫我開一堆機器。現在Auto Scaling有Suspend/Resume功能，你可以先暫停health checking、launching、terminating、scheduled activities等等動作。</p>
+
+<h3>Health Checks</h3>
+
+
+<p>現在Auto Scaling可以利用ELB的health check結果，去做scaling activities。例如一個Load Balander發現一個EC2 instance是unhealthy，Auto Scaling可以去關掉unhealthy的機器。(還可以加上再開一台新的機器的activity)。設定方法是這個Auto Scaing Group的屬性:&#8221;HealthCheckType&#8221;，如果設成&#8221;EC2&#8221;就是原本用CloudWatch的讀數，如果設成&#8221;ELB&#8221;就是用Load Balander的health check。
+另外Auto Scaling Group還有一個新屬性:&#8221;HealthCheckGracePeriod&#8221;，代表新的機器開機以後的秒數，才會去做health check。
+你也可以自己設定某個機器的健康狀態，適合用在你自己有monitoring系統的時候。指令是&#8221;SetInstanceHealth&#8221;，傳入instanceID和HealthStatus，值可以是&#8221;Health&#8221;，或&#8221;Unhealthy&#8221;。</p>
+
+<h2>CloudWatch</h2>
+
+
+<h3>Alarms</h3>
+
+
+<p>現在CloudWatch有示警(alarming)的功能了! 你可以設定metric超過或低於一個threshold值，就發通知。一個metric可以有多個alarm，每個alarm可以有多個通知。通知的State有3種: OK、ALARM、和INSUFFICIENT_DATA。分別代表&#8221;在threshold值內&#8221;、&#8221;不在threahold值內&#8221;、和&#8221;metric值無法讀取或資訊不足&#8221;。CloudWatch的示警是發佈到SNS上面，所以要收到CloudWatch示警的地方，就去接收SNS topic。或是直接去進行Auto Scaling actions。</p>
+
+<h3>Basic Monitoring</h3>
+
+
+<p>免費啦! 又來好康了，這次是CloudWatch。其實本來CloudWatch就只有EC2的metrics才要收費，連EBS、RDS的metrics都不收費，現在更是多了Basic Monitoring。這個Basic Monitoring是EC2的CPUUtilization，Disk IO，和Network IO都不收費了，但是是5分鐘的時間間隔。如果你不需要完整的metrics和1分鐘內的取樣時間，就不需要使用收費的CloudWatch了(現在叫做Detailed Monitoring)。</p>
+
+<h2>SimpleDB</h2>
+
+
+<h3>BatchDelete</h3>
+
+
+<p>以前只有BatchPutAttributes，現在新增加了BatchDeleteAttributes，所以刪除的時候也可以用batch的作法了。</p>
+
+<h2>Amazon Route 53</h2>
+
+
+<h3>AWS的DNS</h3>
+
+
+<p>以前我就很希望AWS能夠有DNS的服務，因為動態IP實在是很麻煩啊，Elastic IP只解決了一些問題，現在Amazon推出了DNS服務&#8221;Route 53&#8221;，有AWS一慣風格，就是所有動作都有API。所以你可以在Route 53設定你的domain的records。
+不過我希望的&#8221;EC2 instances如果解析到EC2 instances的IP，可以有辦法解析成local IP addresses&#8221;，這個功能還是沒有，所以要有最大的彈性，還是得在自己在EC2裡面架一個private DNS，然後所有的EC2 instances都先用自己的DNS。(為什麼要儘量用local IP addresses? 為了省$)。</p>
+
+<h2>AWS SDK</h2>
+
+
+<h3>Android and iOS</h3>
+
+
+<p>手持裝置是未來上網成長最多的用戶，所以AWS也趕快推出了Android和iOS的SDK，就是不希望在開發新的網路應用的時候，被開發者嫌不好開發啊!</p>
+
+<h2>S3</h2>
+
+
+<h3>5 TB</h3>
+
+
+<p>夠猛了&#8230;單一物件(檔案)5TB。原本5GB對大多數的使用情境應該都夠了，但是AWS又把S3的單一物件大小限制提高到5TB! 這真是太超過了啊! (好了!可以放Bluray ISO了! )</p>
+
+<h2>EC2</h2>
+
+
+<h3>Free BSD</h3>
+
+
+<p>如果你是Free BSD的死忠用戶，要注意了! <a href="http://www.daemonology.net/blog/2010-12-13-FreeBSD-on-EC2.html">EC2現在也可以用Free BSD了!</a> 目前只能用t1.micro，不過等穩定了以後，應該可以用更多的機器類型，可以<a href="http://www.daemonology.net/freebsd-on-ec2/">到這裡選AMI</a>。</p>
+
+<h3>VM Import</h3>
+
+
+<p>現在可以用你自己的VMware的映像檔，輸入到EC2上面。</p>
+
+<p>好啦! 來不及寫了! 新年快樂，希望明年是成功的一年!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/11/30/aws-news-2010-11">AWS News 2010-11</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-30T21:49:35+08:00" pubdate data-updated="true">2010-11-30</time>
+        
+         | <a href="/blog/2010/11/30/aws-news-2010-11#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>滴搭滴搭&#8230;時間不斷往前進，又到了月底啦。 11月只有30天，所以沒辦法多偷一天啊! 這幾個月我都沒時間好好看Google Reader，未閱讀數目早就爆表了。另外知道了一件事&#8230;Google Reader的未閱讀數最多只到1000，超過就只顯示<code>1000+</code>，是不希望給我太大的壓力嗎!</p>
+
+<h3>AWS Free Usage Tier (免費使用層級)</h3>
+
+
+<p>AWS從公開以來，已經降價好多次了，不過始終沒有免費試用，現在終於有免費的方案了，就是<a href="http://aws.amazon.com/free/">AWS Free Usage Tier</a>。在2010年11月1日以後註冊AWS帳號，可以有一年的免費使用期限。只要是在AWS免費的配額內，就不用收錢。如果是對AWS還不熟悉的使用者，我覺得這是一個很好的嘗試機會，可以瞭解AWS的概念和實際操作。如果是已經在用AWS的使用者，也有免費的配額！
+以下是免費的配額，以每個月的使用量來計算。</p>
+
+<ul>
+<li>750個機器小時（machine hours）的EC2 Linux Micro Instances，也就是開1台micro instance可以開一個月。不能使用Windows、IBM、SUSE Linux這些AMI。</li>
+<li>750個機器小時（machine hours）的ELB，及15GB的傳輸量。</li>
+<li>10GB的EBS容量，1百萬次的讀寫，1GB的快照容量，1萬次讀取快照，1千次儲存快照。</li>
+<li>5GB的S3容量，2萬次的讀取，及2千次的儲存，因為S3是很常用的功能，所以這個比較容易超過。</li>
+<li>15GB的網路傳輸量，上傳和下載各有15GB。CloudFront是沒有免費的，所以CloudFront的網路傳輸是要收費的。</li>
+</ul>
+
+
+<p>另外，和AWS Free Usage Tier一起更新的是，SimpleDB、SQS、SNS也有免費配額，而且是新舊客戶都適用，也沒有期限的。可以看得出來AWS想要促銷這三項產品。<br/>
+以下是這三個服務的免費配額，一樣以每個月計算：</p>
+
+<ul>
+<li>25個機器小時(machine hours，就是每次請求回傳值裡的「Box Usage」的總合)的SimpleDB，及1GB的儲存量。</li>
+<li>10萬次的SQS請求。</li>
+<li>10萬次的SNS請求，10萬次的HTTP通知，和1千次的email通知。</li>
+</ul>
+
+
+
+
+<h3>S3 更新</h3>
+
+
+<p>降價<br/>
+AWS降價好像不是新聞，而是常態了。在1TB以下的儲存量大約降了7%，50 TB左右的儲存量則是降最多，約19%，可以說是大小客戶都照顧了，夠誠意吧! 請看<a href="http://aws.amazon.com/s3/#pricing">S3 pricing</a>有詳細的價錢。</p>
+
+<p>Multipart upload<br/>
+S3的功能真的很強，這個功能就更強了。Multipart upload是把大檔案分成許多小檔案上傳，每一個小檔案如果傳爛了，可以只重傳這個小檔案，而且可以同時上傳多個小檔案。所以如果是在網路不穩的地方，你可以一次上傳一個小檔案，如果有一個小檔案掛了，重傳那一份就好了。如果你是在頻寬很大的網路，那就不要客氣了，一次上傳個3個小檔案，可能節省3倍的上傳時間。這個功能真是太好啦!</p>
+
+<h3>CloudFront 更新</h3>
+
+
+<p>CloudFront Custom Origins<br/>
+以前CloudFront只能用S3作為原始資料來源，一般來說有一些問題。最麻煩的就是要把S3 Object的權限全部改成<code>public-read</code>，才能讓CloudFront來讀，或是建立CloudFront的Distribution時，建立一個original access identity，然後授權S3的Object，讓CloudFront可以讀取。其實用original access idenitity還更麻煩，差別只在於用original access identity可以防止使用者直接去S3下載。
+自定來源伺服器要滿足一些要求，例如不能使用query string，所以可能無法直接使用原本的web server，所以還是有一些地方要注意。請看<a href="http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/">CloudFront文件</a> (沒錯&#8230;我懶得翻譯)。</p>
+
+<p>SLA<br/>
+CloudFront也增加了SLA，和其它服務類似，也是99.9%~99.0% uptime退10%，99.0%以下退25%。</p>
+
+<h3>Cluster GPU Instance</h3>
+
+
+<p>強大的Cluster GPU Instance，是用GPU來提供一般性的運算。以前就有看過一張圖表，是說使用GPU來做Parallel Computing，可以比用一般CPU得到8x以上的運算能力。現在這個Cluster GPU Instance，就是提供大量運算的更強大的選擇。Cluster GPU的規格如下：</p>
+
+<ul>
+<li>2個NVIDIA Tesla M2050 Fermi GPU, 每個GPU上有3GB的ECC RAM</li>
+<li>2個4核心的Intel Nehalem X5570處理器</li>
+<li>22 GB RAM, 另有1 GB專門給GPU使用</li>
+<li>1680 GB instance storage</li>
+<li>10 Gbps 低延遲、獨立的ethernet</li>
+</ul>
+
+
+<p>要使用NVIDIA的GPU來做運算，就要使用NVIDIA的CUDA架構，可以使用多種語言來開發。例如C/C++、Java、Python、Ruby、FORTRAN等。如果拿來和MapReduce搭配可以說是完美組合啊! 可以儘量榨乾每一滴運算資源! 不過和Cluster Compute一樣，目前只在<code>us-east-1</code>地區可以用，而且只能用Linux作業系統，不過這應該不是什麼大問題，因為這種大量運算通常不是服務線上使用者的，所以開在美東是沒什麼關係的。</p>
+
+<p>最後，在Google搜尋AWS，第一名終於是AWS啦！之前都是American Welding Society&#8230;有圖為證
+<a href="http://hanklin.com/blog/wp-content/uploads/2010/11/2010-11-30-00318.png"><img src="http://hanklin.com/blog/wp-content/uploads/2010/11/2010-11-30-00318.png" alt="AWS search results" title="AWS search results" width="1024" height="768" class="alignnone size-full wp-image-73" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/10/31/aws-news-2010-10">AWS News 2010-10</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-31T14:08:27+08:00" pubdate data-updated="true">2010-10-31</time>
+        
+         | <a href="/blog/2010/10/31/aws-news-2010-10#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>好啦！死撐活撐，又撐到月底了。如果要維持一個月至少一個文章，就要趕快來寫啊！這個月到底發生了什麼事，讓我們繼續看下去&hellip;</p>
+
+<h2>RDS</h2>
+
+
+<h3>RDS read replicas</h3>
+
+
+<p>最早RDS是只有一個instance，後來出現了多所在地（Availability Zone）的佈署方式，提供不中斷的服務。但是多所在地的佈署，雖然多開了一倍的機器，但是卻不能對額外的資料庫機器去讀寫。只有在一個所在地的機房掛掉的時候，RDS會切換到另一個所在地的RDS instances。雖然這就是HA的代價，不過還是會覺得有點不甘心吶！<a href="http://aws.amazon.com/rds/#Read_Replica">Amazon RDS read replicas</a>讓你可以分散讀取的流量，其實就是我們熟悉的MySQL replication的功能。所以用RDS read replicas和MySQL replications一樣，都有資料不一致的風險，在應用層要注意處理唄。</p>
+
+<h3>降價</h3>
+
+
+<p>又降了又降了，Amazon是嫌賺太多了嗎？看一下<a href="http://aws.typepad.com/aws/2010/10/amazon-rds-price-reduction.html">AWS blog</a>就知道降的比例還滿大的。</p>
+
+<h2>AWS Management Console</h2>
+
+
+<h3>支援SNS</h3>
+
+
+<p>AWS Management Console可以玩SNS了，但是還沒支援SQS。</p>
+
+<h3>設定RDS的MySQL版本</h3>
+
+
+<p>如果你需要確定的一版MySQL的話，可以在AWS Management Console裡設定了。</p>
+
+<h2>ELB支援SSL了</h2>
+
+
+<p>以前ELB把SSL連線送到你的EC2 instances，所以你所有收SSL連線的EC2 instances都要裝SSL certificates。裝的effort是還好，但是SSL連線是很花運算資源的。所以一般都是在LB上面收SSL，轉發的時候就是一般的TCP連線了。畢竟到了自己家比較不怕人偷看了。設定的步驟要先把你的SSL certificate上傳到你的AWS帳號，會產生一個ID，然後在建立ELB的時候，把這個ID設定上去。這樣就只剩一個問題了，如果我的伺服器希望知道用戶端是HTTP還是SSL連線的話，要怎麼知道？AWS會在這個request的header加上<code>X-Forwarded-Proto: https</code>，這樣如果你需要分辨使用不同protocol的用戶端，就可以辦到了。
+AWS真是揪甘心蛤！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/09/30/aws-news-2010-09">AWS News 2010-09</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-30T02:51:26+08:00" pubdate data-updated="true">2010-09-30</time>
+        
+         | <a href="/blog/2010/09/30/aws-news-2010-09#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>快速的滑過一下，一個月不寫，就是會積一大堆東西啊! 話說我的google reader也不敢開了，怕被未閱讀的數字嚇死啊!</p>
+
+<h2>AWS SDK for PHP</h2>
+
+
+<p>好了，<a href="http://aws.typepad.com/aws/2010/09/new-aws-sdk-for-php.html">PHP也有SDK了</a>。這樣一來，現在Amazon出的SDK就有3種了：Java、.NET、和<a href="http://aws.amazon.com/sdkforphp/">PHP</a>。Amazon的SDK畢竟是支援的服務比較完整，更新的也最快，品質也不錯，所以現在如果是開發AWS的應用的話，我都比較推薦使用AWS的SDK(除非你不是用上面3種啦)。</p>
+
+<h2>EC2的新功能</h2>
+
+
+<p>新功能推不完，一個月就可以增加好幾個新功能。以下就一項一項來看。</p>
+
+<ul>
+  <li>Resource Tagging</li>
+     現在可以對EC2的資源，像是instances, AMIs, EBS volumes, EBS snapshots, VPC取標籤，這有什麼好處咧，以前要找EC2 instances，可能就要用public IP，或是所在的region和security groups去找，常常會看到眼睛受不了。因為怕instance如果認錯了，萬一關錯了就麻煩了。現在可以自取標籤，可以很快的就找到正確的EC2資源。
+  <li>Filtering</li>
+     有標籤，當然有過濾條件。用filter來過濾EC2資源，非常的簡單好用。例如，我先把所有production用的AMI標一個<code>'production'</code>的標籤，以後只要想找production的AMI時，就可以用過濾條件把正確的AMI列出來了，不用再找到眼睛抽筋了。
+  <li>Idempotent Instance Creation</li>
+    這個比較是自動化的時候需要用的，如果你開EC2的機器是自動化的話，可以用Idempotent Instance Creation確保不會重覆開機。因為EC2開機需要一陣子，如果我們自動化程式覺得開機失敗的話，可能會再下一次指令，這樣就會重覆開機了。原理就是下<code>ec2-run-instances</code>這個指令的時候，加上一個<code>client token</code>參數，只要<code>client token</code>參數是一樣的，EC2就不會重覆開機。
+  <li>Own Keypair</li>
+    如果你要用自己的keypair的話，現在Amazon也可以讓你用了。先上傳你的public key給EC2，就可以用你的private key來登入EC2了。不過EC2產生也滿方便的啦，不太需要自己生keypairs唄。
+  <li>降價</li>
+    Amazon又降價了，這前是降EC2的兩種instance type，<code>m2.2xlarge</code>和<code>m2.4xlarge</code>。<a href="http://aws.amazon.com/ec2/#pricing">降幅達到19%</a>，如果是重度使用者的話會省很多錢。
+  <li>Micro Instances</li>
+    EC2推出一種新的instance type，只有613 MB RAM，但是偶而可以讓你多用一點CPU，(2 ECUs)，適合流量低的網站，或是久久作一次的工作。這是唯一可以32-bit、64-bit通吃的instance type，也就是不管你的AMI是32-bit還是64-bit，都可以開成micro instance。之前Ubuntu的AMI開在micro instance會有問題，現在已經解掉了。
+  <li>Linux AMIs</li>
+    Amazon現在自己也出<a href="http://aws.amazon.com/amazon-linux-ami/">專門的Linux AMI</a>了。以前都是零零散散的在developer resource裡面，資料也很難找。現在Amazon專門出Linux AMI，有針對EC2做優化、加強安全性、用EC2內部的套件儲存庫，等等好處。而且是Amazon出的，比較不用擔心用到來路不明的AMI。
+</ul>
+
+
+
+
+<h2>AWS Management Console</h2>
+
+
+<p>現在AWS Management Console也可以操作VPC了，可以更方便去使用VPC。（雖然一般情況很少用到啦）</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/31/aws-news-2010-08">AWS News 2010-08</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-31T10:32:48+08:00" pubdate data-updated="true">2010-08-31</time>
+        
+         | <a href="/blog/2010/08/31/aws-news-2010-08#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>8月一如我的預期，真的都沒有更新blog，這個月真的是沒日沒夜的忙啊！事情真的好多，不過忙也是好事啦！我是需要睡眠充足的人，至少要睡8小時才夠。我實在無法想像拿破崙一天只睡3小時，是怎麼做到的。我已經很久都是只睡大概5小時，累積到現在，大概只要5秒鐘沒注意我就可以睡著了。現在想想8月都沒更新blog也說不過去，還是把新聞更新一下唄。</p>
+
+<h3>Amazon RDS Reserved DB Instances</h3>
+
+
+<p>Amazon RDS也有<a href="http://aws.typepad.com/aws/2010/08/by-popular-demand-amazon-rds-reserved-db-instances.html">Reserved Instance</a>的付費模式了。和EC2的Reserved Instances付費模式類似，就是你先付一筆年費，有1年期也有3年期的，之後你開的RDS DB instances就會套用比較便宜的費率。因為資料庫可不是說停就停的，所以長期的租用可以說是一種常態，這樣說起來也算是AWS又降價了，只是這一次是降RDS。有關RDS的最新費率，可以到<a href="http://aws.amazon.com/rds/#pricing">RDS</a>的首頁來看。</p>
+
+<h3>Amazon RDS MySQL Version Management</h3>
+
+
+<p>Amazon RDS現在可以<a href="http://aws.typepad.com/aws/2010/08/amazon-rds-mysql-upgrade-and-version-management.html">管理MySQL的版本</a>了。你可以在建立新的DB instance的時候，指定MySQL的版本，如果不指定，那就會用最新的。RDS也會自動幫你昇級小版本，如果你不想要這樣的話，可以改DB instance的屬性: <code>AutoMinorVersionUpgrade</code>，設定為<code>false</code>，這樣RDS就不會自動幫你昇級小版本。你可以新建一個最新版的DB instance，測試通過了，再修改production的DB instance的屬性: <code>EngineVersion</code>，改成新的版本，RDS就會在下一次維護系統的時候幫你昇級。如果你要立刻昇級，也行，加上 <code>ApplyImmediately</code>這個屬性就可以了。
+目前RDS的MySQL有5.1.45和5.1.49兩種版本可以選擇，以後會有更多的版本。5.1.49以後，RDS會套用<a href="http://www.innodb.com/wp/products/innodb_plugin/">InnoDB plugin</a>，取代原本的InnoDB engine，根據InnoDB的說法，InnoDB plugin 有比較好的performance、scalability、及reliability。</p>
+
+<h3>Amazon CloudFront Default Root Object</h3>
+
+
+<p>Web server都有default root document的功能，現在CloudFront也把<a href="http://aws.typepad.com/aws/2010/08/new-amazon-cloudfront-feature-default-root-object.html">這個功能</a>加進來，讓CloudFront更像一個真正的web server。這樣就可以不用寫這種網址：
+<code>http://www.mywebsite.com/index.html</code>
+而可以寫這種：
+<code>http://www.mywebsite.com/</code></p>
+
+<h3>Java AutoCloseable</h3>
+
+
+<p>根據<a href="http://blogs.sun.com/darcy/entry/project_coin_updated_arm_spec">新聞</a>，Java 7的ARM(<a href="http://blogs.sun.com/darcy/entry/project_coin_arm_api">Automatic Resource Management</a>)，只要有implement <code>java.lang.AutoCloseable</code>的classes，就可以叫Java自動把它關閉，不用自己再寫<code>finally</code> block處理。看起來是很好啦，不過我只想問一句，Java 7到底什麼時候要出咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/07/17/aws-news-2010-07">AWS News 2010-07</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-17T02:22:51+08:00" pubdate data-updated="true">2010-07-17</time>
+        
+         | <a href="/blog/2010/07/17/aws-news-2010-07#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>AWS可以說是動力全開啊，增加新功能的速度讓我都來不及看啊！
+在<a href="http://aws.typepad.com/aws/2010/07/amazon-s3-and-amazon-sns-best-friends-forever.html">Amazon S3 and Amazon SNS - Best Friends Forever</a>提到的新功能，是在說，以後AWS的服務會和SNS再做連接，形成更強的功能。以後AWS的服務能發佈訊息到SNS的topic，一開始提供的是和<a href="http://aws.typepad.com/aws/2010/05/new-amazon-s3-reduced-redundancy-storage-rrs.html">S3 RRS(Reduced Redundancy Storage)</a>的合作機制。當S3發現某個RRS的object損壞(也就是不見了咩)的時候，S3會發一個訊息給你設定的SNS topic，如此一來，我們可以實作回復的機制，然後一但有接受到這個topic裡的訊息，就可以重新建立失去的objects。舉個例子，我把使用者上傳的原圖，存成<code>mypic.jpg</code>，然後對原圖作了一系列的縮圖：<code>mypic_24x24.jpg, mypic_100x100.jpg</code>&#8230; 並且用RRS選項儲存以節省儲存費用。如果哪一天<code>mypic_24x24.jpg</code>壞了，借由S3和SNS的合作機制，我會收到通知訊息，我就設定收到這個訊息時，再去作一次縮圖，就可以把檔案回復了。
+<a href="http://aws.typepad.com/aws/2010/07/enhanced-cloudfront-logs-now-with-query-strings.html">Enhanced CloudFront Logs, Now With Query Strings</a> 這個只是說CloudFront的log現在會記下query string，也就是問號(?)以後的東西啦。query string 對CloudFront要去抓哪個S3 object是完全沒影響的，這個只有在你想分析CloudFront的requests log時才有差別。比如說，我有兩個地方可以讓使用者去下載<code>good.avi</code>，我就兩個地方的URL分別改成<code>good.avi?mobile</code>及<code>good.avi?web</code>，之後可以用分析log的軟體得出流量的資料。</p>
+
+<p><a href="http://aws.typepad.com/aws/2010/07/use-your-own-kernel-with-amazon-ec2.html">Use Your Own Kernel with Amazon EC2</a> 是讓你能用自定的linux kernel。以前是只能選用Amazon的kernel，自己是不能作kernel的。不過關於Amazon釋出的kernel的資訊都很少，而且也不易驗證不同kernel間的效能差異，要花很多時間去評估，所以最簡單的作法還是使用Amazon預設的kernel就好了。現在能夠自定kernel，算是更進階的功能，要花的評估時間一樣少不了，所以如果你是linux高手，又有足夠時間，是可以試著建立自己的kernel來用咩！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: big data | Hank Lin]]></title>
+  <link href="http://hanklin.com/blog/categories/big-data/atom.xml" rel="self"/>
+  <link href="http://hanklin.com/"/>
+  <updated>2013-03-22T10:47:20+08:00</updated>
+  <id>http://hanklin.com/</id>
+  <author>
+    <name><![CDATA[Hank Lin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[一切從一篇paper開始 - Hadoop]]></title>
+    <link href="http://hanklin.com/blog/2012/03/21/paper-hadoop"/>
+    <updated>2012-03-21T22:13:22+08:00</updated>
+    <id>http://hanklin.com/blog/2012/03/21/paper-hadoop</id>
+    <content type="html"><![CDATA[<h2>下一個AWS</h2>
+
+
+<p>上一場我在精誠資訊的演講，有提到「下一個AWS從何而來」這個議題。我有列出了一些，不過我最有興趣的，還是「大量資料的處理」這一塊。
+就像我在裡面講的，我不認為用小資本就能進入IaaS的市場，賣貨櫃機房更不算得上是雲端運算。那我認為比較有希望的還是在PaaS或SaaS。其中我認為將來最需要的就是「大量資料的處理」(big data processing)、「即時的資料處理」(realtime processing)、以及「資料的視覺化」(data visualization)。因為這些功能都和資料的儲存、使用、形態很緊密結合，所以開發好用的SaaS就是我最感興趣的。</p>
+
+<h2>真實的需求</h2>
+
+
+<p>現在的網路世界，不單是server數量大增，可以上網的裝置也大量增加。以前的電腦還一定要人走過去用才上網，現在手機、平版電腦、販賣機等可以上網的裝置爆增，以後可能所有電子產品都可以上網，簡單到一個插頭都可以回報資料。所以資料量是以等比級數在上昇的，要如何快速、正確的取得我們要的資料，就變成最重要的問題。
+以前有一個名詞叫data porn，形容資料太多，像色情一樣泛濫，不知從何處理起。那可以想像，資料如果用等比級數在增加，這個data porn會越來越難處理。而Hadoop的出現，幫助我們解決一部份的問題。</p>
+
+<h2>一切從一篇paper開始</h2>
+
+
+<p>一般公司要解決大資料的處理，大都是開發程式，用自己的方法去解決資料處理的問題，開發一個應用成本比較高，不易再利用。Google在2004年發表一篇很有名的「<a href="http://research.google.com/archive/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>」，說明Google如何處理爬回來的網頁，以支援Google的搜尋等服務。特點就在於可以用一套程式設計界面，處理各種問題。寫一個應用時不需要處理分散式的程式設計等問題，重用性較高。可以投入更多機器，讓問題更快解完。而且還有容錯能力，會自動重試失敗的jobs。
+MapReduce這麼神，但是當然Google沒有發表實作細節，許多細節還申請了專利。其它人想用MapReduce怎麼辦?</p>
+
+<h2>黃色大象Hadoop</h2>
+
+
+<p>另一個大師，Doug Cutting，為了支援Nutch，又建立了Hadoop這個專案。以模擬MapReduce的樣子，做出這個分散式資料處理的框架。因為是free open source，所以被許多公司拿來用。現在Yahoo!是最大的操作者，單一cluster有到4,000個節點。Facebook、Amazon、Apple、eBay、Microsoft、IBM、HP等等大公司也用Hadoop來處理大量資料。所以就像我前面說的，隨著資料越來越多，增長得越來越快，Hadoop(或大量處理資料的工具)就會越來越重要。投資在Hadoop上，似乎是下一個最被關注的課題。
+當然，除了Hadoop，還有許多的類MapReduce的資料處理框架，只是Hadoop是比較多人在用的。</p>
+
+<p>這個星期五(3月23日)，我在精誠資訊分享第2場「<a href="http://www.facebook.com/events/207058829394087/">向成功的雲服務學習</a>」，歡迎你。</p>
+]]></content>
+  </entry>
+  
+</feed>

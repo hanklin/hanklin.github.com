@@ -1,0 +1,1293 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="我即將寫一本關於使用AWS的新書，預計2010年年底前發行。
+有機會出書，其實我是很興奮的。感覺好像作夢一樣，很不真實。以前總覺得有名的blog作家，才有可能出書，怎麼也沒想過，自己竟然有這個機會。我現在相信，努力和堅持是有用的。Andy Roddick的砲彈發球很難破吧! &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/page/4/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/07/02/aws-book">AWS專書</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-02T08:44:05+08:00" pubdate data-updated="true">2010-07-02</time>
+        
+         | <a href="/blog/2010/07/02/aws-book#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我即將寫一本關於使用AWS的新書，預計2010年年底前發行。
+有機會出書，其實我是很興奮的。感覺好像作夢一樣，很不真實。以前總覺得有名的blog作家，才有可能出書，怎麼也沒想過，自己竟然有這個機會。我現在相信，努力和堅持是有用的。<a href="http://en.wikipedia.org/wiki/Andy_Roddick">Andy Roddick</a>的砲彈發球很難破吧! 但是<a href="http://en.wikipedia.org/wiki/Lu_Yen-hsun">盧彥勳</a>還是能把他擊敗。不要一開始就認為不可能，你的任何努力都是會有回報的。千萬別忽視正面思考的力量!
+我要謝謝<a href="http://mrjamie.cc/">Jamie</a>，是他鼓勵我寫這個blog的。也是因為他我才有寫書的機會。現在，我要焚膏繼晷、夜以繼日、燃燒小宇宙，把書給寫好。這邊就暫時寫一些新聞性的文章就好，比較深入的文章我就先不寫了。對於AWS的新書有什麼想法的人，也可以留言告訴我，Thanks!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/06/27/recovery-of-ebs-boot-ec2-instances-part-2">Recovery of EBS-boot EC2 Instances. Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-27T05:22:03+08:00" pubdate data-updated="true">2010-06-27</time>
+        
+         | <a href="/blog/2010/06/27/recovery-of-ebs-boot-ec2-instances-part-2#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>E is for Elastic</h2>
+
+
+<p>EC2在cloud computing裡, 提供的是最底層的IaaS. 這代表著很多比較高階的東西, 如: provisioning, monitoring, backup and disaster recovery 等等. 都要自己做, 這對development或deployment會增加許多額外負擔. 相對的, 以正面的觀點來看, 代表著EC2有最大的彈性, 能應付各種不同的需求. 也能用不同的作法來達成目的.</p>
+
+<h2>A picture is worth a thousand words</h2>
+
+
+<p>前一陣子我寫了一篇<a href="/blog/p/23/">Recovery of EBS-boot EC2 Instances</a>, 提供一種回復EBS-boot 的EC2 instances作法. 但是之前在alestic有看到一篇<a href="http://alestic.com/2010/05/ec2-move-ebs-boot-instance">Move a Running EBS Boot Instance to New Hardware on Amazon EC2</a>, 其實是作一樣的事. 不過我現在覺得Eric Hammond的作法比較好, 步驟少一點, 要清理的東西也少一些. 現在我把Eric Hammond的作法, 和我的作法用圖解比較一下. (啊! 好難得畫圖啊! 雖然本blog以圖少著稱, 但是偶爾還是得花點時間, 畫一些讓人比較易懂的圖咩!) 我先把我的作法用圖解講一次, 可以和<a href="/blog/p/23/">上一篇</a>的文字對照著看.</p>
+
+<h2>My approach</h2>
+
+
+<p>(a) 一開始, 有之前做好的一個EBS-boot image, (EBS-boot image的作法可以看<a href="/blog/p/13">creating EBS-backed AMIs from running instances</a> 這篇) 我把它叫<code>snap-1</code>, 把<code>snap-1</code>註冊為AMI時, 得到AMI ID : <code>ami-1</code>. 然後我用<code>ami-1</code>來開新的EC2 instances. EC2 會依據<code>snap-1</code> 開一個新的EBS Volume, Volume ID是<code>vol-1</code>, 然後用<code>vol-1</code>作為boot partition, 開了一個新的EC2 instance, Instance ID 是<code>i-1</code>
+<img class="size-full wp-image-29 alignnone" title="recovery-ebs-a1" src="http://hanklin.com/wp-content/uploads/2010/06/recovery-ebs-a1.png" alt="" width="430" height="240" />
+(b) 有一天, 很不幸的, <code>i-1</code>掛了. 但是<code>vol-1</code>上的資料還在!!
+<img class="alignnone size-full wp-image-32" title="recovery-ebs-b2" src="http://hanklin.com/wp-content/uploads/2010/06/recovery-ebs-b2.png" alt="" width="430" height="135" />
+(c) 我的作法, 對<code>vol-1</code>作snapshot, 得到<code>snap-2</code>, 也把<code>vol-1</code>從<code>i-1</code> detach 掉.
+<img class="alignnone size-full wp-image-30" title="recovery-ebs-a2" src="http://hanklin.com/wp-content/uploads/2010/06/recovery-ebs-a2.png" alt="" width="430" height="240" />
+(d) 然後用<code>snap-2</code>作AMI, 得到<code>ami-2</code>, 然後用<code>ami-2</code>開新的EC2 instance, 新的instance的volume 是<code>vol-2</code>
+<img class="alignnone size-full wp-image-31" title="recovery-ebs-a3" src="http://hanklin.com/wp-content/uploads/2010/06/recovery-ebs-a3.png" alt="" width="430" height="240" />
+(e) 最後, 把<code>i-1</code>, <code>ami-1</code>, <code>snap-1</code>, <code>vol-1</code>都給清乾淨, 免得浪費錢咩!</p>
+
+<h2>Eric&#8217;s approach</h2>
+
+
+<p>(a), (b)流程和上面一樣, 但是從(c)開始, 就不一樣了咩!
+(c) 直接用舊的AMI(<code>ami-1</code>, 用的是舊的snapshot: <code>snap-1</code>) 開一個新的EC2 instance, 得到Instance ID: <code>i-2</code>, Volume ID: <code>vol-2</code>.
+<img class="alignnone size-full wp-image-33" title="recovery-ebs-b3" src="http://hanklin.com/wp-content/uploads/2010/06/recovery-ebs-b3.png" alt="" width="430" height="240" />
+(d) 把<code>i-2</code>先stop一下, 然後把<code>vol-2</code>從<code>i-2</code> detach掉. 然後把原來的<code>vol-1</code> attach回<code>i-2</code>. 最後再把<code>i-2</code>重新start就可以了!
+<img src="http://hanklin.com/wp-content/uploads/2010/06/recovery-ebs-b4.png" alt="" title="recovery-ebs-b4" width="430" height="240" class="alignnone size-full wp-image-34" />
+(e) 要清的東西只有<code>vol-2</code>, <code>i-1</code>!</p>
+
+<h2>Conclusion</h2>
+
+
+<p>好啦, 我承認Eric的作法確實比較好啦! 步驟較簡單, 要清理的東西也比較少. 所以我以後也會改用Eric的作法咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/06/14/aws-news">一些AWS News</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-14T23:45:45+08:00" pubdate data-updated="true">2010-06-14</time>
+        
+         | <a href="/blog/2010/06/14/aws-news#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Google Storage</h2>
+
+
+<p>ㄟㄟ&#8230;這個不是AWS的新聞啦. 是Google的. 前一陣子Google 發表了 <a href="http://code.google.com/apis/storage/">Google Storage for Developers</a> . 這是Google在cloud computing 的新產品, 當然還在Labs的階段, 只開放少數developers試用. Google Storage for Developers 可以直接從REST界面存取objects了, 不用佈署一個Google App Engine的app就可以利用Google的龐大儲存能力了. 你可以把他當成Amazon S3的直接競爭者. Amazon雖然在cloud computing 的產品領先其它公司很多, 但是我看了一下Google Storage, 一些進階功能Google都會推出(eg: Range GET, Access Control Lists). 所以Google 是來勢洶洶啊!</p>
+
+<h2>Amazon CloudFront</h2>
+
+
+<p>這不是第一次啦! <a href="http://aws.typepad.com/aws/2010/06/amazon-cloudfront-support-for-https-access.html">AWS又降價了咩</a>! 真是佛心來的啊! 這次是CloudFront 的HTTP requests 降25%. 也就是本來每10,000個HTTP requests要$0.01 USD 變成$0.0075 USD. 另外, 增加了HTTPS support, 可以消除掉mixed content warning. 作法就是把CloudFront Distribution 設定成只能用HTTPS去讀取content. 這樣在https的頁面就不會有mixed content warning了. 但是目前https request 還不能用CNAME, 這應該是很不方便的. 我想應該是server的HTTPS certificate的domain name的問題. 以後應該會解決. 最後就是CloudFront 多了一個edge location: New York. 噹噹! 偉大的New York咩! 這樣的話現在CloudFront有16個edge locations了! 完整的可以看<a href="http://aws.amazon.com/cloudfront/">CloudFront的網頁</a>.</p>
+
+<h2>AWS Import/Export API</h2>
+
+
+<p><a href="http://aws.typepad.com/aws/2010/06/aws-importexport-api.html">AWS Import/Export 也加了API</a>. AWS Import/Export是為了大量import/export 資料到S3. 你寫一張單子, 然後和硬碟一起寄給Amazon. Amazon就照你的要求, 把資料給import或export, 然後把硬碟還給你. 如果有大量資料的話, AWS Import/Export可以省很多的錢和時間. 以前是沒有API, 現在雖然有API, 可以說明Import/Export jobs, 但是寄硬碟的步驟還是少不了的. (除非用<a href="http://en.wikipedia.org/wiki/Quantum_teleportation">Quantum Teleportation</a>咩!)</p>
+
+<h2>AWS Management Console</h2>
+
+
+<p><a href="https://console.aws.amazon.com/">AWS Management Console</a> 又<a href="http://aws.typepad.com/aws/2010/06/aws-management-console-now-supports-amazon-s3.html">增加一個可以管理的功能了</a> ,那就是S3. 那其它的一些Firefox plugin 像是S3Fox大概就可以不用了. 填Secret Key 還是填給Amazon比較放心您說是吧! 支援的功能有: 新增/刪除buckets, 上傳/下載/刪除objects, 改ACLs, 在buckets間copy/move objects, 改object metadata. 功能可以說是非常夠了, 以前要先裝S3的工具才能用, 現在在AWS Management Console裡按一按就可以了, 真爽咩!
+現在AWS Management Console 已經有支援: Amazon S3, Amazon EC2, Amazon Elastic MapReduce, Amazon CloudFront, Amazon RDS. 這可以說是不用API的簡單方法咩, 如果只是簡單的做一件事, (eg: 上傳一個小圖檔, 或是單純開一個EC2 instance) 用這個就很方便了, 不用辛苦的裝一堆工具了咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/06/08/recovery-of-ebs-boot-ec2-instances">Recovery of EBS-boot EC2 Instances</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-08T02:37:58+08:00" pubdate data-updated="true">2010-06-08</time>
+        
+         | <a href="/blog/2010/06/08/recovery-of-ebs-boot-ec2-instances#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近又接到了AWS的通知信, 說因為他們的問題, 造成我的一個instance 會被terminated. 信大概長這樣:
+<code>We have noticed that one or more of your instances are running on a host degraded due to hardware failure.
+   i-a20a871a
+The host needs to undergo maintenance and will be taken down at 12:00 GMT on 2010-06-16. Your instances will be terminated at this point.
+......</code></p>
+
+<p>這算是比較正常的failure, 當然EC2 instances也有直接掛掉的情形. 我覺得以前比較常發生直接掛掉, 最近一年來倒是沒遇到. 而且直接掛掉的都是<code>m1.small</code> 的instances. 比較大的instances都沒有直接掛掉過. 在<a href="/p/22">上次的課程</a>裡, 有人問說為什麼要改用EC2, EC2還是會掛啊?! 沒錯, 天有不測風雲, EC2 instances也是會掛的. 事實是, 任何東西都會掛. 就算是最貴最高檔的server也一樣. 你要有一個觀念, 用cloud computing 時, Backup 和 Diseaster recovery 一樣也不能少. 差別在於, EC2 instances 掛了, 我坐在我的辦公室裡, 下幾個指令就回來了. 如果是租主機, 只能通報, 然後在那邊著急. 如果是主機代管, 很抱歉, 自己去一趟機房咩!</p>
+
+<h2>Steps of Recovery</h2>
+
+
+<p>因為我是使用EBS-boot instances, 所以recover 的動作就變得很簡單. 以下就一步一步來看:</p>
+
+<p>先找出那個instance的資料, 後面會需要用到:</p>
+
+<pre class="brush:bash">
+$ ec2-describe-instances i-a20a871a
+RESERVATION     r-441f2d2c      107357334611    default
+INSTANCE        i-a20a871a      ami-155b3811    ec2-67-202-19-78.compute-1.amazonaws.com       domU-12-11-21-01-D1-F2.compute-1.internal       running mykeypair 0      m 1.small 2010-03-01T07:26:57+0000        us-east-1a                              monitoring-disabled     67.202.19.78   10.253.214.4                    ebs
+BLOCKDEVICE     /dev/sda1       vol-242e0c1a    2010-03-01T08:04:09.000Z
+</pre>
+
+
+<p>要把volume ID 和AMI ID記下來, 我的volume ID是<code>vol-242e0c1a</code>, AMI ID是<code>ami-155b3811</code>
+也可以查一下這個舊的volume, 一定是attach到舊的那個instance.</p>
+
+<pre class="brush:bash">
+$ ec2-describe-volumes vol-242e0c1a
+ATTACHMENT      vol-242e0c1a    i-a20a871a      /dev/sda1       attached        2010-03-01T07:27:09+0000
+</pre>
+
+
+<p>連進去舊的instance, 小心一點的話, 最好先確定一下instance ID 是不是一樣:</p>
+
+<pre class="brush:bash">
+$ curl http://169.254.169.254/latest/meta-data/instance-id && echo
+i-a20a871a
+</pre>
+
+
+<p>把該關的services關一關, 還有如果有其它資料是存在instance storage(ephemeral storage)上要備份的話, 也先備份出來, 要不然terminate instance之後那些資料就沒了. 好了之後, 可以先stop instance, 只有EBS-boot instances可以被stop, stop時是不算EC2 的instance/hour 費用的. 好處就是可以再start起來, 資料還是之前存在EBS volume上的. 缺點就是IP 會改.</p>
+
+<pre class="brush:bash">
+$ ec2-stop-instances i-a20a871a
+INSTANCE        i-a20a871a      running stopping
+</pre>
+
+
+<p>等它的狀態是stopped</p>
+
+<pre class="brush:bash">
+$ ec2-describe-instances i-a20a871a
+RESERVATION     r-441f2d2c      107357334611    default
+INSTANCE        i-a20a871a      ami-155b3811                    stopped mykeypair 0               m1.small        2010-03-01T07:26:57+0000        us-east-1a              monitoring-disabled                                      ebs
+BLOCKDEVICE     /dev/sda1       vol-242e0c1a    2010-03-01T08:04:09.000Z
+</pre>
+
+
+<p>然後對那個舊的volume作snapshot, <code>-d "description"</code> 記得要寫得易懂一些.</p>
+
+<pre class="brush:bash">
+$ ec2-create-snapshot vol-242e0c1a -d "Ubuntu 8.04 20100607"
+SNAPSHOT        snap-1a73348a   vol-242e0c1a    pending 2010-06-07T07:55:59+0000                107357334611    20      Ubuntu 8.04 20100607
+</pre>
+
+
+<p>等snapshot的狀態是completed</p>
+
+<pre class="brush:bash">
+$ ec2-describe-snapshots snap-1a73348a
+SNAPSHOT        snap-1a73348a   vol-242e0c1a    completed       2010-06-07T07:55:59+0000        100%    107357334611    20      Ubuntu 8.04 20100607
+</pre>
+
+
+<p>現在把這個新的snapshot註冊為AMI, 同樣的, <code>-d "description"</code> 也是要寫得descriptive一點, 自己以後才看得懂是什麼image咩!</p>
+
+<pre class="brush:bash">
+$ ec2-register -s snap-1a73348a -a i386 -n "ebs-ubuntu-8.04-i386-20100607" -d "EBS Ubuntu 8.04 i386 20100607" -b /dev/sda2=ephemeral0 --root-device-name /dev/sda1
+IMAGE   ami-c4b65e31
+</pre>
+
+
+<p>用新的AMI來開instance吧!</p>
+
+<pre class="brush:bash">
+$ ec2-run-instances ami-c4b65e31 -k mykeypair -g default -z us-east-1a -t m1.small --instance-initiated-shutdown-behavior stop --disable-api-termination
+RESERVATION     r-4ac31021      107357334611    default
+INSTANCE        i-949c91ef      ami-c4b65e31                    pending mykeypair 0               m1.small        2010-06-07T08:01:21+0000        us-east-1a             monitoring-disabled  
+</pre>
+
+
+<p>等新的instance的狀態是running, 就可以連進去看看</p>
+
+<pre class="brush:bash">
+$ ec2-describe-instances i-949c91ef
+RESERVATION     r-4ac31021      107357334611    default
+INSTANCE        i-949c91ef      ami-c4b65e31    ec2-174-129-101-39.compute-1.amazonaws.com      domU-12-31-38-00-40-22.compute-1.internal       running mykeypair 0      m1.small 2010-06-07T08:01:21+0000        us-east-1a                              monitoring-disabled     174.129.101.39  10.252.71.208                   ebs
+BLOCKDEVICE     /dev/sda1       vol-a1179d66    2010-06-07T08:01:25.000Z
+
+$ ssh -i mykeypair.pem root@174.129.101.39
+</pre>
+
+
+
+
+<h2>Clean Up</h2>
+
+
+<p>確認新的instance工作一切正常之後, 就可以把之前舊的instance, volume, snapshot清乾淨了. 首先, 把舊的instance給砍了.</p>
+
+<pre class="brush:bash">
+$ ec2-terminate-instances i-a20a871a
+Client.OperationNotPermitted: The instance 'i-a20a871a' may not be terminated. Modify its 'disableApiTermination' instance attribute and try again.
+</pre>
+
+
+<p>哈哈! 如果你和我一樣, 都習慣在run instance時加了<code>--disable-api-termination</code>, 或是用</p>
+
+<pre class="brush:bash">
+$ ec2-modify-instance-attribute --disable-api-termination true $instanceId
+</pre>
+
+
+<p>把API termination 給disabled的話, 就可以避免不小心把instance給砍了, 一失足成千古恨咩! 現在確定要砍了的話, 就把API termination enable:</p>
+
+<pre class="brush:bash">
+$ ec2-modify-instance-attribute i-a20a871a --disable-api-termination false
+disableApiTermination   i-a20a871a      false
+</pre>
+
+
+<p>現在可以terminate了.</p>
+
+<pre class="brush:bash">
+$ ec2-terminate-instances i-a20a871a
+INSTANCE        i-a20a871a      stopped terminated
+</pre>
+
+
+<p>然後看一下舊的instance的AMI的資料, 記下snapshot ID.</p>
+
+<pre class="brush:bash">
+$ ec2-describe-images ami-155b3811
+IMAGE   ami-155b3811    107357334611/ebs-ubuntu-8.04-32b-20100301  107357334611    available       private         i386    machine                         ebs
+BLOCKDEVICEMAPPING      /dev/sda1               snap-e13ab246   20
+</pre>
+
+
+<p>先把舊的AMI deregister:</p>
+
+<pre class="brush:bash">
+$ ec2-deregister ami-155b3811
+IMAGE   ami-155b3811
+</pre>
+
+
+<p>再把舊的snapshot給砍了</p>
+
+<pre class="brush:bash">
+$ ec2-delete-snapshot snap-e13ab246
+SNAPSHOT        snap-e13ab246
+</pre>
+
+
+<p>最後可以把舊的volume 給砍了</p>
+
+<pre class="brush:bash">
+$ ec2-delete-volume vol-242e0c1a
+VOLUME  vol-242e0c1a
+</pre>
+
+
+<p>完成! 坐在自己的位子就可以做好了咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/06/04/intro-to-aws-slides">Intro to AWS Slides</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-04T19:46:00+08:00" pubdate data-updated="true">2010-06-04</time>
+        
+         | <a href="/blog/2010/06/04/intro-to-aws-slides#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天應 <a href="http://mrjamie.cc/">Mr. Jamie 看網路與創投</a>  到 <a href="http://appworks.tw/">appWorks</a>  去講一個AWS的簡介. 有一陣子沒有簡報了, 所以slides還弄了老半天. 最近睡眠也不太夠. 還好appWorks的團隊都很熱情, 也對我的簡報滿捧場的. 也謝謝Jamie和appWorks團隊咩!
+分享一下 slides, <a href="http://www.slideshare.net/hanklin/aws-introduction">Intro to Amazon Web Services</a> . 有任何意見請不吝指教咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/05/27/google-chrome">閒聊Google Chrome</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T03:15:29+08:00" pubdate data-updated="true">2010-05-27</time>
+        
+         | <a href="/blog/2010/05/27/google-chrome#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>勞苦功高的Browsers</h2>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Web_browser">Web browser</a> 可不是一個單純的application. 一但接上網路, 就有無限的可能. Server端更新功能, Client端就能馬上使用. 而且web application可以是super scalable的, 現在使用者最多的application, 像是facebook, twitter 都是web applications. 如果想要作一個Browser, 可不是簡單起個案子, 請10個工程師弄個2年就可以作出來了. 現在的Browser可是身負重任, 負責現今使用者大部份的網路活動. 一般的使用流程, 就是先去使用者打的網址, 把HTML文件抓下來, HTML文件裡可能有各種各樣的resources, 如: JavaScript, CSS, 圖檔, Flash, Java Applet 等等. Browser要知道應該對什麼東西作什麼事, 該下載的再去下載, 該run的去run一run, 然後把結果render在畫面上. 而且還要有extensions/plugins, 滿足開發者和使用者的要求. 還有還有, Browser還要試著幫忙修正錯誤的HTML, CSS, JavaScript, 以避免粗心的開發者寫個<div><p></div></p> 就整組壞去. 最後, 以上一切的動作都要<a href="http://googleresearch.blogspot.com/2009/06/speed-matters.html">快! 快! 快! </a> 現代人是很沒耐心的, 一秒鐘是幾十萬上下的啊!
+好吧, 光這個規格開下來就沒人敢作了, 所以主流還是只有Microsoft的IE. 沒辦法, 曾經高達95%的market share, 還是得針對它開發web applications. &nbsp;(雖然IE有很多問題一直被罵) &nbsp;Firefox出來後, 真是的有如救星啊! 好用的bookmark, 可以多個tabs, 符合W3C標準, 許多好用的plugins, 還有最重要的, 跑起來至少比IE6快10倍以上咩! 其中Firebug 這個plugin真是開發者的好朋友啊! 到現在還是必須的plugin. 不過即使Firefox那麼好, 到現在market share還是只有大約30%, 所以可憐的工程師還是要和古怪的IE6奮戰. 如果考量到小小的Mozilla要和大大的Microsoft對抗, Windows內建IE等等不利因素, 這個結果還算是不錯咩, 只能說Windows賣得太好, IE又一直不進步. 所以很多人根本不知道什麼是Firefox, 在他們心中:</p>
+
+<pre class="brush:java">Browser == IE</pre>
+
+
+<p>的結果會是<code>true</code>. 所以, Firefox就還是只有宅男/Geek/工程師拿來自爽用而已. 但是&#8230;</p>
+
+<h2>突然出現的Chrome</h2>
+
+
+<p>在2008年9月, 有一天我正要下班時, 上網看一看最新的新聞. 竟然看到了一種10年才可能出現一次的新聞. 那就是: <a href="http://googleblog.blogspot.com/2008/09/fresh-take-on-browser.html">Google要出Browser了!</a> 那時候Google 是先出一個<a href="http://www.google.com/googlebooks/chrome/">Chrome廣告的漫畫</a>. 看完這個漫畫就很期待, Chrome開放的當天就趕快下載來用用了. 那時的感覺是, 快雖快, 但是整個還是非常陽春. bookmark難用, flash常crash, 字也和狗啃的一樣, 也沒有別的plugins, 整個用起來就是很不順手. 但是, 不到2年, Chrome的版本也從0.2快速升到5.0 (這年頭大家的版本的增加速度都在比快的), 在補強了一些常用功能, 還有<a href="http://lifehacker.com/5547211/fix-the-webs-biggest-annoyances-with-google-chrome">一些好用的 chrome extensions</a> 漸漸出來以後. Chrome現在也是我主要使用的browser了. 不過我在開發的時候, 還是使用Firefox, 沒辦法, Firebug還是比Chrome的developer tools 好用太多了. 如果你只是一般使用者, 那你可以安心的使用chrome咩!
+Chrome強調的最大特點就是: <a href="http://code.google.com/speed/">快! 快! 快!</a> Chrome用的JavaScript engine 叫<a href="http://code.google.com/p/v8/">V8</a> , 就是號稱輕量又快速. 我的laptop在<a href="http://v8.googlecode.com/svn/data/benchmarks/current/run.html">V8 benchmark</a> 上用Chrome 5.0可以得到 <code>5468</code>分(越大越好), Firefox 3.6只有<code>527</code>分. <a href="http://www2.webkit.org/perf/sunspider-0.9/sunspider-driver.html">SunSpider JavaScript Benchmark</a> 則是Chrome 5.0得到<code>306.0ms</code>(越小越好) Firefox 3.6 則是<code>830.2ms</code>. Chrome用的layout engine是Webkit, 也是和Firefox 用的Gecko有很大的不同. Webkit也是注重輕量和快速, Gecko則是<a href="http://arstechnica.com/open-source/news/2008/09/mozilla-committed-to-gecko.ars">功能較強大, 但是heavy-weight</a>
+但是改進JavaScript和render的速度並不能很大量的改進效能. 棖據<a href="http://developer.yahoo.com/performance/rules.html">Yahoo!&#8217;s Exceptional Performance</a> 的研究, 最花時間的就是HTTP request, 所以針對HTTP requests 次數要少, request headers 要小, 要設cache headers, 要用Gzip, 要用CDN 等等都是為了在HTTP requests這一步能夠快一點. Google也在作一個新的Protocol想要取代HTTP, 叫<a href="http://dev.chromium.org/spdy">SPDY</a> , 號稱可以<a href="http://googleresearch.blogspot.com/2009/11/2x-faster-web.html">比HTTP 快上55%</a> . 要是再加上HTML5的offline storage, 和WebSocket, 真是令人期待啊! 可以想像將來真的是web application的時代咩!</p>
+
+<p>Chrome在使用的感覺上確實有比Firefox快一些, 雖然一些功能還是比不上Firefox, 但日常使用也都夠了. 重新打造一個超快的Browser當然是很有成就感, 但是這就是Google 加入<a href="http://en.wikipedia.org/wiki/Browser_wars">Browser wars</a> 的原因嗎? 之前就有謠傳Google偷偷在開發OS, 不過Google一直沒證實. 開發OS又比開發Browser難了好幾個級數, 而且開發好了要怎麼和Microsoft火拼還是一大問題. 後來在2009年7月, Google發表了<a href="http://googleblog.blogspot.com/2009/07/introducing-google-chrome-os.html">Chrome OS 的消息</a>, 才真象大白. 原來是target在netbooks的OS, 開機就是Chrome, 當然裡面的application都是用web applications, 充份實現cloud computing的好處. 不過Chrome OS實在和<a href="http://www.android.com/">Android</a> 太過接近了, 真是令人猜不透Google想幹嘛. 要嘛不來, 一來就作2個. 我是希望Google能專心把Chrome作好就好了, netbook或smartphone就交給Android就好了, 雖然Google資源多, 但是一次專注在一件事情上, 把事情作好不是比較好嗎?</p>
+
+<h2>Browser Wars</h2>
+
+
+<p>使用者習慣不是一朝一夕可以改過來的, IE獨佔市場快10年了, Windows內建IE, 可以用就好了咩, 所以很難說什麼: &#8220;IE比較難用咩, 所以你裝好Windows之後要去下載Firefox/Chrome來用.&#8221; 這種理由去讓一般使用者改用別的browser. 到現在還有存在很多網站(尤其是國內的一些網路銀行頁面), 是只能用IE去看的, 用其他Browser去看的話, 不是layout亂掉不能用, 就是mouse event都沒用, hover或點下去沒反應. IE在1999年開始獨霸browser market之後, 大概從2005年才一點一點(真的很慢, 幾乎察覺不出來, 哈哈!)的流失給Firefox. 而Chrome 是Google做的, Google品牌夠大, 要推Chrome也不像沒錢的Mozilla那樣沒力. 目前Chrome也有約7%的market share了. 但是Microsoft也不是省油的燈, 怎麼可能坐視不管呢? <a href="http://ie.microsoft.com/testdrive/">IE9</a> 預計2011年要出, 這終於是可以和Chrome或Firefox相比的Browser了! 最大的改變就是大力支援W3C標準. 看了<a href="http://ie.microsoft.com/testdrive/benchmarks/SunSpider/Default.html">SunSpider Test</a> , <a href="http://ie.microsoft.com/testdrive/benchmarks/Acid3/Default.html">Acid3 Test</a> , <a href="http://ie.microsoft.com/testdrive/benchmarks/CSS3info/Default.html">CSS selector Test</a> 和<a href="http://samples.msdn.microsoft.com/ietestcenter/">Internet Explorer Testing Center</a> 之後, 我覺得Microsoft終於有心把Browser做好了! 其實還是那句老話, 有競爭才有進步. 當Web不斷快速進步, 而Browser卻沒改進, 這是不會被接受的. 所以, 不論是IE 或Firefox, 只要符合W3C標準, 就是好Browser!
+最後, 附一個Chrome的新廣告: <a href="http://www.youtube.com/watch?v=nCgQDjiotG0&amp;fmt=22#t=1m33">Google Chrome Speed Tests</a>(我直接快轉到閃電那段, 因為很酷咩!)</p>
+
+<h3>Resources:</h3>
+
+
+<p><a href="http://acid3.acidtests.org/">The Acid3 Test</a>
+<a href="http://tools.css3.info/selectors-test/test.html">CSS3 Selectors Test </a>
+<a href="http://samples.msdn.microsoft.com/ietestcenter/">Internet Explorer Testing Center </a>
+<a href="http://developer.yahoo.com/performance/">Yahoo!&#8217;s Exceptional Performance</a>
+<a href="http://code.google.com/speed/page-speed/docs/rules_intro.html">Web Performance Best Practices</a>
+<a href="http://gs.statcounter.com/">StatCounter Global Stats - Browser, OS, Search Engine including Mobile Market Share</a>
+<a href="https://chrome.google.com/extensions">Google Chrome Extensions</a></p>
+
+<p><a href="http://www.amazon.com/gp/product/0596529309">High Performance Web Sites: Essential Knowledge for Front-End Engineers</a>
+<a href="http://www.amazon.com/gp/product/0596522304">Even Faster Web Sites: Performance Best Practices for Web Developers</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/04/29/amazon-ec2-asia">Amazon EC2 開始在亞洲提供服務了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-29T22:19:22+08:00" pubdate data-updated="true">2010-04-29</time>
+        
+         | <a href="/blog/2010/04/29/amazon-ec2-asia#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>好消息, EC2現在已經<a href="http://aws.typepad.com/aws/2010/04/now-open-aws-region-in-asia-pacific.html">提供Asia Region</a>了!  之前EC2有提供的3個regions, 不是在美國就是在歐洲. 如果你的網站是要給美國或歐洲的使用者的話就沒問題, 可是如果目標客戶是在亞洲的話, 連到美國的速率和latency就會比較差. 之前AWS提供的CloudFront 有解決一部份的問題, 因為CloudFront有提供香港, 東京, 和新加坡的Edge Locations.(我之前試, 台灣是去香港下載) 不過CloudFront在AWS還算是非常新的服務, 所以功能還算陽春. 能夠服務的只有放在S3上的靜態檔案, 在設定上也沒有彈性, CloudFront是完全看S3上面該Object的metadata, 所以如果要改很多objects的cache 時間, 還得一個一個改才行.</p>
+
+<p>如果你的靜態檔案已經放在CloudFront上的話, 那麼現在你也可以把你的Web servers, Application  servers放到離使用者更近的地方了. 有多近? AWS是說在Asia-Pacific的Singapore啦! 好咩, 看一下是不是真的:</p>
+
+<pre class="brush:bash">
+$ ec2-describe-regions
+REGION  eu-west-1       ec2.eu-west-1.amazonaws.com
+REGION  us-east-1       ec2.us-east-1.amazonaws.com
+REGION  us-west-1       ec2.us-west-1.amazonaws.com
+REGION  ap-southeast-1  ec2.ap-southeast-1.amazonaws.com
+</pre>
+
+
+<p>真的多了一個region耶! 厚&#8230; 不過名字怎麼那麼長, 我就最怕長的名字咩. 看看有幾個availability zones:</p>
+
+<pre class="brush:bash">
+$ ec2-describe-availability-zones --region ap-southeast-1
+AVAILABILITYZONE        ap-southeast-1a available       ap-southeast-1
+AVAILABILITYZONE        ap-southeast-1b available       ap-southeast-1
+</pre>
+
+
+<p>目前我還沒開instances來試試網路, 要試的話<a href="http://alestic.com/">alestic </a> 已經有提供public AMI 了. 如果你準備在台灣開網站的話, Amazon EC2現在是個好選擇咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso">用Terracotta 去Distribute Objects</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-21T02:02:19+08:00" pubdate data-updated="true">2010-04-21</time>
+        
+         | <a href="/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Terracotta DSO</h2>
+
+
+<p>
+Terracotta又來啦! 這次是講所謂的Terracotta Distributed Shared Object(DSO). <a href="/blog/p/6">上次</a>有提到用terracotta去作tomcat cluster, 把HttpSession裡的東西在cluster間分享, 不過在一般Java application也想有這種distributed objects要怎麼作?  上一篇畢竟是初次體驗, 對terracotta有什麼本事還沒有說得很完整. 這次我要比較詳細的說明terracotta的架構和原理, 將來如果要開始設計一個distributed applications時, 可以試著用terracotta的programming model去看問題. 不一定要用terracotta, 但是多瞭解一種clustering的方法總是好的. 如果還沒裝terracotta, 可以看上一篇把terracotta裝起來. 先來看一個很簡單的例子:</p>
+
+<p><code>DsoMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.util.Random;
+
+public class DsoMain {
+    private Integer number = new Random().nextInt();
+
+    public static void main(String[] args) {
+        DsoMain tc1 = new DsoMain();
+        DsoMain tc2 = new DsoMain();
+        print(tc1.number, tc2.number);
+        tc1.number = new Integer(tc2.number);
+        print(tc1.number, tc2.number);
+    }
+
+    private static void print(Integer n1, Integer n2) {
+        System.out.println("n1=" + n1 + ", n2=" + n2);
+        System.out.println("n1==n2 ? " + (n1 == n2));
+        System.out.println("n1.equals(n2)? " + (n1.equals(n2)));
+    }
+}</pre>
+
+
+<p>看起來是再簡單不過了, 執行看看:</p>
+
+<pre class="brush:bash">$ java -cp . com.hanklin.DsoMain
+n1=174724645, n2=1254665546
+n1==n2 ? false
+n1.equals(n2)? false
+n1=1254665546, n2=1254665546
+n1==n2 ? false
+n1.equals(n2)? true</pre>
+
+
+<p>好咩, 一切都在你的預料之中. 但是這一切在terracotta加入後就會改變了. 先來看terracotta configuration xml:
+<code>tc-dso.xml</code></p>
+
+<pre class="brush:xml;light:false"><?xml version="1.0" encoding="UTF-8"?>
+<tc:tc-config xsi:schemaLocation="http://www.terracotta.org/schema/terracotta-5.xsd" 
+xmlns:tc="http://www.terracotta.org/config" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <servers>
+    <server host="localhost">
+      <data>%(user.home)/terracotta/server-data</data>
+      <logs>%(user.home)/terracotta/server-logs</logs>
+    </server>
+  </servers>
+
+  <clients>
+    <logs>%(user.home)/terracotta/client-logs</logs> 
+  </clients>
+  
+  <application>
+    <dso>
+      <instrumented-classes>
+        <include>
+          <class-expression>com.hanklin.*..*</class-expression>
+        </include>
+      </instrumented-classes>
+      <roots>
+        <root>
+          <field-name>com.hanklin.DsoMain.number</field-name>
+          <root-name>number</root-name>
+        </root>
+      </roots>
+    </dso>
+  </application>  
+</tc:tc-config></pre>
+
+
+<p>上面的設定檔最重要的地方是<code><root></code>區塊, 在這邊設定<code>com.hanklin.DsoMain.number</code>是terracotta root, terracotta root 下的所有objects都會被distributed. 存好了之後, 再來開terracotta server:</p>
+
+<pre class="brush:bash">$ start-tc-server.sh -f /opt/tc/tc-dso.xml
+2010-04-18 18:45:06,485 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-04-18 18:45:06,878 INFO - Configuration loaded from the file at '/opt/tc/tc-config.xml'.
+2010-04-18 18:45:07,058 INFO - Log file: '/root/terracotta/server-logs/terracotta-server.log'.
+2010-04-18 18:45:09,473 INFO - Available Max Runtime Memory: 490MB
+2010-04-18 18:45:11,903 INFO - JMX Server started. Available at URL[service:jmx:jmxmp://0.0.0.0:9520]
+2010-04-18 18:45:12,470 INFO - Terracotta Server instance has started up as ACTIVE node on 0.0.0.0:9510 successfully, and is now ready for work.</pre>
+
+
+<p>一樣, 最好每次都用<code>-f</code>明確指定configuration file. 現在來看看distributed 版本要怎麼run. 一樣是用java, 但是主要多了3個參數<code>-Xbootclasspath/p:</code>, <code>-Dtc.config</code>,  <code>-Dtc.install-root</code>. terracotta的文件是用<code>dso-java.sh</code> 去執行. 例如:</p>
+
+<pre class="brush:bash">$ dso-java.sh -cp . com.hanklin.DsoMain</pre>
+
+
+<p>但是之前的經驗是它在處理command line arguments內含空白會有問題, 所以我都沒有用它, 看了一下<code>dso-java.sh</code>的內容, 其實就是給這3個參數而已, 所以後來我就都手動給這3個參數, 如果嫌麻煩就設定環境變數吧:
+Linux版:</p>
+
+<pre class="brush:bash">$ export my_tc_setting="-Xbootclasspath/p:/opt/tc/lib/dso-boot/dso-boot-hotspot_linux_160_18.jar -Dtc.install-root=/opt/tc  -Dtc.config=localhost:9510"</pre>
+
+
+<p>Windows版:</p>
+
+<pre class="brush:bash">$ set my_tc_setting=-Xbootclasspath/p:C:libterracotta-3.2.1libdso-bootdso-boot-hotspot_win32_160_18.jar -Dtc.install-root=C:libterracotta-3.2.1  -Dtc.config=localhost:9510</pre>
+
+
+<p>好的, 執行看看咩:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoMain
+2010-04-18 18:49:08,635 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-04-18 18:49:09,138 INFO - Configuration loaded from the server at 'localhost:9510'.
+2010-04-18 18:49:09,413 INFO - Log file: '/root/terracotta/client-logs/terracotta-client.log'.
+2010-04-18 18:49:10,933 INFO - Connection successfully established to server at 127.0.0.1:9510
+n1=1220249279, n2=1220249279
+n1==n2 ? true
+n1.equals(n2)? true
+n1=1220249279, n2=1220249279
+n1==n2 ? true
+n1.equals(n2)? true</pre>
+
+
+<p>結果好像令人大吃一驚! 而且再invoke一次也是一樣, 這是為啥咪咧? 以下就要講解一下Terracotta 的實際作法了.</p>
+
+<h2>解說terracotta</h2>
+
+
+<p>要在cluster內share objects一直是個難題. Java一般的作法是RMI, JMS, 或是distributed caches. 由於network與memory相比是慢非常多的, 所以儘量減少network traffic是增進效能和scalability的作法. 不過一般的framework都是要靠Java Serialization, 所以沒有辦法作fine-grained optimize. Terracotta不是把objects serialize後再傳來傳去, 而是有兩種作法: physically和logically.</p>
+
+<ul>
+    <li>physically managed: terracotta 記錄object的fields 的變化, 然後在其它clustered objects寫入. </li>
+
+    <li>logically managed: terracotta 記錄method calls 及參數, 在clustered objects &#8220;replay&#8221;. logically managed 一般來說效能較好, 而且不會和不同版本的Java 的實作細節綁死. 如<code>java.util.HashMap</code>等collections就是logically managed.</li>
+</ul>
+
+
+<p> 另外, 所有terracotta applications(L1)都只和terracotta server(L2)溝通, network traffic不會成指數上昇. (岔題一下, L2 server要達成HA/scalability又是另一個大問題了, 以後再討論.) terracotta application 可以得知fine-grained 改變(到byte-level), 把這資訊送到terracotta server(L2), L2再決定要通知哪些L1. 如果L2的memory放不下shared objects的話會寫到file system. 所以Java heap size可以馬上從1,2G提昇了一檔次到1,200G! 在<a href="http://www.theserverside.com/news/1320914/Scaling-Your-Java-EE-Applications-Part-2">Scaling Your Java EE Applications &#8211; Part 2</a>裡有提到terracotta在10個nodes以下時有很好的scalability. 不過那是有一點久以前的文章了, terracotta針對L2 write files, network transfer有作很多optimizations, 以後我有空也會來測測, 要自己親身體驗一下才算數, 您說是吧!</p>
+
+<p>雖然說Terracotta號稱是a transparent clustering service. 但是transparent是指沒有API侵入的transparent(如: Serializable, RMI, JMS&#8230;), 在programming model上還是要確實瞭解terracotta的行為, 才不會有像上面一樣令人驚訝的事發生. Terracotta的transparency是由class loading 時, 對需要的classes作instrumentation達成的. 所以是用<a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a>去實作的. Terracotta在選擇<a href="http://en.wikipedia.org/wiki/Join_point">join point</a>的地方是用<a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a> 的<a href="http://open.terracottatech.com/confluence/display/docs/AspectWerkz+Pattern+Language">語法</a>. 而且不但要改client code(也就是我們的code)的行為, 連JRE library也要改, 所以這也就是為什麼一定要給bootstrap classpath(<code>-Xbootclasspath/p:</code>)的原因了. 在各種bytecode instructions中, terracotta會改的最多的地方就是read/write to memory這兩類instructions, read就是找accessor(<code>.</code>), write就是assignment(<code>=</code>). 另外還有constructor instructions, threading instructions(lock, unlock)等也是terracotta要處理的. 有寫過AOP程式的人就知道, 如果要weaving的code base很大的話, 有可能會作很久(看是在什麼時候作weaving). 所以<code><instrumented-classes></code>最好是只寫有需要被instrumented就好, 可以的話用package來分是最好的, 也能加快weaving的速度.</p>
+
+<p>在上面的例子有看到<code><root></code>區塊, 告訴terracotta我們要cluster什麼classes. Terracotta roots的定義是: A top-level object in a clustered object graph. root object graph 內不可以有<a href="http://open.terracottatech.com/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>, 否則就會造成這個root也是Non-portable. Terracotta就會給你一缸子的Exceptions. 解決方法是改用portable class, 或是標成terracotta transient. Terracotta transient和Java transient 不太一樣. Java source code 裡的transient keyword不會自動被terracotta 視為transient, 所以要用以下的設定:</p>
+
+<pre class="brush:xml;light:false"><instrumented-classes>
+  <include>
+    <honor-transient>true</honor-transient>
+    <class-expression>com.company.pckg.*</class-expression>
+  </include>
+  ...
+</instrumented-classes></pre>
+
+
+<p>或是直接標示transient:</p>
+
+<pre class="brush:xml;light:false"><dso>
+  <transient-fields>
+    <field-name>com.company.ClassA.fieldA</field-name>
+    <field-name>com.company.pckg.ClassB.fieldB</field-name>
+  </transient-fields>
+  ...
+</dso></pre>
+
+
+<p>roots的初始化行為很特別, 會受到terracotta的特別照顧:</p>
+
+<ul>
+<li>當JVM第一次assign值給root的時候, terracotta在cluster內依據assign的值建立這個root object.</li>
+
+    <li>一但root建立好了之後, 之後所有root的assignment都會被忽略. 如果root是<a href="http://open.terracottatech.com/confluence/display/docs/Concept+and+Architecture+Guide#ConceptandArchitectureGuide-Literals">Terracotta literals</a>的話, 值可以變, 但是其它的class 的root reference則不可改變.</li>
+
+    <li>root 的top-level object不會被terracotta distributed GC所回收.</li>
+</ul>
+
+
+<p>所以這就是在上面的例子裡, 為什麼改不動一個instance field的原因了. 在實務上, 通常都是用<code>Map</code>或是<code>Collection</code>來作root, 不過要注意有一些collections是不支援的(<a href="http://open.terracottatech.com/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>)
+ 另外, 應該shared objects是data而不是application logic, 如果你需要用很多transient field, 可能就是share了不合適的objects.</p>
+
+<h2>Terracotta常見的用途</h2>
+
+
+<ul>
+    <li>distributed cache: 不受memory大小的限制, 而是由L2 的disk 大小限制. 還有因為<code>Map</code>類的key不會被faulted out of the JVM, 所以keys 一定要放得進memory才行.(通常可以咩! 又不是facebook, twitter)</li>
+
+    <li>session replication: <a href="/blog/p/6">上次那一篇</a>有提到這個用法.</li>
+
+    <li>workload partitioning: 這一篇<a href="http://www.infoq.com/articles/master-worker-terracotta">老文章: Implementing Master-Worker with Terracotta</a>, 有提到這個用法.</li>
+</ul>
+
+
+<p>我在這邊作一個超簡單的workload partitioning 的POC, 先來一個Master:
+<code>DsoMasterMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+public class DsoMasterMain {
+    static BlockingQueue<String> queue = new LinkedBlockingQueue<String>(3);
+
+    public static void main(String[] args) {
+        String[] works = { "A", "B", "C", "D", "E", "F", "G", "H", "0", "0"};
+        for (String work : works) {
+            try {
+                System.out.println("put work " + work);
+                queue.put(work);
+                Thread.sleep(999);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</pre>
+
+
+<p>用一個<code>LinkedBlockingQueue</code>作為work queue, 在這邊就是我們的terracotta root. 再來是Worker:
+<code>DsoWorkerMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+public class DsoWorkerMain {
+    public static void main(String[] args) {
+        String work = null;
+        while (!"0".equals(work = DsoMasterMain.queue.poll())) {
+            try {
+                if (work == null) {
+                    Thread.sleep(350);
+                } else {
+                    System.out.println("doing work " + work);
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+}</pre>
+
+
+<p>worker收到&#8221;<code>0</code>&#8220;則代表沒有work了. 然後是terracotta configuration xml, 只要改<code><roots></code>那邊就好:</p>
+
+<pre class="brush:xml;light:false"><root>
+    <field-name>com.hanklin.DsoMasterMain.queue</field-name>
+    <root-name>queue</root-name>
+</root></pre>
+
+
+<p>改好了之後, 先重開terracotta server:</p>
+
+<pre class="brush:bash">$ start-tc-server.sh -f /opt/tc/tc-dso.xml</pre>
+
+
+<p>然後, 我是先開2個worker啦:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoWorkerMain</pre>
+
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoWorkerMain</pre>
+
+
+<p>最後, 開個master來看看:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoMasterMain</pre>
+
+
+<p>我的結果是第一個worker:</p>
+
+<pre class="brush:bash">doing work A
+doing work G</pre>
+
+
+<p>第二個worker:</p>
+
+<pre class="brush:bash">doing work B
+doing work C
+doing work D
+doing work E
+doing work F
+doing work H</pre>
+
+
+<p>的確有簡單咩, 您說是吧?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/04/08/aws-amazon-simple-notification-service">AWS新功能 Amazon Simple Notification Service</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-08T22:11:40+08:00" pubdate data-updated="true">2010-04-08</time>
+        
+         | <a href="/blog/2010/04/08/aws-amazon-simple-notification-service#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>AWS又推出<a href="http://aws.typepad.com/aws/2010/04/introducing-the-amazon-simple-notification-service.html">新功能了</a>! AWS更新功能的速度真的越來越快了, 很讓人期待將來AWS能更強大. 這次推出的新功能是 <a href="http://aws.amazon.com/sns/">Amazon Simple Notification Service (Amazon SNS)</a>, 這個SNS和之前的<a href="http://aws.amazon.com/sqs/">Amazon SQS</a> 是互補的. 簡單來說, SQS 是以<a href="http://en.wikipedia.org/wiki/Message_queue">message queue</a>的形式傳遞message, 例如<a href="http://en.wikipedia.org/wiki/Java_Message_Service">JMS queue</a>. 而SNS是<a href="http://en.wikipedia.org/wiki/Publish/subscribe">pub/sub</a>的形式, 例如<a href="http://en.wikipedia.org/wiki/Java_Message_Service">JMS topic</a>. 但是要不要改用SQS或SNS還是待考慮. 因為大一點的service systems 一定已經有使用了某種程度的<a href="http://en.wikipedia.org/wiki/Message-oriented_middleware">MOM</a>, 要改用SNS,SQS可能要改很大, 這是比較麻煩的地方.</p>
+
+<p>另外, <a href="http://aws.amazon.com/elasticloadbalancing/">ELB</a>也新增了<a href="http://aws.typepad.com/aws/2010/04/new-elastic-load-balancing-feature-sticky-sessions.html">Sticky Sessions</a> 的功能. Sticky Sessions 能最佳化存取local session data, 對提昇performance和scalability都有很大的幫助, 這是個很重要的功能. 之前有<a href="http://blog.rightscale.com/2010/04/01/benchmarking-load-balancers-in-the-cloud/">另一篇文章</a>, 在比較<a href="http://haproxy.1wt.eu/">HAproxy</a>, <a href="http://www.zeus.com/">Zeus</a>, <a href="http://aicache.com/">aiCache</a>, 和 ELB 的效能. 不過他沒有給數據(數據要和他們連絡), 只有說ELB大勝咩(如果ELB大敗的話也太讓人失望了). 但是畢竟ELB在AWS還是很新的功能, 所以, 其實真的很陽春. 在實用性上面還是比不上其它的產品. 像是如果我有一個load balancer 叫<code>NeverDownLoadBalancer</code>, 我register了兩個availability zone: <code>us-east-1a</code> 和<code>us-east-1b</code>. 在<code>us-east-1a</code> 裡面有2台m1.small 的機器, 在<code>us-east-1b</code> 裡面只有1台m1.small, 但是ELB還是會把requests均分給load balancer內的availability zones, 在這裡有2個availability zones, 所以是50:50. 這樣的話<code>us-east-1b</code> 就比較忙碌. 希望ELB能再加強request dispatching 的彈性, 我會想用ELB的咩!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/03/31/creating-ebs-backed-amis-from-running-instances">Creating EBS-backed AMIs From Running Instances</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-31T10:06:10+08:00" pubdate data-updated="true">2010-03-31</time>
+        
+         | <a href="/blog/2010/03/31/creating-ebs-backed-amis-from-running-instances#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>因為有許多免費的public AMIs, 像是<a href="http://alestic.com">alestic</a>上就有很多好用的Ubuntu AMIs. 所以說不用精通AMI的製作方法, 也能快樂的使用EC2. 不過如果要把EC2這個技能再練一級的話, 自製的AMI是必備的. 2009年底時, AWS推出 可以用EBS-backed AMI. <a href="http://aws.typepad.com/aws/2009/12/new-amazon-ec2-feature-boot-from-elastic-block-store.html">New Amazon EC2 Feature: Boot from Elastic Block Store</a>. 但是之前已經有一堆在run 的instances , 完全享受不到EBS-backed 的好處啊! 這次的課題就是要把目前正在running 的instances, 作成EBS-backed AMI, 方便日後使用.</p>
+
+<p>以前S3-backed AMI, 是存在S3上, launch instances時EC2會去S3把image抓下來再run. 現在EBS-backed AMI則是存在EBS snapshots上. 在功能性上有很大的進步. 首先就是開機的速度比較快, 用EBS-backed AMI 開機時, EBS用那個snapshot 建立root partition, 比從S3 copy 過來還要快. 再來就是S3-backed AMI的root partition最大只能到10GB, EBS-backed AMI可以到1TB. 然後因為是用EBS, 所以root partition上的東西不會在instances死掉的時候就消失了, 這大概是最大的好處. 另外, EBS-backed AMI還支援stop/start instance. 也就是可以先把instances 暫停, 等一下再run, 在stop的期間是不算EC2的錢的. 這麼好康, 當然要轉換咩! 好吧, 但是作AMI的方法真多啊! 有用dd的:</p>
+
+<pre class="brush:bash">$ dd if=/dev/sda1 of=/dev/sdf</pre>
+
+
+<p>有用ec2-bundle-vol的:</p>
+
+<pre class="brush:bash">$ ec2-bundle-vol -c $EC2_CERT -k $EC2_PRIVATE_KEY -u $AMAZON_USER_ID -e /vol -d /mnt</pre>
+
+
+<p>有用<code><a href="https://launchpad.net/vmbuilder">vmbuilder</a></code>的, 還有<code>ec2-download-bundle</code> 再 <code>mount</code> 或 <code>ec2-unbundle</code>的.
+還有<code>rsync</code>的 (我後來用這種):</p>
+
+<pre class="brush:bash">$ rsync -av / $IMAGE_DIR</pre>
+
+
+<p>方法那麼多, 實在不知道優缺點在哪裡. 我參考了很多人的作法, 使用我覺得比較適合我的, 現在就介紹我的步驟.</p>
+
+<p>先確定有最新的EC2 API tools:</p>
+
+<pre class="brush:bash">$ ec2-version
+1.3-46266 2009-11-30</pre>
+
+
+<p>確定一下要轉換的instance id, 以及它在哪個availability zone, 可以用API tools 的describe instances:</p>
+
+<pre class="brush:bash">$ ec2-describe-instances</pre>
+
+
+<p>然後用IP去找到instance id和availability zone, 不過這有點不好找, 如果instances多的話可能會看到眼睛抽筋. 所以可以在要轉換的那一台上面看它的metadata:</p>
+
+<pre class="brush:bash">$ curl http://169.254.169.254/latest/meta-data/instance-id &amp;&amp; echo
+$ curl http://169.254.169.254/latest/meta-data/placement/availability-zone/ &amp;&amp; echo</pre>
+
+
+<p>就可以看到我的instance id 是<code>i-e734e58e</code>, availability zone 是<code>us-east-1a</code>. 再來就是create 一個EBS volume, 然後attached到那一個instance上面. 因為volume不能跨availability zone, 所以一定要和instance 相同. 另外, 如果你的instances不是在預設的region: us-east-1上的話, 記得設定<code>EC2_URL=<EC2 service endpoint></code> 環境變數, 或是每次明確的給<code>--region <region></code>, 或<code>-U <EC2 service endpoint></code> 參數, 我先作一個10G的volume:</p>
+
+<pre class="brush:bash">$ ec2-create-volume -s 10 -z us-east-1a
+VOLUME  vol-75dc7c1c    10              us-east-1a      creating        2010-03-29T08:41:58+0000</pre>
+
+
+<p>然後看看create好了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-volumes vol-75dc7c1c
+VOLUME  vol-75dc7c1c    10              us-east-1a      available       2010-03-29T08:41:58+0000</pre>
+
+
+<p>好了就attach到instance上:</p>
+
+<pre class="brush:bash">$ ec2-attach-volume vol-75dc7c1c -i i-e734e58e -d /dev/sdf
+ATTACHMENT      vol-75dc7c1c    i-e734e58e      /dev/sdf        attaching       2010-03-29T09:04:57+0000</pre>
+
+
+<p>看看attach好了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-volumes vol-75dc7c1c
+VOLUME  vol-75dc7c1c    10              us-east-1a      in-use  2010-03-29T08:41:58+0000
+ATTACHMENT      vol-75dc7c1c    i-e734e58e      /dev/sdf        attached        2010-03-29T09:04:57+0000</pre>
+
+
+<p>OK! 現在連到那一台instance:</p>
+
+<pre class="brush:bash">$ EBS_DEVICE=/dev/sdf
+$ IMAGE_DIR=/mnt/image
+$ EBS_MOUNT_POINT=/mnt/ebs
+$ mkdir -p $EBS_MOUNT_POINT
+$ mkfs.ext3 $EBS_DEVICE
+$ mount  $EBS_DEVICE $EBS_MOUNT_POINT
+$ mkdir -p $IMAGE_DIR
+$ rsync --stats -av --exclude /root/.bash_history --exclude /etc/ssh/ssh_host_* --exclude=/mnt/* --exclude=/proc/* --exclude=/tmp/* / $IMAGE_DIR
+$ cd $IMAGE_DIR
+$ tar -cSf - -C ./ . | tar xvf - -C $EBS_MOUNT_POINT
+$ umount $EBS_MOUNT_POINT</pre>
+
+
+<p>看起來是做了不少事. 其實只是:</p>
+
+<ul>
+    <li>把EBS volume mount上來.</li>
+    <li>把現在的系統作一份image. 在這裡是用rsync, 還有之前提到的多種作法.</li>
+    <li>把作好的image copy 到EBS volume上. 在這裡是用很花俏的tar, (根據<a href="#resources">資料來源</a>的說法是image比較小), 也可以用rsync.</li>
+</ul>
+
+
+<p>現在可以回到EC2 API tools了, 把剛剛那個volume detach掉:</p>
+
+<pre class="brush:bash">$ ec2-detach-volume vol-75dc7c1c
+ATTACHMENT      vol-75dc7c1c    i-e734e58e      /dev/sdf        detaching       2010-03-29T09:04:57+0000</pre>
+
+
+<p>然後對那個volume作snapshot:</p>
+
+<pre class="brush:bash">$ ec2-create-snapshot vol-75dc7c1c -d "Ubuntu 8.04 20100329"
+SNAPSHOT        snap-7856b410   vol-75dc7c1c    pending 2010-03-29T09:30:42+0000                107357113328    10      EBS Ubuntu 8.04</pre>
+
+
+<p>看一下snapshot完成了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-snapshots snap-7856b410
+SNAPSHOT        snap-7856b410   vol-75dc7c1c    completed       2010-03-29T09:30:42+0000        100%    107357113328    10  EBS Ubuntu 8.04</pre>
+
+
+<p>最後把這個snapshot註冊為AMI:</p>
+
+<pre class="brush:bash">$ ec2-register -s snap-7856b410 -a i386 -n "ebs-ubuntu-8.04-i386-20100329" -d "EBS Ubuntu 8.04 i386 20100329" -b /dev/sda2=ephemeral0 --root-device-name /dev/sda1
+IMAGE   ami-bd50bfd4</pre>
+
+
+<p>好了! 現在來開個instance來看看有沒有OK!</p>
+
+<pre class="brush:bash">$ ec2-run-instances ami-bd50bfd4 -k mykeypair -g default -z us-east-1a -t m1.small --instance-initiated-shutdown-behavior stop
+RESERVATION     r-d0dfe8b8      107357113328    default
+INSTANCE        i-33bc3b58      ami-bd50bfd4    ec2-174-129-157-197.compute-1.amazonaws.com     domU-12-31-38-00-AE-05.compute-1.internal       running mykeypair 0               m1.small        2010-03-29T10:03:27+0000    us-east-1a  aki-5f15f636
+ari-0915f660            monitoring-disabled     174.129.157.197 10.252.177.239                  ebs
+BLOCKDEVICE     /dev/sda1       vol-cba606a2    2010-03-29T10:03:37.000Z</pre>
+
+
+<p>等到instance status 是running 就可以連進去看看了:</p>
+
+<pre class="brush:bash">$ ec2-describe-instances i-33bc3b58</pre>
+
+
+<p>最後, 本來的volume可以砍掉了:</p>
+
+<pre class="brush:bash">$ ec2-delete-volume vol-75dc7c1c
+VOLUME  vol-75dc7c1c</pre>
+
+
+<p>因為做AMI的方法很多(參考<a href="#resources">Resources</a>), 也許你用某些方法會做出不能work的AMI, 這時候就得花時間來排除問題, 我也是試了幾次才成功. 有一些地方可以注意一下:</p>
+
+<ul>
+    <li>service最好都先關掉</li>
+<li><code>/etc/fstab</code> 和network interfaces 最好不要亂改, 可能會連不進去</li>
+    <li>如果有一些symlink, 依據你作image的方式的不同, 可能會造成沒有檔案. 這時候就把symlink消掉, 把檔案copy一份咩.</li>
+    <li>在<code>ec2-register</code>的時候, <code>--kernel</code>, <code>--ramdisk</code> 不要亂給. 在<a href="#resources">Resources</a>裡有一些例子有給這些參數, 害我出現Segmentation fault. kernel module 和ramdisk module現在都是只有Amazon才可以作的. 而且有關kernel module 的相容性、性能的說明文件幾乎沒有, 有的資訊只有依據它的名字得知的版本而已. 所以這個進階功能還是以後有空再來試咩.</li>
+</ul>
+
+
+<h3>Resources</h3>
+
+
+<ul> <a name="resources"></a>
+    <li><a href="http://alestic.com/2007/11/ec2ubuntu-build-ami">Building EC2 Images from Scratch with ec2ubuntu-build-ami</a></li>
+    <li><a href="http://alestic.com/2009/06/ec2-ami-bundle">Creating a New Image for EC2 by Rebundling a Running Instance</a></li>
+    <li><a href="http://alestic.com/2010/01/ec2-ebs-boot-ubuntu">Building EBS Boot AMIs Using Canonical&#8217;s Downloadable EC2 Images</a></li>
+    <li><a href="http://alestic.com/2010/01/vmbuilder-ebs-boot-ami">Building EBS Boot and S3 Based AMIs for EC2 with Ubuntu vmbuilder</a></li>
+    <li><a href="http://www.capsunlock.net/2009/12/create-ebs-boot-ami.html">Create EBS Boot AMI</a></li>
+    <li><a href="http://www.full360.com/blogs/Migrating-Linux-S3-Based-AMI-EBS-Based-AMI">Migrating a Linux S3 Based AMI to an EBS Based AMI</a></li>
+    <li><a href="http://aws-musings.com/how-to-create-an-ebs-image-from-an-existing-ec2-instance/">How to create an ebs image from an existing ec2 instance</a></li>
+    <li><a href="http://coderslike.us/2009/12/07/amazon-ec2-boot-from-ebs-and-ami-conversion/">amazon ec2 &ndash; boot from ebs and ami conversion</a></li>
+    <li><a href="http://www.yottaa.com/blog/2010/02/converting-instance-store-instances-to-ebs-instances-aws-ec2/">Converting instance-store instances to EBS instances (AWS EC2)</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

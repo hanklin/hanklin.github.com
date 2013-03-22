@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>網站小圖檔的規範(1) - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="令人又愛又恨的小圖檔 小圖檔在網站上，扮演一個很重要的角色。即使是像我這個懶得放圖的blog，還是得有favicon小圖示，按鈕、上一頁/下一頁的小圖示等。一般的商業網站更是需要大量的圖。這些圖的請求量通常很驚人，所以怎麼優化就變得很重要了。
+根據Yahoo!的研究(http://www. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2012/03/15/image-optimize-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">網站小圖檔的規範(1)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T10:13:43+08:00" pubdate data-updated="true">2012-03-15</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>令人又愛又恨的小圖檔</h2>
+
+
+<p>小圖檔在網站上，扮演一個很重要的角色。即使是像我這個懶得放圖的blog，還是得有favicon小圖示，按鈕、上一頁/下一頁的小圖示等。一般的商業網站更是需要大量的圖。這些圖的請求量通常很驚人，所以怎麼優化就變得很重要了。
+根據Yahoo!的研究(http://www.yuiblog.com/blog/2008/10/29/imageopt-1/)，圖的請求量(總bytes數)，平均約佔總傳輸量的46.6%。當然每個網站都不相同，但是這個平均數也太驚人了。如果可以減少圖的負擔，網頁可以讀取得更快，伺服器也可以服務更多的使用者，頻寬費也可以降低。所以要做一個高品質的網站，圖的規範最好從一開始就建立好。</p>
+
+<h2>縮小圖檔的大小</h2>
+
+
+<p>優化圖檔有許多作法，其中一個最簡單的作法就是：縮小圖檔的大小(bytes數)。
+一般設計師輸出的圖，常常存了許多不必要的資訊(metadata)，在網站顯示這些圖檔是完全不需要這些資訊的，把它們去除通常可以減少檔案大小。唯一要注意的就是有版權的圖是不能這樣作的，除非你有這張圖的版權。另外可以做的就是優化壓縮的效率，而不至於損失圖像的資訊(lossless)。可以縮小圖檔大小的工具有很多，我們可以只看一些免費的工具。</p>
+
+<ul>
+  <li><a href="http://www.imagemagick.org/">imagemagick</a>: 萬用的圖像工具</li>
+  <li><a href="http://optipng.sourceforge.net/">OptiPNG</a>: 專門處理png的工具</li>
+  <li><a href="http://pmt.sourceforge.net/pngcrush/">PNGCrush</a>: 專門處理png的工具</li>
+  <li><a href="http://psydk.org/PngOptimizer.php">PngOptimizer</a>: 專門處理png的工具</li>
+  <li><a href="http://advsys.net/ken/utils.htm">PngOut</a>: 專門處理png的工具</li>
+  <li><a href="http://advancemame.sourceforge.net/comp-readme.html">AdvanceCOMP</a>: 專門處理png的工具</li>
+  <li><a href="http://www.walbeehm.com/download/">DeflOpt</a>: 專門處理png的工具</li>
+  <li><a href="http://pngquant.org/">PngQuant</a>: 把png24轉成png8的工具</li>
+  <li><a href="http://pngnq.sourceforge.net/">Pngnq</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://pornel.net/pngnq">Improved Pngnq</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://entropymine.com/imageworsener/">ImageWorsener</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://jpegclub.org/">JPEGTran</a>: 專門處理jpeg的工具</li>
+  <li><a href="http://www.lcdf.org/gifsicle/">Gifsicle</a>: 專門處理動畫gif的工具 </li>
+</ul>
+
+
+<p>可以用的工具不少，每一種工具對不同的圖，處理完的大小還可能有不小的差異。但是要對每個圖試用每一個工具，拿最小的來使用，會太花時間。所以只要選一個自己覺得好用的來用就可以了。
+據我的經驗，jpeg最多可以減少20%的大小，png則可以減少10%的大小。</p>
+
+<h2>處理圖檔的原則</h2>
+
+
+<ul>
+  <li>圖的尺寸較小、但要有清析的邊緣，例如小圖示，使用png。缺點是使用png8時，顏色受到限制，用png24在大圖的檔案大小又會太大。</li>
+  <li>圖的尺寸較大、顏色要鮮明，例如照片，使用jpeg。缺點是高對比的邊緣和大色塊會模糊</li>
+  <li>可以的話，把所有gif轉成png8(除了動畫gif)，或是一開始就規定不要使用gif。</li>
+  <li>動畫gif的數目也要儘量減少，有的話，使用工具去縮小</li>
+  <li>用工具對所有png圖檔執行縮小的步驟</li>
+  <li>用工具對所有jpeg圖檔執行縮小的步驟</li>
+</ul>
+
+
+
+
+<h2>壓縮</h2>
+
+
+<p>許多網站伺服器，如Apache, 或是應用程式框架，都有動態壓縮輸出內容的功能，可以很簡單的設定那些輸出是要壓縮的。由於常用的圖檔格式: jpeg、png、gif都是已經壓縮過的，再經過壓縮程序常常多花時間、花記憶體、花CPU，但常常壓出來的東西反而還更大，所以這些圖都記得絕不要設定壓縮。</p>
+
+<h2>favicon</h2>
+
+
+<p>一定要記得在你的網站放favicon，而且favicon最好不要太大，最好小於1KB。有的favicon檔案包含了各種大小的圖檔，所以就會太大。可以的話，使用16色palette png就好了。動畫gif的favicon是完全不必要的，要避免(但是動態更換favicon倒是在一些場合很有用)。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T10:13:43+08:00" pubdate data-updated="true">2012-03-15</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/web/'>web</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2012/03/15/image-optimize-1" data-via="hanklin" data-counturl="http://hanklin.com/blog/2012/03/15/image-optimize-1" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/01/11/nuance" title="Previous Post: nuance">&laquo; nuance</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/03/21/paper-hadoop" title="Next Post: 一切從一篇paper開始 - Hadoop">一切從一篇paper開始 - Hadoop &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

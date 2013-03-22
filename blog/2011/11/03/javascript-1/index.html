@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>JavaScript的處理方式 - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="每個原始檔要先最小化，然後依照引用的順序合併。檔名可以在佈署時動態產生，常用的選擇有亂數、佈署版本的號碼或名稱、最後修改的檔案時間戳記、或可閱讀的曰期時間字串。 每個頁面所引用的JavaScript檔，組合會有很多種。所以對整個網站考量時，就有幾種合併的作法，以下是比較常用的。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2011/11/03/javascript-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">JavaScript的處理方式</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-03T21:04:36+08:00" pubdate data-updated="true">2011-11-03</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>每個原始檔要先最小化，然後依照引用的順序合併。檔名可以在佈署時動態產生，常用的選擇有亂數、佈署版本的號碼或名稱、最後修改的檔案時間戳記、或可閱讀的曰期時間字串。</p>
+
+<p>每個頁面所引用的JavaScript檔，組合會有很多種。所以對整個網站考量時，就有幾種合併的作法，以下是比較常用的。</p>
+
+<ul>
+  <li><h4>整個網站用到的所有JavaScript，都合併成一個檔案</h4>
+    適合所有頁面引用的JavaScript，組合並不多時。並且引用的順序都一樣，也就是順序不影響的時候。這種作法當然網站速度最快，但是常常每個頁面引用的JavaScript，都有不同。而且有些JavaScript檔案，只在一、二個網頁被引用到，這個比例高的話，就變成每一頁都還要引用原本只需要在那一個網頁要讀取的JavaScript。有一些這類的JavaScript函式庫還滿大的，例如所見即所得編輯器(WYSIWYG)，所以實務上不見得是最適合的作法。
+  </li>
+  <li><h4>將所有頁面，或是超過一半的頁面，都有引用到的JavaScript，合併成一個檔案</h4>
+    這個JavaScript會被全部的網頁所引用，然後每個網頁再各自去合併自已的專屬JavaScript檔案。也就是變成一個是整個網站都用到的合併檔，另一個是這個網頁用到的合併檔。這樣的作法，會減少單一頁面的傳輸量，不至於包含了過多沒有用到的JavaScript檔案，但是至少會有兩次的JavaScript請求。適合每個網頁所引用的JavaScript很分歧，而且檔案又不算小的時候。這也是一般常見的情況。
+  </li>
+  <li><h4>每一個網頁各自合併自己引用的檔案</h4>
+    這樣每個網頁只會有一個JavaScript請求，而且不會有多餘的內容，也容許相同組合的JavaScript以不同順序引用。缺點就是你可能需要把JavaScript合併成多種組合，最多到和網頁數一樣多。如果在各網頁間，引用相同的JavaScrip檔案數量很少時，就適合用這個作法。其實這個作法不用管理&#8221;共同的&#8221;及&#8221;各別的&#8221;JavaScript檔案，是我比較喜歡的作法。
+  </li>
+</ul>
+
+
+<p>合併完成後，再來就是要最小化（minify）。JavaScript很適合最小化，可以用語法解析器（parser）檢查，並把不需要的空白去掉。例如使用rhino、jslint。</p>
+
+<p>在合併完後，尤其是最小化之後，JavaScript原始檔會變得完全不能由人去編輯，所以合併及最小化的工作必須在佈署時期，由工具幫我們作。最好是命令列的工具，可以整合進專案的自動管理流程。
+如果原本的一個JavaScript檔案，被合併到多個合併後的檔案。那麼，即使你只改了原始檔的一個字，所有合併後的檔案，都要重新產生，使用者也應該重新下載。 這裡可能有二個問題：</p>
+
+<ul>
+  <li>我們有設定快取標頭，如何通知使用者(瀏覽器)下載新的合併檔？
+  </li>
+  <li>只改一個檔案的一個字，就要使用者重新下載合併的檔案，會不會影響速度？
+  </li>
+</ul>
+
+
+<p>第一個問題，只要改變下載合併檔的URL，下次使用者到這個網頁，就會重新下載這個合併檔。麻煩的地方在於，我們要把所有修改過的合併檔，傳到伺服器上。也就是說，一定要再走一次佈署流程，把所有合併檔都產生好，再佈署上去，即使有工具幫我們作，負擔也是不小，過程也很多地方可能會出錯。所以使用「lazy initialization」，在伺服器端作「合併」、「最小化」的工作，也是一個不錯的方法。
+第二個問題，我認為影響不大。因為我們的目標是，即使客戶端完全沒有快取，也要能很快的顯示網頁。以每一個網頁只使用一到兩個<code><script></code>元素來看，負擔很小。這也可以說是，因為我們把請求數目大量的減少，所以不用太擔心快取的問題。</p>
+
+<p>進行好合併、最小化之後，其它的工作就比較簡單了。也就是在網站伺服器上，對JavaScript檔案進行壓縮及設定快取標頭，把JavaScript的下載最佳化。</p>
+
+<p>JavaScript檔案和區塊，都應該放在HTML文件的最後面。例如我的習慣，是像這樣子：</p>
+
+<pre><code>
+<html>
+  <head></head>
+  <body>
+ 
+    ......
+  
+    <script src="combined.js"></script>
+    <script>
+      $(function() {
+        init(); 
+      });
+    </script>
+  </body>
+</html>
+</code></pre>
+
+
+<p>我們常常需要在我們的網站上，引用第三方的JavaScript函式庫，如社羣網站API、測量工具、或廣告商等。以前通常會對放置JavaScript的區塊作限制，甚至要求要用document.write()的語法，對我們網站的效能造成嚴重的限制。我真的不希望使用者看我的網頁，要先等廣告render好，才出現真正的內容。尤其是JavaScript的請求會擋住(block)網頁的render，如果第三方的網站回應較慢，還會連累我們的網站，讓使用者等半天，只看到白畫面。
+還好，現在比較大的第三方JavaScript函式庫，都支援了非同步的JavaScript使用法。所以我們也要把這些JavaScript，在HTML文件和資源都準備好(onload)之後，再去呼叫初始化。初始化的步驟通常是用JavaScript插入一段引用第三方JavaScript函式庫的<script>元素，然後傳入必要的參數。</p>
+
+<p>現在非同步的JavaScript函式庫的支援很常見，所以一定要用這個方法去引用。如果你要用的函式庫，沒有支援非同步的使用法，那我建議考慮別家，有支援非同步的函式庫。</p>
+
+<p>另外應該避免的作法，就是使用「inline」的JavaScript，或是說<script>區塊。所謂的「inline」，就是直接寫在HTML裡的<script>元素，例如：</p>
+
+<pre><code>
+<div>
+  <script>
+    alert("!"); 
+  </script>
+  <img src="what.png" />
+</div>
+</code></pre>
+
+
+<p>inline又分成兩種，一種是寫在靜態HTML裡，如果量不多倒是還好。另一種是隨著伺服器端腳本（server side script）或範本（template）工具動態產生的HTML寫出去的。</p>
+
+<p>這兩種作法都會造成許多管理、開發、和優化的麻煩，所以要從一開始就要儘量避免。</p>
+
+<p>如果要最小化這些源始碼，必須先把inline的一段段<script>的內容拿出來，進行最小化處理之後，再塞回原本的地方。這個過程很囉嗦，也很容易出錯。</p>
+
+<p>然而，還有一種寫法比inline更糟，那就是用伺服器端腳本或範本工具，動態產生JavaScript區塊，例如：</p>
+
+<pre><code>
+<script>
+  alert("Hello, <%=userName%>"); 
+</script>
+</code></pre>
+
+
+<p>這種程式碼是很難進行自動化優化的，而且維護成本非常高，無論如何你都應該避免這種寫法。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-03T21:04:36+08:00" pubdate data-updated="true">2011-11-03</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/web/'>web</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2011/11/03/javascript-1" data-via="hanklin" data-counturl="http://hanklin.com/blog/2011/11/03/javascript-1" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/10/27/blue-pill-or-red-pill" title="Previous Post: blue pill or red pill?">&laquo; blue pill or red pill?</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/01/11/nuance" title="Next Post: nuance">nuance &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

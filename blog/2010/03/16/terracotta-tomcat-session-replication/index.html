@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>用terracotta達成tomcat session replication - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="不設定session replication 的tomcat cluster Tomcat是最常用的java servlet container了, 經過調教也有很多網站在使用. 如果要達成high scalability的話, clustering 是最常用的手段. 這一篇老文章: Under &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/03/16/terracotta-tomcat-session-replication">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">用terracotta達成tomcat Session Replication</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-16T02:02:58+08:00" pubdate data-updated="true">2010-03-16</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>不設定session replication 的tomcat cluster</h2>
+
+
+<p><a href="http://tomcat.apache.org/">Tomcat</a>是最常用的java servlet container了, 經過調教也有很多網站在使用. 如果要達成high scalability的話, clustering 是最常用的手段. 這一篇老文章: <a href="http://www.theserverside.com/news/1364410/Under-the-Hood-of-J2EE-Clustering">Under the Hood of J2EE Clustering</a>, 把一些application server 怎麼做clustering的方法寫得很清楚. 在這邊我要介紹不用tomcat的cluster 機制去做到session replication. 我先複製了兩份tomcat 6.0 的目錄, 分別放在 /opt/server1 和/opt/server2 , 然後分別listen 8080, 8081 port. 然後jvmRoute 分別設成jvm1, jvm2以資區別. (以上如果不知道要怎麼做的話&#8230;ㄟㄟ&#8230;請看<a href="http://tomcat.apache.org/">tomcat document</a>) 用port的好處就是可以不用switch, 就把browser 裡的cookie 帶到servers, 因為cookie是只看domain和path的. 而且我還可以用port 控制我要request到哪一台, 可以說是development 測試最方便的作法了.</p>
+
+<p>tomcats 好了之後, 在eclipse 裡開個新web project, 我把他叫tc (名字我都喜歡短的). 就做一個簡單的計數器, 每request 一次就把request過的次數加1, 然後印到畫面上:</p>
+
+<p><code>CountServlet.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+public class CountServlet extends HttpServlet {
+    private static final long serialVersionUID = -4951220189098528823L;
+
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession();
+        AtomicInteger count = (AtomicInteger) session.getAttribute("count");
+        if (count == null) {
+            count = new AtomicInteger();
+            session.setAttribute("count", count);
+        }
+        resp.getWriter().write("<h1>" + count.addAndGet(1) + "</h1>");
+    }
+}</pre>
+
+
+<p>好吧, 這在使用者第一次request時, 如果同時發很多requests可能會錯, 不過那不是這裡的重點, 所以不管他. 接下來是<code>web.xml</code>, 也很簡單的.</p>
+
+<p><code>web.xml</code></p>
+
+<pre class="brush:xml;light:false"><?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="tc" version="2.5">
+  <display-name>tc</display-name>
+  <servlet>
+    <servlet-name>count</servlet-name>
+    <servlet-class>com.hanklin.CountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>count</servlet-name>
+    <url-pattern>/count</url-pattern>
+  </servlet-mapping>
+</web-app>
+</pre>
+
+
+<p>然後可以輸出成<code>tc.war</code>檔了, 把<code>tc.war</code> 丟到兩個tomcat 的<code>webapps</code>目錄下面, 然後開server.</p>
+
+<pre class="brush:bash">
+$ sudo /opt/server1/startup.sh
+$ sudo /opt/server2/startup.sh</pre>
+
+
+<p>依次開兩個chrome來看看:</p>
+
+<p><img class="alignnone size-full wp-image-9" title="no session replication tomcat cluster" src="http://hanklin.com/wp-content/uploads/2010/03/tc-session1.png" alt="http://localhost:8080/tc/count http://localhost:8081/tc/count" width="466" height="513" /></p>
+
+<p>好的, 你沒見過我, 我也不認識你. 現在該<a href="http://en.wikipedia.org/wiki/Terracotta_Army">terracotta 大軍</a> 登場了.</p>
+
+<h2>terracotta 簡介</h2>
+
+
+<p><a href="http://www.terracotta.org/">Terracotta</a>, 說是簡介可是實在不知道如何&#8221;簡&#8221;起啊! 以前terracotta網站自己介紹是&#8221;Network-attached memory&#8221;, 就是要你把他想成<a href="http://en.wikipedia.org/wiki/Network-attached_storage">NAS</a>(Network-attached storage). 還用很多flash動畫說明, 看起來就像很多java processes 可以合在一起, 形成一個超大的java process. 在這個超大java process 裡面, 被shared的objects 可以被不同的小java processes 存取, 而且會符合Java language的規範, 像是<code>==</code>, <code>hashCode()</code> 會有正確的行為. 而且也會符合<a href="http://en.wikipedia.org/wiki/Java_Memory_Model">Java Memory Model</a>的行為, 如<code>synchronized</code>. 在<a href="http://www.amazon.com/Definitive-Guide-Terracotta-Hibernate-Scalability/dp/1590599861">The Definitive Guide to Terracotta</a> 一書裡面, 是這樣定義Terracotta: &#8220;a transparent clustering service for Java applications&#8221;. (內心OS: 這本書快出<a href="http://www.amazon.com/Definitive-Guide-Terracotta-Second/dp/1430227362">第二版</a>了, 要記得去買) 所以terracotta的架構就是要有一台terracotta server(技術文件叫L2), 管理這些shared objects, 然後有許多的terracotta clients(技術文件叫L1), 也就是你的java applications, 連到terracotta server. 當你的一個java application 寫入一個shared objects時, 另一個java application 可以讀到更新後的值. 感覺起來和一些caching solution很像, 可是如果你有注意到我前面說的, 像是 <code>synchronized</code> 也可以正常運作的話, 就可以知道這並不只是單純的caching objects, 還包含協調行為, 而且Java 的code 是可以不用改的. 不過有一些classes是不能shared, terracotta 把它叫作<a href="http://www.terracotta.org/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>, 要注意啊.
+我最早開始在EC2上弄tomcat clustering 的時候, 發現到在EC2的環境是不支援multicast的. 這樣的話tomcat內建的clustering 機制就無法運作, 只能在load balancer上動手腳, 讓同一個client 始終都導到同一台tomcat上. 這當然不是非常好的辦法, 還好在那時候有找到一篇文章, 說的就是怎麼用terracotta在EC2上架tomcat cluster. 在那之前我就有聽過terracotta, 但是沒有用過, 只覺得terracotta似乎是很有趣. 正好這是個不可多得的好機會來試試terracotta, 雖然terracotta的網站說的比扯鈴還扯, ㄟㄟ&#8230;是比傑克還神奇, 什麼true linear scalability, transparent clustering, 但是沒有實際使用過怎麼知道呢? 好的, 以下我們就一步一步, 用terracotta建立tomcat cluster吧!</p>
+
+<h2>建立terracotta大軍</h2>
+
+
+<p>萬事起頭難, 先下載Terracotta咩! Terracotta滿討厭的一點就是下載點不公開, 一定要網頁點點點, 它才給你一個很快就失效的URL (其實是放在S3上面, 這個技巧我以後來介紹一下). 而且terracotta的網站改了好多次, 產品名字也換來換去, 連結也換來換去, 搞得我好亂啊! 目前這個<a href="http://www.terracotta.org/dl/oss-download-catalog">下載頁面</a>, 是可以用的啦. 安裝terracotta, 有installer和tar兩種, 我都是用tar 解壓的, 因為只要解壓就裝好了咩. 所以我選&#8221;terracotta-3.2.1.tar.gz&#8221; 那個下載連結. 下載好以後, 就是安裝步驟:</p>
+
+<pre class="brush:bash">$ sudo tar zxf terracotta-3.2.1.tar.gz</pre>
+
+
+<p>我是把他丟在/opt 下面, 然後做一個link 叫tc, 所以我的terracotta的安裝目錄就是/opt/tc.</p>
+
+<pre class="brush:bash">$ sudo ln -s /opt/terracotta-3.2.1 tc</pre>
+
+
+<p>然後要做一個叫作boot jar 的東西:</p>
+
+<pre class="brush:bash">$ cd tc/bin
+$ sudo ./make-boot-jar.sh
+
+2010-03-12 12:13:54,961 INFO - Configuration loaded from the Java resource at '/com/tc/config/schema/setup/default-config.xml', relative to class com.tc.config.schema.setup.StandardXMLFileConfigurationCreator.
+2010-03-12 12:14:03,960 INFO - Creating boot JAR at '/opt/terracotta-3.2.1/bin/../lib/dso-boot/dso-boot-hotspot_linux_150_16.jar'...
+2010-03-12 12:14:04,360 INFO - Successfully created boot JAR file at '/opt/terracotta-3.2.1/lib/dso-boot/dso-boot-hotspot_linux_160_18.jar'.
+</pre>
+
+
+<p>要記得這個boot jar 的位置, 等一下會用到. 現在來設定tomcat servers. terracotta在 3.0版本以後有別的方法可以設定, 我還是用以前的作法, 直接在java process 給system properties. 先來編輯<code>$TOMCAT/bin/startup.sh</code>, 修改<code>JAVA_OPTS</code>:</p>
+
+<pre class="brush:text">export JAVA_OPTS="-Xbootclasspath/p:/opt/tc/lib/dso-boot/dso-boot-hotspot_linux_160_18.jar -Dtc.install-root=/opt/tc -Dtc.config=localhost:9510 $JAVA_OPTS"</pre>
+
+
+<p><code>-Xbootclasspath/p:</code> 後面跟的就是boot jar的位置. <code>tc.install-root</code> 就是terracotta的安裝目錄, <code>tc.config</code>是terracotta的設定檔位置, 可以用file path, 但是建議要用<code>ip:port</code>的寫法, 讓每個terracotta client 去找terracotta server 要設定檔.</p>
+
+<p>然後是一些煩人的東西. 如果你有用<a href="http://java.sun.com/javase/technologies/hotspot/gc/g1_intro.jsp">G1GC</a>, (我就是其中之一&#8230;(汗)), 很抱歉, terracotta還不支援G1GC! 移掉這個!
+<code>-XX:+UnlockExperimentalVMOptions -XX:+UseG1GC</code></p>
+
+<p>如果你是用 java 1.6.0_18, (我還是其中之一&#8230;(大汗)), 要再加上:</p>
+
+<p><code>-XX:+MustCallLoadClassInternal</code></p>
+
+<p>這是什麼東西我也不知道, 反正terracotta和java 1.6.0_18 氾沖就對了. 然後就是terracotta的重頭戲了, terracotta的設定檔, 我把他取名<code>tc-config.xml</code>, 放在<code>/opt/tc</code> 下面:</p>
+
+<p><code>tc-config.xml</code></p>
+
+<pre class="brush:xml;light:false"><?xml version="1.0" encoding="UTF-8"?>
+<tc:tc-config xsi:schemaLocation="http://www.terracotta.org/schema/terracotta-5.xsd"
+  xmlns:tc="http://www.terracotta.org/config"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <servers>
+    <server host="localhost">
+      <data>%(user.home)/terracotta/server-data</data>
+      <logs>%(user.home)/terracotta/server-logs</logs>
+    </server>
+  </servers>
+
+  <clients>
+    <logs>%(user.home)/terracotta/client-logs</logs>
+    <modules>
+      <module name="tim-tomcat-6.0" />
+    </modules>
+  </clients>
+
+  <application>
+    <dso>
+      <web-applications>
+        <web-application>tc</web-application>
+      </web-applications>
+    </dso>
+  </application>
+</tc:tc-config></pre>
+
+
+<p>主要是分成3塊:&nbsp;<code><servers>, <clients>, <application></code>. 重點是加 <code><module name="tim-tomcat-6.0" /></code> 和  <code><web-application>tc</web-application></code>. 因為我把web application取名tc, 所以要填入tc. 然後因為我用tomcat 6.0, 所以要寫說要用tomat 6.0 的TIM(Terracotta Integration Module). 寫好了之後就下載tim.</p>
+
+<pre class="brush:bash">$ cd /opt/tc
+$ sudo bin/tim-get.sh install-for tc-config.xml
+
+Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+
+Parsing module: tim-tomcat-6.0:latest
+Installing tim-tomcat-6.0 2.1.1 and dependencies...
+INSTALLED: tim-tomcat-6.0 2.1.1 - Ok
+INSTALLED: tim-tomcat-5.5 2.1.1 - Ok
+INSTALLED: tim-tomcat-common 2.1.1 - Ok
+SKIPPED: tim-session-common 2.1.1 - Already installed
+SKIPPED: tim-distributed-cache 1.3.1 - Already installed
+SKIPPED: tim-concurrent-collections 1.3.1 - Already installed
+
+Done.
+</pre>
+
+
+<p>都OK了, 就可以開terracotta server了!</p>
+
+<pre class="brush:bash">$ sudo bin/start-tc-server.sh -f /opt/tc/tc-config.xml
+2010-03-12 12:53:05,308 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-03-12 12:53:06,066 INFO - Configuration loaded from the file at '/opt/tc/tc-config.xml'.
+2010-03-12 12:53:06,416 INFO - Log file: '/root/terracotta/server-logs/terracotta-server.log'.
+2010-03-12 12:53:09,073 INFO - Available Max Runtime Memory: 496MB
+2010-03-12 12:53:16,431 INFO - JMX Server started. Available at URL[service:jmx:jmxmp://0.0.0.0:9520]
+2010-03-12 12:53:17,517 INFO - Terracotta Server instance has started up as ACTIVE node on 0:0:0:0:0:0:0:0:9510 successfully, and is now ready for work.
+</pre>
+
+
+<p>我是每次都用<code>-f</code>去指定設定檔的位置, 以免搞錯. 然後看一下log裡面的configuration file是不是讀到對的. 然後看到ready for work就是開好了. 現在可以開tomcat servers了.</p>
+
+<pre class="brush:bash">$ sudo /opt/server1/startup.sh
+$ sudo /opt/server2/startup.sh
+
+2010-03-12 12:54:20,998 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-03-12 12:54:22,306 INFO - Configuration loaded from the server at 'localhost:9510'.
+2010-03-12 12:54:23,013 INFO - Log file: '/root/terracotta/client-logs/terracotta-client.log'.
+2010-03-12 12:54:30,986 INFO - Connection successfully established to server at 127.0.0.1:9510
+</pre>
+
+
+<p>可以發現tomcat的開機訊息多了terracotta的東西! 看一下configuration 是不是去terracotta server 讀設定檔. 現在終於到了重要的一刻了, 來試試咩!</p>
+
+<p>一樣, 依次開兩個chrome來看看!</p>
+
+<p><img title="terracotta tomcat session replication" src="http://hanklin.com/wp-content/uploads/2010/03/tc-session2.png" alt="http://localhost:8080/tc/count http://localhost:8081/tc/count" width="467" height="512" /></p>
+
+<p>感動! 現在這兩台tomcat 已經合為一體了! (我發誓! 我絕對不是refresh 按兩下去抓圖的!)</p>
+
+<h2>開始的結束</h2>
+
+
+<p>用Java 的好處是有很多免費的東西可以用. 有時候太多也是很麻煩, 不知道要用哪一個. 最有名的例子應該就是Java servlet用的MVC framework吧! 我記得至少有40種可以用&#8230; 搞到最後大概還是回去用struts, 一方面也是大家用最久最習慣, 一方面也是資源比較多. 後來有一陣Ajax的旋風, 那些MVC framework又馬上就過時了, 因為programming model都不太合. 所以累的地方就是要一直學新的東西咩! 這樣也好啦, 多充實一下自己才不會一下就被人幹掉了. 剛剛我很快的用terracotta, 弄完一個最簡單的tomcat cluster, 但是scalability, HA, performance這些議題是沒完沒了的. 以後我再慢慢把一些經驗寫出來.</p>
+
+<h2>Resources</h2>
+
+
+<ul>
+    <li><a href="http://www.terracotta.org/confluence/display/docs/Home">terracotta文件</a></li>
+    <li><a href="http://www.terracotta.org/confluence/display/docs/Configuration+Guide+and+Reference">terracotta configuration reference</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-16T02:02:58+08:00" pubdate data-updated="true">2010-03-16</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/03/16/terracotta-tomcat-session-replication" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/03/16/terracotta-tomcat-session-replication" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/02/25/start-ec2" title="Previous Post: 用EC2作一朵雲">&laquo; 用EC2作一朵雲</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/03/25/aws-sdk-for-java" title="Next Post: AWS SDK for Java">AWS SDK for Java &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

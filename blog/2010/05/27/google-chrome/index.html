@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>閒聊Google Chrome - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="勞苦功高的Browsers Web browser 可不是一個單純的application. 一但接上網路, 就有無限的可能. Server端更新功能, Client端就能馬上使用. 而且web application可以是super scalable的, 現在使用者最多的application &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/05/27/google-chrome">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">閒聊Google Chrome</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T03:15:29+08:00" pubdate data-updated="true">2010-05-27</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>勞苦功高的Browsers</h2>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Web_browser">Web browser</a> 可不是一個單純的application. 一但接上網路, 就有無限的可能. Server端更新功能, Client端就能馬上使用. 而且web application可以是super scalable的, 現在使用者最多的application, 像是facebook, twitter 都是web applications. 如果想要作一個Browser, 可不是簡單起個案子, 請10個工程師弄個2年就可以作出來了. 現在的Browser可是身負重任, 負責現今使用者大部份的網路活動. 一般的使用流程, 就是先去使用者打的網址, 把HTML文件抓下來, HTML文件裡可能有各種各樣的resources, 如: JavaScript, CSS, 圖檔, Flash, Java Applet 等等. Browser要知道應該對什麼東西作什麼事, 該下載的再去下載, 該run的去run一run, 然後把結果render在畫面上. 而且還要有extensions/plugins, 滿足開發者和使用者的要求. 還有還有, Browser還要試著幫忙修正錯誤的HTML, CSS, JavaScript, 以避免粗心的開發者寫個<div><p></div></p> 就整組壞去. 最後, 以上一切的動作都要<a href="http://googleresearch.blogspot.com/2009/06/speed-matters.html">快! 快! 快! </a> 現代人是很沒耐心的, 一秒鐘是幾十萬上下的啊!
+好吧, 光這個規格開下來就沒人敢作了, 所以主流還是只有Microsoft的IE. 沒辦法, 曾經高達95%的market share, 還是得針對它開發web applications. &nbsp;(雖然IE有很多問題一直被罵) &nbsp;Firefox出來後, 真是的有如救星啊! 好用的bookmark, 可以多個tabs, 符合W3C標準, 許多好用的plugins, 還有最重要的, 跑起來至少比IE6快10倍以上咩! 其中Firebug 這個plugin真是開發者的好朋友啊! 到現在還是必須的plugin. 不過即使Firefox那麼好, 到現在market share還是只有大約30%, 所以可憐的工程師還是要和古怪的IE6奮戰. 如果考量到小小的Mozilla要和大大的Microsoft對抗, Windows內建IE等等不利因素, 這個結果還算是不錯咩, 只能說Windows賣得太好, IE又一直不進步. 所以很多人根本不知道什麼是Firefox, 在他們心中:</p>
+
+<pre class="brush:java">Browser == IE</pre>
+
+
+<p>的結果會是<code>true</code>. 所以, Firefox就還是只有宅男/Geek/工程師拿來自爽用而已. 但是&#8230;</p>
+
+<h2>突然出現的Chrome</h2>
+
+
+<p>在2008年9月, 有一天我正要下班時, 上網看一看最新的新聞. 竟然看到了一種10年才可能出現一次的新聞. 那就是: <a href="http://googleblog.blogspot.com/2008/09/fresh-take-on-browser.html">Google要出Browser了!</a> 那時候Google 是先出一個<a href="http://www.google.com/googlebooks/chrome/">Chrome廣告的漫畫</a>. 看完這個漫畫就很期待, Chrome開放的當天就趕快下載來用用了. 那時的感覺是, 快雖快, 但是整個還是非常陽春. bookmark難用, flash常crash, 字也和狗啃的一樣, 也沒有別的plugins, 整個用起來就是很不順手. 但是, 不到2年, Chrome的版本也從0.2快速升到5.0 (這年頭大家的版本的增加速度都在比快的), 在補強了一些常用功能, 還有<a href="http://lifehacker.com/5547211/fix-the-webs-biggest-annoyances-with-google-chrome">一些好用的 chrome extensions</a> 漸漸出來以後. Chrome現在也是我主要使用的browser了. 不過我在開發的時候, 還是使用Firefox, 沒辦法, Firebug還是比Chrome的developer tools 好用太多了. 如果你只是一般使用者, 那你可以安心的使用chrome咩!
+Chrome強調的最大特點就是: <a href="http://code.google.com/speed/">快! 快! 快!</a> Chrome用的JavaScript engine 叫<a href="http://code.google.com/p/v8/">V8</a> , 就是號稱輕量又快速. 我的laptop在<a href="http://v8.googlecode.com/svn/data/benchmarks/current/run.html">V8 benchmark</a> 上用Chrome 5.0可以得到 <code>5468</code>分(越大越好), Firefox 3.6只有<code>527</code>分. <a href="http://www2.webkit.org/perf/sunspider-0.9/sunspider-driver.html">SunSpider JavaScript Benchmark</a> 則是Chrome 5.0得到<code>306.0ms</code>(越小越好) Firefox 3.6 則是<code>830.2ms</code>. Chrome用的layout engine是Webkit, 也是和Firefox 用的Gecko有很大的不同. Webkit也是注重輕量和快速, Gecko則是<a href="http://arstechnica.com/open-source/news/2008/09/mozilla-committed-to-gecko.ars">功能較強大, 但是heavy-weight</a>
+但是改進JavaScript和render的速度並不能很大量的改進效能. 棖據<a href="http://developer.yahoo.com/performance/rules.html">Yahoo!&#8217;s Exceptional Performance</a> 的研究, 最花時間的就是HTTP request, 所以針對HTTP requests 次數要少, request headers 要小, 要設cache headers, 要用Gzip, 要用CDN 等等都是為了在HTTP requests這一步能夠快一點. Google也在作一個新的Protocol想要取代HTTP, 叫<a href="http://dev.chromium.org/spdy">SPDY</a> , 號稱可以<a href="http://googleresearch.blogspot.com/2009/11/2x-faster-web.html">比HTTP 快上55%</a> . 要是再加上HTML5的offline storage, 和WebSocket, 真是令人期待啊! 可以想像將來真的是web application的時代咩!</p>
+
+<p>Chrome在使用的感覺上確實有比Firefox快一些, 雖然一些功能還是比不上Firefox, 但日常使用也都夠了. 重新打造一個超快的Browser當然是很有成就感, 但是這就是Google 加入<a href="http://en.wikipedia.org/wiki/Browser_wars">Browser wars</a> 的原因嗎? 之前就有謠傳Google偷偷在開發OS, 不過Google一直沒證實. 開發OS又比開發Browser難了好幾個級數, 而且開發好了要怎麼和Microsoft火拼還是一大問題. 後來在2009年7月, Google發表了<a href="http://googleblog.blogspot.com/2009/07/introducing-google-chrome-os.html">Chrome OS 的消息</a>, 才真象大白. 原來是target在netbooks的OS, 開機就是Chrome, 當然裡面的application都是用web applications, 充份實現cloud computing的好處. 不過Chrome OS實在和<a href="http://www.android.com/">Android</a> 太過接近了, 真是令人猜不透Google想幹嘛. 要嘛不來, 一來就作2個. 我是希望Google能專心把Chrome作好就好了, netbook或smartphone就交給Android就好了, 雖然Google資源多, 但是一次專注在一件事情上, 把事情作好不是比較好嗎?</p>
+
+<h2>Browser Wars</h2>
+
+
+<p>使用者習慣不是一朝一夕可以改過來的, IE獨佔市場快10年了, Windows內建IE, 可以用就好了咩, 所以很難說什麼: &#8220;IE比較難用咩, 所以你裝好Windows之後要去下載Firefox/Chrome來用.&#8221; 這種理由去讓一般使用者改用別的browser. 到現在還有存在很多網站(尤其是國內的一些網路銀行頁面), 是只能用IE去看的, 用其他Browser去看的話, 不是layout亂掉不能用, 就是mouse event都沒用, hover或點下去沒反應. IE在1999年開始獨霸browser market之後, 大概從2005年才一點一點(真的很慢, 幾乎察覺不出來, 哈哈!)的流失給Firefox. 而Chrome 是Google做的, Google品牌夠大, 要推Chrome也不像沒錢的Mozilla那樣沒力. 目前Chrome也有約7%的market share了. 但是Microsoft也不是省油的燈, 怎麼可能坐視不管呢? <a href="http://ie.microsoft.com/testdrive/">IE9</a> 預計2011年要出, 這終於是可以和Chrome或Firefox相比的Browser了! 最大的改變就是大力支援W3C標準. 看了<a href="http://ie.microsoft.com/testdrive/benchmarks/SunSpider/Default.html">SunSpider Test</a> , <a href="http://ie.microsoft.com/testdrive/benchmarks/Acid3/Default.html">Acid3 Test</a> , <a href="http://ie.microsoft.com/testdrive/benchmarks/CSS3info/Default.html">CSS selector Test</a> 和<a href="http://samples.msdn.microsoft.com/ietestcenter/">Internet Explorer Testing Center</a> 之後, 我覺得Microsoft終於有心把Browser做好了! 其實還是那句老話, 有競爭才有進步. 當Web不斷快速進步, 而Browser卻沒改進, 這是不會被接受的. 所以, 不論是IE 或Firefox, 只要符合W3C標準, 就是好Browser!
+最後, 附一個Chrome的新廣告: <a href="http://www.youtube.com/watch?v=nCgQDjiotG0&amp;fmt=22#t=1m33">Google Chrome Speed Tests</a>(我直接快轉到閃電那段, 因為很酷咩!)</p>
+
+<h3>Resources:</h3>
+
+
+<p><a href="http://acid3.acidtests.org/">The Acid3 Test</a>
+<a href="http://tools.css3.info/selectors-test/test.html">CSS3 Selectors Test </a>
+<a href="http://samples.msdn.microsoft.com/ietestcenter/">Internet Explorer Testing Center </a>
+<a href="http://developer.yahoo.com/performance/">Yahoo!&#8217;s Exceptional Performance</a>
+<a href="http://code.google.com/speed/page-speed/docs/rules_intro.html">Web Performance Best Practices</a>
+<a href="http://gs.statcounter.com/">StatCounter Global Stats - Browser, OS, Search Engine including Mobile Market Share</a>
+<a href="https://chrome.google.com/extensions">Google Chrome Extensions</a></p>
+
+<p><a href="http://www.amazon.com/gp/product/0596529309">High Performance Web Sites: Essential Knowledge for Front-End Engineers</a>
+<a href="http://www.amazon.com/gp/product/0596522304">Even Faster Web Sites: Performance Best Practices for Web Developers</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T03:15:29+08:00" pubdate data-updated="true">2010-05-27</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gossip/'>gossip</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/05/27/google-chrome" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/05/27/google-chrome" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/04/29/amazon-ec2-asia" title="Previous Post: Amazon EC2 開始在亞洲提供服務了">&laquo; Amazon EC2 開始在亞洲提供服務了</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/06/04/intro-to-aws-slides" title="Next Post: Intro to AWS slides">Intro to AWS slides &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

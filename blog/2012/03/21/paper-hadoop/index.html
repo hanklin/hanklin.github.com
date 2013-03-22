@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>一切從一篇paper開始 - Hadoop - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="下一個AWS 上一場我在精誠資訊的演講，有提到「下一個AWS從何而來」這個議題。我有列出了一些，不過我最有興趣的，還是「大量資料的處理」這一塊。
+就像我在裡面講的，我不認為用小資本就能進入IaaS的市場，賣貨櫃機房更不算得上是雲端運算。那我認為比較有希望的還是在PaaS或SaaS。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2012/03/21/paper-hadoop">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">一切從一篇paper開始 - Hadoop</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-21T22:13:22+08:00" pubdate data-updated="true">2012-03-21</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>下一個AWS</h2>
+
+
+<p>上一場我在精誠資訊的演講，有提到「下一個AWS從何而來」這個議題。我有列出了一些，不過我最有興趣的，還是「大量資料的處理」這一塊。
+就像我在裡面講的，我不認為用小資本就能進入IaaS的市場，賣貨櫃機房更不算得上是雲端運算。那我認為比較有希望的還是在PaaS或SaaS。其中我認為將來最需要的就是「大量資料的處理」(big data processing)、「即時的資料處理」(realtime processing)、以及「資料的視覺化」(data visualization)。因為這些功能都和資料的儲存、使用、形態很緊密結合，所以開發好用的SaaS就是我最感興趣的。</p>
+
+<h2>真實的需求</h2>
+
+
+<p>現在的網路世界，不單是server數量大增，可以上網的裝置也大量增加。以前的電腦還一定要人走過去用才上網，現在手機、平版電腦、販賣機等可以上網的裝置爆增，以後可能所有電子產品都可以上網，簡單到一個插頭都可以回報資料。所以資料量是以等比級數在上昇的，要如何快速、正確的取得我們要的資料，就變成最重要的問題。
+以前有一個名詞叫data porn，形容資料太多，像色情一樣泛濫，不知從何處理起。那可以想像，資料如果用等比級數在增加，這個data porn會越來越難處理。而Hadoop的出現，幫助我們解決一部份的問題。</p>
+
+<h2>一切從一篇paper開始</h2>
+
+
+<p>一般公司要解決大資料的處理，大都是開發程式，用自己的方法去解決資料處理的問題，開發一個應用成本比較高，不易再利用。Google在2004年發表一篇很有名的「<a href="http://research.google.com/archive/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>」，說明Google如何處理爬回來的網頁，以支援Google的搜尋等服務。特點就在於可以用一套程式設計界面，處理各種問題。寫一個應用時不需要處理分散式的程式設計等問題，重用性較高。可以投入更多機器，讓問題更快解完。而且還有容錯能力，會自動重試失敗的jobs。
+MapReduce這麼神，但是當然Google沒有發表實作細節，許多細節還申請了專利。其它人想用MapReduce怎麼辦?</p>
+
+<h2>黃色大象Hadoop</h2>
+
+
+<p>另一個大師，Doug Cutting，為了支援Nutch，又建立了Hadoop這個專案。以模擬MapReduce的樣子，做出這個分散式資料處理的框架。因為是free open source，所以被許多公司拿來用。現在Yahoo!是最大的操作者，單一cluster有到4,000個節點。Facebook、Amazon、Apple、eBay、Microsoft、IBM、HP等等大公司也用Hadoop來處理大量資料。所以就像我前面說的，隨著資料越來越多，增長得越來越快，Hadoop(或大量處理資料的工具)就會越來越重要。投資在Hadoop上，似乎是下一個最被關注的課題。
+當然，除了Hadoop，還有許多的類MapReduce的資料處理框架，只是Hadoop是比較多人在用的。</p>
+
+<p>這個星期五(3月23日)，我在精誠資訊分享第2場「<a href="http://www.facebook.com/events/207058829394087/">向成功的雲服務學習</a>」，歡迎你。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-21T22:13:22+08:00" pubdate data-updated="true">2012-03-21</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/big-data/'>big data</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2012/03/21/paper-hadoop" data-via="hanklin" data-counturl="http://hanklin.com/blog/2012/03/21/paper-hadoop" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/15/image-optimize-1" title="Previous Post: 網站小圖檔的規範(1)">&laquo; 網站小圖檔的規範(1)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/03/27/memorize" title="Next Post: 超級記憶王 - 心得">超級記憶王 - 心得 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

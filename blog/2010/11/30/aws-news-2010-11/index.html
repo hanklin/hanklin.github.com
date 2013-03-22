@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AWS News 2010-11 - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="滴搭滴搭&#8230;時間不斷往前進，又到了月底啦。 11月只有30天，所以沒辦法多偷一天啊! 這幾個月我都沒時間好好看Google Reader，未閱讀數目早就爆表了。另外知道了一件事&#8230;Google Reader的未閱讀數最多只到1000，超過就只顯示1000+， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/11/30/aws-news-2010-11">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">AWS News 2010-11</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-30T21:49:35+08:00" pubdate data-updated="true">2010-11-30</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>滴搭滴搭&#8230;時間不斷往前進，又到了月底啦。 11月只有30天，所以沒辦法多偷一天啊! 這幾個月我都沒時間好好看Google Reader，未閱讀數目早就爆表了。另外知道了一件事&#8230;Google Reader的未閱讀數最多只到1000，超過就只顯示<code>1000+</code>，是不希望給我太大的壓力嗎!</p>
+
+<h3>AWS Free Usage Tier (免費使用層級)</h3>
+
+
+<p>AWS從公開以來，已經降價好多次了，不過始終沒有免費試用，現在終於有免費的方案了，就是<a href="http://aws.amazon.com/free/">AWS Free Usage Tier</a>。在2010年11月1日以後註冊AWS帳號，可以有一年的免費使用期限。只要是在AWS免費的配額內，就不用收錢。如果是對AWS還不熟悉的使用者，我覺得這是一個很好的嘗試機會，可以瞭解AWS的概念和實際操作。如果是已經在用AWS的使用者，也有免費的配額！
+以下是免費的配額，以每個月的使用量來計算。</p>
+
+<ul>
+<li>750個機器小時（machine hours）的EC2 Linux Micro Instances，也就是開1台micro instance可以開一個月。不能使用Windows、IBM、SUSE Linux這些AMI。</li>
+<li>750個機器小時（machine hours）的ELB，及15GB的傳輸量。</li>
+<li>10GB的EBS容量，1百萬次的讀寫，1GB的快照容量，1萬次讀取快照，1千次儲存快照。</li>
+<li>5GB的S3容量，2萬次的讀取，及2千次的儲存，因為S3是很常用的功能，所以這個比較容易超過。</li>
+<li>15GB的網路傳輸量，上傳和下載各有15GB。CloudFront是沒有免費的，所以CloudFront的網路傳輸是要收費的。</li>
+</ul>
+
+
+<p>另外，和AWS Free Usage Tier一起更新的是，SimpleDB、SQS、SNS也有免費配額，而且是新舊客戶都適用，也沒有期限的。可以看得出來AWS想要促銷這三項產品。<br/>
+以下是這三個服務的免費配額，一樣以每個月計算：</p>
+
+<ul>
+<li>25個機器小時(machine hours，就是每次請求回傳值裡的「Box Usage」的總合)的SimpleDB，及1GB的儲存量。</li>
+<li>10萬次的SQS請求。</li>
+<li>10萬次的SNS請求，10萬次的HTTP通知，和1千次的email通知。</li>
+</ul>
+
+
+
+
+<h3>S3 更新</h3>
+
+
+<p>降價<br/>
+AWS降價好像不是新聞，而是常態了。在1TB以下的儲存量大約降了7%，50 TB左右的儲存量則是降最多，約19%，可以說是大小客戶都照顧了，夠誠意吧! 請看<a href="http://aws.amazon.com/s3/#pricing">S3 pricing</a>有詳細的價錢。</p>
+
+<p>Multipart upload<br/>
+S3的功能真的很強，這個功能就更強了。Multipart upload是把大檔案分成許多小檔案上傳，每一個小檔案如果傳爛了，可以只重傳這個小檔案，而且可以同時上傳多個小檔案。所以如果是在網路不穩的地方，你可以一次上傳一個小檔案，如果有一個小檔案掛了，重傳那一份就好了。如果你是在頻寬很大的網路，那就不要客氣了，一次上傳個3個小檔案，可能節省3倍的上傳時間。這個功能真是太好啦!</p>
+
+<h3>CloudFront 更新</h3>
+
+
+<p>CloudFront Custom Origins<br/>
+以前CloudFront只能用S3作為原始資料來源，一般來說有一些問題。最麻煩的就是要把S3 Object的權限全部改成<code>public-read</code>，才能讓CloudFront來讀，或是建立CloudFront的Distribution時，建立一個original access identity，然後授權S3的Object，讓CloudFront可以讀取。其實用original access idenitity還更麻煩，差別只在於用original access identity可以防止使用者直接去S3下載。
+自定來源伺服器要滿足一些要求，例如不能使用query string，所以可能無法直接使用原本的web server，所以還是有一些地方要注意。請看<a href="http://docs.amazonwebservices.com/AmazonCloudFront/latest/DeveloperGuide/">CloudFront文件</a> (沒錯&#8230;我懶得翻譯)。</p>
+
+<p>SLA<br/>
+CloudFront也增加了SLA，和其它服務類似，也是99.9%~99.0% uptime退10%，99.0%以下退25%。</p>
+
+<h3>Cluster GPU Instance</h3>
+
+
+<p>強大的Cluster GPU Instance，是用GPU來提供一般性的運算。以前就有看過一張圖表，是說使用GPU來做Parallel Computing，可以比用一般CPU得到8x以上的運算能力。現在這個Cluster GPU Instance，就是提供大量運算的更強大的選擇。Cluster GPU的規格如下：</p>
+
+<ul>
+<li>2個NVIDIA Tesla M2050 Fermi GPU, 每個GPU上有3GB的ECC RAM</li>
+<li>2個4核心的Intel Nehalem X5570處理器</li>
+<li>22 GB RAM, 另有1 GB專門給GPU使用</li>
+<li>1680 GB instance storage</li>
+<li>10 Gbps 低延遲、獨立的ethernet</li>
+</ul>
+
+
+<p>要使用NVIDIA的GPU來做運算，就要使用NVIDIA的CUDA架構，可以使用多種語言來開發。例如C/C++、Java、Python、Ruby、FORTRAN等。如果拿來和MapReduce搭配可以說是完美組合啊! 可以儘量榨乾每一滴運算資源! 不過和Cluster Compute一樣，目前只在<code>us-east-1</code>地區可以用，而且只能用Linux作業系統，不過這應該不是什麼大問題，因為這種大量運算通常不是服務線上使用者的，所以開在美東是沒什麼關係的。</p>
+
+<p>最後，在Google搜尋AWS，第一名終於是AWS啦！之前都是American Welding Society&#8230;有圖為證
+<a href="http://hanklin.com/blog/wp-content/uploads/2010/11/2010-11-30-00318.png"><img src="http://hanklin.com/blog/wp-content/uploads/2010/11/2010-11-30-00318.png" alt="AWS search results" title="AWS search results" width="1024" height="768" class="alignnone size-full wp-image-73" /></a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-30T21:49:35+08:00" pubdate data-updated="true">2010-11-30</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/news/'>news</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/11/30/aws-news-2010-11" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/11/30/aws-news-2010-11" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/10/31/aws-news-2010-10" title="Previous Post: AWS news 2010-10">&laquo; AWS news 2010-10</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/01/01/aws-news-2010-12" title="Next Post: AWS News 2010-12">AWS News 2010-12 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

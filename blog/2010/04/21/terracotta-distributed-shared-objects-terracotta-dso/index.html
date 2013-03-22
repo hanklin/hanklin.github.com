@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>用Terracotta 去Distribute Objects - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="Terracotta DSO Terracotta又來啦! 這次是講所謂的Terracotta Distributed Shared Object(DSO). 上次有提到用terracotta去作tomcat cluster, 把HttpSession裡的東西在cluster間分享, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">用Terracotta 去Distribute Objects</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-21T02:02:19+08:00" pubdate data-updated="true">2010-04-21</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Terracotta DSO</h2>
+
+
+<p>
+Terracotta又來啦! 這次是講所謂的Terracotta Distributed Shared Object(DSO). <a href="/blog/p/6">上次</a>有提到用terracotta去作tomcat cluster, 把HttpSession裡的東西在cluster間分享, 不過在一般Java application也想有這種distributed objects要怎麼作?  上一篇畢竟是初次體驗, 對terracotta有什麼本事還沒有說得很完整. 這次我要比較詳細的說明terracotta的架構和原理, 將來如果要開始設計一個distributed applications時, 可以試著用terracotta的programming model去看問題. 不一定要用terracotta, 但是多瞭解一種clustering的方法總是好的. 如果還沒裝terracotta, 可以看上一篇把terracotta裝起來. 先來看一個很簡單的例子:</p>
+
+<p><code>DsoMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.util.Random;
+
+public class DsoMain {
+    private Integer number = new Random().nextInt();
+
+    public static void main(String[] args) {
+        DsoMain tc1 = new DsoMain();
+        DsoMain tc2 = new DsoMain();
+        print(tc1.number, tc2.number);
+        tc1.number = new Integer(tc2.number);
+        print(tc1.number, tc2.number);
+    }
+
+    private static void print(Integer n1, Integer n2) {
+        System.out.println("n1=" + n1 + ", n2=" + n2);
+        System.out.println("n1==n2 ? " + (n1 == n2));
+        System.out.println("n1.equals(n2)? " + (n1.equals(n2)));
+    }
+}</pre>
+
+
+<p>看起來是再簡單不過了, 執行看看:</p>
+
+<pre class="brush:bash">$ java -cp . com.hanklin.DsoMain
+n1=174724645, n2=1254665546
+n1==n2 ? false
+n1.equals(n2)? false
+n1=1254665546, n2=1254665546
+n1==n2 ? false
+n1.equals(n2)? true</pre>
+
+
+<p>好咩, 一切都在你的預料之中. 但是這一切在terracotta加入後就會改變了. 先來看terracotta configuration xml:
+<code>tc-dso.xml</code></p>
+
+<pre class="brush:xml;light:false"><?xml version="1.0" encoding="UTF-8"?>
+<tc:tc-config xsi:schemaLocation="http://www.terracotta.org/schema/terracotta-5.xsd" 
+xmlns:tc="http://www.terracotta.org/config" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <servers>
+    <server host="localhost">
+      <data>%(user.home)/terracotta/server-data</data>
+      <logs>%(user.home)/terracotta/server-logs</logs>
+    </server>
+  </servers>
+
+  <clients>
+    <logs>%(user.home)/terracotta/client-logs</logs> 
+  </clients>
+  
+  <application>
+    <dso>
+      <instrumented-classes>
+        <include>
+          <class-expression>com.hanklin.*..*</class-expression>
+        </include>
+      </instrumented-classes>
+      <roots>
+        <root>
+          <field-name>com.hanklin.DsoMain.number</field-name>
+          <root-name>number</root-name>
+        </root>
+      </roots>
+    </dso>
+  </application>  
+</tc:tc-config></pre>
+
+
+<p>上面的設定檔最重要的地方是<code><root></code>區塊, 在這邊設定<code>com.hanklin.DsoMain.number</code>是terracotta root, terracotta root 下的所有objects都會被distributed. 存好了之後, 再來開terracotta server:</p>
+
+<pre class="brush:bash">$ start-tc-server.sh -f /opt/tc/tc-dso.xml
+2010-04-18 18:45:06,485 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-04-18 18:45:06,878 INFO - Configuration loaded from the file at '/opt/tc/tc-config.xml'.
+2010-04-18 18:45:07,058 INFO - Log file: '/root/terracotta/server-logs/terracotta-server.log'.
+2010-04-18 18:45:09,473 INFO - Available Max Runtime Memory: 490MB
+2010-04-18 18:45:11,903 INFO - JMX Server started. Available at URL[service:jmx:jmxmp://0.0.0.0:9520]
+2010-04-18 18:45:12,470 INFO - Terracotta Server instance has started up as ACTIVE node on 0.0.0.0:9510 successfully, and is now ready for work.</pre>
+
+
+<p>一樣, 最好每次都用<code>-f</code>明確指定configuration file. 現在來看看distributed 版本要怎麼run. 一樣是用java, 但是主要多了3個參數<code>-Xbootclasspath/p:</code>, <code>-Dtc.config</code>,  <code>-Dtc.install-root</code>. terracotta的文件是用<code>dso-java.sh</code> 去執行. 例如:</p>
+
+<pre class="brush:bash">$ dso-java.sh -cp . com.hanklin.DsoMain</pre>
+
+
+<p>但是之前的經驗是它在處理command line arguments內含空白會有問題, 所以我都沒有用它, 看了一下<code>dso-java.sh</code>的內容, 其實就是給這3個參數而已, 所以後來我就都手動給這3個參數, 如果嫌麻煩就設定環境變數吧:
+Linux版:</p>
+
+<pre class="brush:bash">$ export my_tc_setting="-Xbootclasspath/p:/opt/tc/lib/dso-boot/dso-boot-hotspot_linux_160_18.jar -Dtc.install-root=/opt/tc  -Dtc.config=localhost:9510"</pre>
+
+
+<p>Windows版:</p>
+
+<pre class="brush:bash">$ set my_tc_setting=-Xbootclasspath/p:C:libterracotta-3.2.1libdso-bootdso-boot-hotspot_win32_160_18.jar -Dtc.install-root=C:libterracotta-3.2.1  -Dtc.config=localhost:9510</pre>
+
+
+<p>好的, 執行看看咩:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoMain
+2010-04-18 18:49:08,635 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-04-18 18:49:09,138 INFO - Configuration loaded from the server at 'localhost:9510'.
+2010-04-18 18:49:09,413 INFO - Log file: '/root/terracotta/client-logs/terracotta-client.log'.
+2010-04-18 18:49:10,933 INFO - Connection successfully established to server at 127.0.0.1:9510
+n1=1220249279, n2=1220249279
+n1==n2 ? true
+n1.equals(n2)? true
+n1=1220249279, n2=1220249279
+n1==n2 ? true
+n1.equals(n2)? true</pre>
+
+
+<p>結果好像令人大吃一驚! 而且再invoke一次也是一樣, 這是為啥咪咧? 以下就要講解一下Terracotta 的實際作法了.</p>
+
+<h2>解說terracotta</h2>
+
+
+<p>要在cluster內share objects一直是個難題. Java一般的作法是RMI, JMS, 或是distributed caches. 由於network與memory相比是慢非常多的, 所以儘量減少network traffic是增進效能和scalability的作法. 不過一般的framework都是要靠Java Serialization, 所以沒有辦法作fine-grained optimize. Terracotta不是把objects serialize後再傳來傳去, 而是有兩種作法: physically和logically.</p>
+
+<ul>
+    <li>physically managed: terracotta 記錄object的fields 的變化, 然後在其它clustered objects寫入. </li>
+
+    <li>logically managed: terracotta 記錄method calls 及參數, 在clustered objects &#8220;replay&#8221;. logically managed 一般來說效能較好, 而且不會和不同版本的Java 的實作細節綁死. 如<code>java.util.HashMap</code>等collections就是logically managed.</li>
+</ul>
+
+
+<p> 另外, 所有terracotta applications(L1)都只和terracotta server(L2)溝通, network traffic不會成指數上昇. (岔題一下, L2 server要達成HA/scalability又是另一個大問題了, 以後再討論.) terracotta application 可以得知fine-grained 改變(到byte-level), 把這資訊送到terracotta server(L2), L2再決定要通知哪些L1. 如果L2的memory放不下shared objects的話會寫到file system. 所以Java heap size可以馬上從1,2G提昇了一檔次到1,200G! 在<a href="http://www.theserverside.com/news/1320914/Scaling-Your-Java-EE-Applications-Part-2">Scaling Your Java EE Applications &#8211; Part 2</a>裡有提到terracotta在10個nodes以下時有很好的scalability. 不過那是有一點久以前的文章了, terracotta針對L2 write files, network transfer有作很多optimizations, 以後我有空也會來測測, 要自己親身體驗一下才算數, 您說是吧!</p>
+
+<p>雖然說Terracotta號稱是a transparent clustering service. 但是transparent是指沒有API侵入的transparent(如: Serializable, RMI, JMS&#8230;), 在programming model上還是要確實瞭解terracotta的行為, 才不會有像上面一樣令人驚訝的事發生. Terracotta的transparency是由class loading 時, 對需要的classes作instrumentation達成的. 所以是用<a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a>去實作的. Terracotta在選擇<a href="http://en.wikipedia.org/wiki/Join_point">join point</a>的地方是用<a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a> 的<a href="http://open.terracottatech.com/confluence/display/docs/AspectWerkz+Pattern+Language">語法</a>. 而且不但要改client code(也就是我們的code)的行為, 連JRE library也要改, 所以這也就是為什麼一定要給bootstrap classpath(<code>-Xbootclasspath/p:</code>)的原因了. 在各種bytecode instructions中, terracotta會改的最多的地方就是read/write to memory這兩類instructions, read就是找accessor(<code>.</code>), write就是assignment(<code>=</code>). 另外還有constructor instructions, threading instructions(lock, unlock)等也是terracotta要處理的. 有寫過AOP程式的人就知道, 如果要weaving的code base很大的話, 有可能會作很久(看是在什麼時候作weaving). 所以<code><instrumented-classes></code>最好是只寫有需要被instrumented就好, 可以的話用package來分是最好的, 也能加快weaving的速度.</p>
+
+<p>在上面的例子有看到<code><root></code>區塊, 告訴terracotta我們要cluster什麼classes. Terracotta roots的定義是: A top-level object in a clustered object graph. root object graph 內不可以有<a href="http://open.terracottatech.com/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>, 否則就會造成這個root也是Non-portable. Terracotta就會給你一缸子的Exceptions. 解決方法是改用portable class, 或是標成terracotta transient. Terracotta transient和Java transient 不太一樣. Java source code 裡的transient keyword不會自動被terracotta 視為transient, 所以要用以下的設定:</p>
+
+<pre class="brush:xml;light:false"><instrumented-classes>
+  <include>
+    <honor-transient>true</honor-transient>
+    <class-expression>com.company.pckg.*</class-expression>
+  </include>
+  ...
+</instrumented-classes></pre>
+
+
+<p>或是直接標示transient:</p>
+
+<pre class="brush:xml;light:false"><dso>
+  <transient-fields>
+    <field-name>com.company.ClassA.fieldA</field-name>
+    <field-name>com.company.pckg.ClassB.fieldB</field-name>
+  </transient-fields>
+  ...
+</dso></pre>
+
+
+<p>roots的初始化行為很特別, 會受到terracotta的特別照顧:</p>
+
+<ul>
+<li>當JVM第一次assign值給root的時候, terracotta在cluster內依據assign的值建立這個root object.</li>
+
+    <li>一但root建立好了之後, 之後所有root的assignment都會被忽略. 如果root是<a href="http://open.terracottatech.com/confluence/display/docs/Concept+and+Architecture+Guide#ConceptandArchitectureGuide-Literals">Terracotta literals</a>的話, 值可以變, 但是其它的class 的root reference則不可改變.</li>
+
+    <li>root 的top-level object不會被terracotta distributed GC所回收.</li>
+</ul>
+
+
+<p>所以這就是在上面的例子裡, 為什麼改不動一個instance field的原因了. 在實務上, 通常都是用<code>Map</code>或是<code>Collection</code>來作root, 不過要注意有一些collections是不支援的(<a href="http://open.terracottatech.com/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>)
+ 另外, 應該shared objects是data而不是application logic, 如果你需要用很多transient field, 可能就是share了不合適的objects.</p>
+
+<h2>Terracotta常見的用途</h2>
+
+
+<ul>
+    <li>distributed cache: 不受memory大小的限制, 而是由L2 的disk 大小限制. 還有因為<code>Map</code>類的key不會被faulted out of the JVM, 所以keys 一定要放得進memory才行.(通常可以咩! 又不是facebook, twitter)</li>
+
+    <li>session replication: <a href="/blog/p/6">上次那一篇</a>有提到這個用法.</li>
+
+    <li>workload partitioning: 這一篇<a href="http://www.infoq.com/articles/master-worker-terracotta">老文章: Implementing Master-Worker with Terracotta</a>, 有提到這個用法.</li>
+</ul>
+
+
+<p>我在這邊作一個超簡單的workload partitioning 的POC, 先來一個Master:
+<code>DsoMasterMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+public class DsoMasterMain {
+    static BlockingQueue<String> queue = new LinkedBlockingQueue<String>(3);
+
+    public static void main(String[] args) {
+        String[] works = { "A", "B", "C", "D", "E", "F", "G", "H", "0", "0"};
+        for (String work : works) {
+            try {
+                System.out.println("put work " + work);
+                queue.put(work);
+                Thread.sleep(999);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</pre>
+
+
+<p>用一個<code>LinkedBlockingQueue</code>作為work queue, 在這邊就是我們的terracotta root. 再來是Worker:
+<code>DsoWorkerMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+public class DsoWorkerMain {
+    public static void main(String[] args) {
+        String work = null;
+        while (!"0".equals(work = DsoMasterMain.queue.poll())) {
+            try {
+                if (work == null) {
+                    Thread.sleep(350);
+                } else {
+                    System.out.println("doing work " + work);
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+}</pre>
+
+
+<p>worker收到&#8221;<code>0</code>&#8220;則代表沒有work了. 然後是terracotta configuration xml, 只要改<code><roots></code>那邊就好:</p>
+
+<pre class="brush:xml;light:false"><root>
+    <field-name>com.hanklin.DsoMasterMain.queue</field-name>
+    <root-name>queue</root-name>
+</root></pre>
+
+
+<p>改好了之後, 先重開terracotta server:</p>
+
+<pre class="brush:bash">$ start-tc-server.sh -f /opt/tc/tc-dso.xml</pre>
+
+
+<p>然後, 我是先開2個worker啦:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoWorkerMain</pre>
+
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoWorkerMain</pre>
+
+
+<p>最後, 開個master來看看:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoMasterMain</pre>
+
+
+<p>我的結果是第一個worker:</p>
+
+<pre class="brush:bash">doing work A
+doing work G</pre>
+
+
+<p>第二個worker:</p>
+
+<pre class="brush:bash">doing work B
+doing work C
+doing work D
+doing work E
+doing work F
+doing work H</pre>
+
+
+<p>的確有簡單咩, 您說是吧?</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-21T02:02:19+08:00" pubdate data-updated="true">2010-04-21</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/04/08/aws-amazon-simple-notification-service" title="Previous Post: AWS新功能 Amazon Simple Notification Service">&laquo; AWS新功能 Amazon Simple Notification Service</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/04/29/amazon-ec2-asia" title="Next Post: Amazon EC2 開始在亞洲提供服務了">Amazon EC2 開始在亞洲提供服務了 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

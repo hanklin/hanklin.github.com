@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>creating EBS-backed AMIs from running instances - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="因為有許多免費的public AMIs, 像是alestic上就有很多好用的Ubuntu AMIs. 所以說不用精通AMI的製作方法, 也能快樂的使用EC2. 不過如果要把EC2這個技能再練一級的話, 自製的AMI是必備的. 2009年底時, AWS推出 可以用EBS-backed AMI. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/03/31/creating-ebs-backed-amis-from-running-instances">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Creating EBS-backed AMIs From Running Instances</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-31T10:06:10+08:00" pubdate data-updated="true">2010-03-31</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>因為有許多免費的public AMIs, 像是<a href="http://alestic.com">alestic</a>上就有很多好用的Ubuntu AMIs. 所以說不用精通AMI的製作方法, 也能快樂的使用EC2. 不過如果要把EC2這個技能再練一級的話, 自製的AMI是必備的. 2009年底時, AWS推出 可以用EBS-backed AMI. <a href="http://aws.typepad.com/aws/2009/12/new-amazon-ec2-feature-boot-from-elastic-block-store.html">New Amazon EC2 Feature: Boot from Elastic Block Store</a>. 但是之前已經有一堆在run 的instances , 完全享受不到EBS-backed 的好處啊! 這次的課題就是要把目前正在running 的instances, 作成EBS-backed AMI, 方便日後使用.</p>
+
+<p>以前S3-backed AMI, 是存在S3上, launch instances時EC2會去S3把image抓下來再run. 現在EBS-backed AMI則是存在EBS snapshots上. 在功能性上有很大的進步. 首先就是開機的速度比較快, 用EBS-backed AMI 開機時, EBS用那個snapshot 建立root partition, 比從S3 copy 過來還要快. 再來就是S3-backed AMI的root partition最大只能到10GB, EBS-backed AMI可以到1TB. 然後因為是用EBS, 所以root partition上的東西不會在instances死掉的時候就消失了, 這大概是最大的好處. 另外, EBS-backed AMI還支援stop/start instance. 也就是可以先把instances 暫停, 等一下再run, 在stop的期間是不算EC2的錢的. 這麼好康, 當然要轉換咩! 好吧, 但是作AMI的方法真多啊! 有用dd的:</p>
+
+<pre class="brush:bash">$ dd if=/dev/sda1 of=/dev/sdf</pre>
+
+
+<p>有用ec2-bundle-vol的:</p>
+
+<pre class="brush:bash">$ ec2-bundle-vol -c $EC2_CERT -k $EC2_PRIVATE_KEY -u $AMAZON_USER_ID -e /vol -d /mnt</pre>
+
+
+<p>有用<code><a href="https://launchpad.net/vmbuilder">vmbuilder</a></code>的, 還有<code>ec2-download-bundle</code> 再 <code>mount</code> 或 <code>ec2-unbundle</code>的.
+還有<code>rsync</code>的 (我後來用這種):</p>
+
+<pre class="brush:bash">$ rsync -av / $IMAGE_DIR</pre>
+
+
+<p>方法那麼多, 實在不知道優缺點在哪裡. 我參考了很多人的作法, 使用我覺得比較適合我的, 現在就介紹我的步驟.</p>
+
+<p>先確定有最新的EC2 API tools:</p>
+
+<pre class="brush:bash">$ ec2-version
+1.3-46266 2009-11-30</pre>
+
+
+<p>確定一下要轉換的instance id, 以及它在哪個availability zone, 可以用API tools 的describe instances:</p>
+
+<pre class="brush:bash">$ ec2-describe-instances</pre>
+
+
+<p>然後用IP去找到instance id和availability zone, 不過這有點不好找, 如果instances多的話可能會看到眼睛抽筋. 所以可以在要轉換的那一台上面看它的metadata:</p>
+
+<pre class="brush:bash">$ curl http://169.254.169.254/latest/meta-data/instance-id &amp;&amp; echo
+$ curl http://169.254.169.254/latest/meta-data/placement/availability-zone/ &amp;&amp; echo</pre>
+
+
+<p>就可以看到我的instance id 是<code>i-e734e58e</code>, availability zone 是<code>us-east-1a</code>. 再來就是create 一個EBS volume, 然後attached到那一個instance上面. 因為volume不能跨availability zone, 所以一定要和instance 相同. 另外, 如果你的instances不是在預設的region: us-east-1上的話, 記得設定<code>EC2_URL=<EC2 service endpoint></code> 環境變數, 或是每次明確的給<code>--region <region></code>, 或<code>-U <EC2 service endpoint></code> 參數, 我先作一個10G的volume:</p>
+
+<pre class="brush:bash">$ ec2-create-volume -s 10 -z us-east-1a
+VOLUME  vol-75dc7c1c    10              us-east-1a      creating        2010-03-29T08:41:58+0000</pre>
+
+
+<p>然後看看create好了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-volumes vol-75dc7c1c
+VOLUME  vol-75dc7c1c    10              us-east-1a      available       2010-03-29T08:41:58+0000</pre>
+
+
+<p>好了就attach到instance上:</p>
+
+<pre class="brush:bash">$ ec2-attach-volume vol-75dc7c1c -i i-e734e58e -d /dev/sdf
+ATTACHMENT      vol-75dc7c1c    i-e734e58e      /dev/sdf        attaching       2010-03-29T09:04:57+0000</pre>
+
+
+<p>看看attach好了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-volumes vol-75dc7c1c
+VOLUME  vol-75dc7c1c    10              us-east-1a      in-use  2010-03-29T08:41:58+0000
+ATTACHMENT      vol-75dc7c1c    i-e734e58e      /dev/sdf        attached        2010-03-29T09:04:57+0000</pre>
+
+
+<p>OK! 現在連到那一台instance:</p>
+
+<pre class="brush:bash">$ EBS_DEVICE=/dev/sdf
+$ IMAGE_DIR=/mnt/image
+$ EBS_MOUNT_POINT=/mnt/ebs
+$ mkdir -p $EBS_MOUNT_POINT
+$ mkfs.ext3 $EBS_DEVICE
+$ mount  $EBS_DEVICE $EBS_MOUNT_POINT
+$ mkdir -p $IMAGE_DIR
+$ rsync --stats -av --exclude /root/.bash_history --exclude /etc/ssh/ssh_host_* --exclude=/mnt/* --exclude=/proc/* --exclude=/tmp/* / $IMAGE_DIR
+$ cd $IMAGE_DIR
+$ tar -cSf - -C ./ . | tar xvf - -C $EBS_MOUNT_POINT
+$ umount $EBS_MOUNT_POINT</pre>
+
+
+<p>看起來是做了不少事. 其實只是:</p>
+
+<ul>
+    <li>把EBS volume mount上來.</li>
+    <li>把現在的系統作一份image. 在這裡是用rsync, 還有之前提到的多種作法.</li>
+    <li>把作好的image copy 到EBS volume上. 在這裡是用很花俏的tar, (根據<a href="#resources">資料來源</a>的說法是image比較小), 也可以用rsync.</li>
+</ul>
+
+
+<p>現在可以回到EC2 API tools了, 把剛剛那個volume detach掉:</p>
+
+<pre class="brush:bash">$ ec2-detach-volume vol-75dc7c1c
+ATTACHMENT      vol-75dc7c1c    i-e734e58e      /dev/sdf        detaching       2010-03-29T09:04:57+0000</pre>
+
+
+<p>然後對那個volume作snapshot:</p>
+
+<pre class="brush:bash">$ ec2-create-snapshot vol-75dc7c1c -d "Ubuntu 8.04 20100329"
+SNAPSHOT        snap-7856b410   vol-75dc7c1c    pending 2010-03-29T09:30:42+0000                107357113328    10      EBS Ubuntu 8.04</pre>
+
+
+<p>看一下snapshot完成了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-snapshots snap-7856b410
+SNAPSHOT        snap-7856b410   vol-75dc7c1c    completed       2010-03-29T09:30:42+0000        100%    107357113328    10  EBS Ubuntu 8.04</pre>
+
+
+<p>最後把這個snapshot註冊為AMI:</p>
+
+<pre class="brush:bash">$ ec2-register -s snap-7856b410 -a i386 -n "ebs-ubuntu-8.04-i386-20100329" -d "EBS Ubuntu 8.04 i386 20100329" -b /dev/sda2=ephemeral0 --root-device-name /dev/sda1
+IMAGE   ami-bd50bfd4</pre>
+
+
+<p>好了! 現在來開個instance來看看有沒有OK!</p>
+
+<pre class="brush:bash">$ ec2-run-instances ami-bd50bfd4 -k mykeypair -g default -z us-east-1a -t m1.small --instance-initiated-shutdown-behavior stop
+RESERVATION     r-d0dfe8b8      107357113328    default
+INSTANCE        i-33bc3b58      ami-bd50bfd4    ec2-174-129-157-197.compute-1.amazonaws.com     domU-12-31-38-00-AE-05.compute-1.internal       running mykeypair 0               m1.small        2010-03-29T10:03:27+0000    us-east-1a  aki-5f15f636
+ari-0915f660            monitoring-disabled     174.129.157.197 10.252.177.239                  ebs
+BLOCKDEVICE     /dev/sda1       vol-cba606a2    2010-03-29T10:03:37.000Z</pre>
+
+
+<p>等到instance status 是running 就可以連進去看看了:</p>
+
+<pre class="brush:bash">$ ec2-describe-instances i-33bc3b58</pre>
+
+
+<p>最後, 本來的volume可以砍掉了:</p>
+
+<pre class="brush:bash">$ ec2-delete-volume vol-75dc7c1c
+VOLUME  vol-75dc7c1c</pre>
+
+
+<p>因為做AMI的方法很多(參考<a href="#resources">Resources</a>), 也許你用某些方法會做出不能work的AMI, 這時候就得花時間來排除問題, 我也是試了幾次才成功. 有一些地方可以注意一下:</p>
+
+<ul>
+    <li>service最好都先關掉</li>
+<li><code>/etc/fstab</code> 和network interfaces 最好不要亂改, 可能會連不進去</li>
+    <li>如果有一些symlink, 依據你作image的方式的不同, 可能會造成沒有檔案. 這時候就把symlink消掉, 把檔案copy一份咩.</li>
+    <li>在<code>ec2-register</code>的時候, <code>--kernel</code>, <code>--ramdisk</code> 不要亂給. 在<a href="#resources">Resources</a>裡有一些例子有給這些參數, 害我出現Segmentation fault. kernel module 和ramdisk module現在都是只有Amazon才可以作的. 而且有關kernel module 的相容性、性能的說明文件幾乎沒有, 有的資訊只有依據它的名字得知的版本而已. 所以這個進階功能還是以後有空再來試咩.</li>
+</ul>
+
+
+<h3>Resources</h3>
+
+
+<ul> <a name="resources"></a>
+    <li><a href="http://alestic.com/2007/11/ec2ubuntu-build-ami">Building EC2 Images from Scratch with ec2ubuntu-build-ami</a></li>
+    <li><a href="http://alestic.com/2009/06/ec2-ami-bundle">Creating a New Image for EC2 by Rebundling a Running Instance</a></li>
+    <li><a href="http://alestic.com/2010/01/ec2-ebs-boot-ubuntu">Building EBS Boot AMIs Using Canonical&#8217;s Downloadable EC2 Images</a></li>
+    <li><a href="http://alestic.com/2010/01/vmbuilder-ebs-boot-ami">Building EBS Boot and S3 Based AMIs for EC2 with Ubuntu vmbuilder</a></li>
+    <li><a href="http://www.capsunlock.net/2009/12/create-ebs-boot-ami.html">Create EBS Boot AMI</a></li>
+    <li><a href="http://www.full360.com/blogs/Migrating-Linux-S3-Based-AMI-EBS-Based-AMI">Migrating a Linux S3 Based AMI to an EBS Based AMI</a></li>
+    <li><a href="http://aws-musings.com/how-to-create-an-ebs-image-from-an-existing-ec2-instance/">How to create an ebs image from an existing ec2 instance</a></li>
+    <li><a href="http://coderslike.us/2009/12/07/amazon-ec2-boot-from-ebs-and-ami-conversion/">amazon ec2 &ndash; boot from ebs and ami conversion</a></li>
+    <li><a href="http://www.yottaa.com/blog/2010/02/converting-instance-store-instances-to-ebs-instances-aws-ec2/">Converting instance-store instances to EBS instances (AWS EC2)</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-31T10:06:10+08:00" pubdate data-updated="true">2010-03-31</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/03/31/creating-ebs-backed-amis-from-running-instances" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/03/31/creating-ebs-backed-amis-from-running-instances" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/03/25/aws-sdk-for-java" title="Previous Post: AWS SDK for Java">&laquo; AWS SDK for Java</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/04/08/aws-amazon-simple-notification-service" title="Next Post: AWS新功能 Amazon Simple Notification Service">AWS新功能 Amazon Simple Notification Service &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

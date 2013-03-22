@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>一些AWS News - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="Google Storage ㄟㄟ&#8230;這個不是AWS的新聞啦. 是Google的. 前一陣子Google 發表了 Google Storage for Developers . 這是Google在cloud computing 的新產品, 當然還在Labs的階段, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/06/14/aws-news">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">一些AWS News</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-14T23:45:45+08:00" pubdate data-updated="true">2010-06-14</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Google Storage</h2>
+
+
+<p>ㄟㄟ&#8230;這個不是AWS的新聞啦. 是Google的. 前一陣子Google 發表了 <a href="http://code.google.com/apis/storage/">Google Storage for Developers</a> . 這是Google在cloud computing 的新產品, 當然還在Labs的階段, 只開放少數developers試用. Google Storage for Developers 可以直接從REST界面存取objects了, 不用佈署一個Google App Engine的app就可以利用Google的龐大儲存能力了. 你可以把他當成Amazon S3的直接競爭者. Amazon雖然在cloud computing 的產品領先其它公司很多, 但是我看了一下Google Storage, 一些進階功能Google都會推出(eg: Range GET, Access Control Lists). 所以Google 是來勢洶洶啊!</p>
+
+<h2>Amazon CloudFront</h2>
+
+
+<p>這不是第一次啦! <a href="http://aws.typepad.com/aws/2010/06/amazon-cloudfront-support-for-https-access.html">AWS又降價了咩</a>! 真是佛心來的啊! 這次是CloudFront 的HTTP requests 降25%. 也就是本來每10,000個HTTP requests要$0.01 USD 變成$0.0075 USD. 另外, 增加了HTTPS support, 可以消除掉mixed content warning. 作法就是把CloudFront Distribution 設定成只能用HTTPS去讀取content. 這樣在https的頁面就不會有mixed content warning了. 但是目前https request 還不能用CNAME, 這應該是很不方便的. 我想應該是server的HTTPS certificate的domain name的問題. 以後應該會解決. 最後就是CloudFront 多了一個edge location: New York. 噹噹! 偉大的New York咩! 這樣的話現在CloudFront有16個edge locations了! 完整的可以看<a href="http://aws.amazon.com/cloudfront/">CloudFront的網頁</a>.</p>
+
+<h2>AWS Import/Export API</h2>
+
+
+<p><a href="http://aws.typepad.com/aws/2010/06/aws-importexport-api.html">AWS Import/Export 也加了API</a>. AWS Import/Export是為了大量import/export 資料到S3. 你寫一張單子, 然後和硬碟一起寄給Amazon. Amazon就照你的要求, 把資料給import或export, 然後把硬碟還給你. 如果有大量資料的話, AWS Import/Export可以省很多的錢和時間. 以前是沒有API, 現在雖然有API, 可以說明Import/Export jobs, 但是寄硬碟的步驟還是少不了的. (除非用<a href="http://en.wikipedia.org/wiki/Quantum_teleportation">Quantum Teleportation</a>咩!)</p>
+
+<h2>AWS Management Console</h2>
+
+
+<p><a href="https://console.aws.amazon.com/">AWS Management Console</a> 又<a href="http://aws.typepad.com/aws/2010/06/aws-management-console-now-supports-amazon-s3.html">增加一個可以管理的功能了</a> ,那就是S3. 那其它的一些Firefox plugin 像是S3Fox大概就可以不用了. 填Secret Key 還是填給Amazon比較放心您說是吧! 支援的功能有: 新增/刪除buckets, 上傳/下載/刪除objects, 改ACLs, 在buckets間copy/move objects, 改object metadata. 功能可以說是非常夠了, 以前要先裝S3的工具才能用, 現在在AWS Management Console裡按一按就可以了, 真爽咩!
+現在AWS Management Console 已經有支援: Amazon S3, Amazon EC2, Amazon Elastic MapReduce, Amazon CloudFront, Amazon RDS. 這可以說是不用API的簡單方法咩, 如果只是簡單的做一件事, (eg: 上傳一個小圖檔, 或是單純開一個EC2 instance) 用這個就很方便了, 不用辛苦的裝一堆工具了咩!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-14T23:45:45+08:00" pubdate data-updated="true">2010-06-14</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>, <a class='category' href='/blog/categories/news/'>news</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/06/14/aws-news" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/06/14/aws-news" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/06/08/recovery-of-ebs-boot-ec2-instances" title="Previous Post: Recovery of EBS-boot EC2 Instances">&laquo; Recovery of EBS-boot EC2 Instances</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/06/27/recovery-of-ebs-boot-ec2-instances-part-2" title="Next Post: Recovery of EBS-boot EC2 Instances. Part 2">Recovery of EBS-boot EC2 Instances. Part 2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

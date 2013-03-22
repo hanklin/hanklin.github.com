@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Recovery of EBS-boot EC2 Instances - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="最近又接到了AWS的通知信, 說因為他們的問題, 造成我的一個instance 會被terminated. 信大概長這樣:
+We have noticed that one or more of your instances are running on a host degraded due &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/06/08/recovery-of-ebs-boot-ec2-instances">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Recovery of EBS-boot EC2 Instances</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-08T02:37:58+08:00" pubdate data-updated="true">2010-06-08</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>最近又接到了AWS的通知信, 說因為他們的問題, 造成我的一個instance 會被terminated. 信大概長這樣:
+<code>We have noticed that one or more of your instances are running on a host degraded due to hardware failure.
+   i-a20a871a
+The host needs to undergo maintenance and will be taken down at 12:00 GMT on 2010-06-16. Your instances will be terminated at this point.
+......</code></p>
+
+<p>這算是比較正常的failure, 當然EC2 instances也有直接掛掉的情形. 我覺得以前比較常發生直接掛掉, 最近一年來倒是沒遇到. 而且直接掛掉的都是<code>m1.small</code> 的instances. 比較大的instances都沒有直接掛掉過. 在<a href="/p/22">上次的課程</a>裡, 有人問說為什麼要改用EC2, EC2還是會掛啊?! 沒錯, 天有不測風雲, EC2 instances也是會掛的. 事實是, 任何東西都會掛. 就算是最貴最高檔的server也一樣. 你要有一個觀念, 用cloud computing 時, Backup 和 Diseaster recovery 一樣也不能少. 差別在於, EC2 instances 掛了, 我坐在我的辦公室裡, 下幾個指令就回來了. 如果是租主機, 只能通報, 然後在那邊著急. 如果是主機代管, 很抱歉, 自己去一趟機房咩!</p>
+
+<h2>Steps of Recovery</h2>
+
+
+<p>因為我是使用EBS-boot instances, 所以recover 的動作就變得很簡單. 以下就一步一步來看:</p>
+
+<p>先找出那個instance的資料, 後面會需要用到:</p>
+
+<pre class="brush:bash">
+$ ec2-describe-instances i-a20a871a
+RESERVATION     r-441f2d2c      107357334611    default
+INSTANCE        i-a20a871a      ami-155b3811    ec2-67-202-19-78.compute-1.amazonaws.com       domU-12-11-21-01-D1-F2.compute-1.internal       running mykeypair 0      m 1.small 2010-03-01T07:26:57+0000        us-east-1a                              monitoring-disabled     67.202.19.78   10.253.214.4                    ebs
+BLOCKDEVICE     /dev/sda1       vol-242e0c1a    2010-03-01T08:04:09.000Z
+</pre>
+
+
+<p>要把volume ID 和AMI ID記下來, 我的volume ID是<code>vol-242e0c1a</code>, AMI ID是<code>ami-155b3811</code>
+也可以查一下這個舊的volume, 一定是attach到舊的那個instance.</p>
+
+<pre class="brush:bash">
+$ ec2-describe-volumes vol-242e0c1a
+ATTACHMENT      vol-242e0c1a    i-a20a871a      /dev/sda1       attached        2010-03-01T07:27:09+0000
+</pre>
+
+
+<p>連進去舊的instance, 小心一點的話, 最好先確定一下instance ID 是不是一樣:</p>
+
+<pre class="brush:bash">
+$ curl http://169.254.169.254/latest/meta-data/instance-id && echo
+i-a20a871a
+</pre>
+
+
+<p>把該關的services關一關, 還有如果有其它資料是存在instance storage(ephemeral storage)上要備份的話, 也先備份出來, 要不然terminate instance之後那些資料就沒了. 好了之後, 可以先stop instance, 只有EBS-boot instances可以被stop, stop時是不算EC2 的instance/hour 費用的. 好處就是可以再start起來, 資料還是之前存在EBS volume上的. 缺點就是IP 會改.</p>
+
+<pre class="brush:bash">
+$ ec2-stop-instances i-a20a871a
+INSTANCE        i-a20a871a      running stopping
+</pre>
+
+
+<p>等它的狀態是stopped</p>
+
+<pre class="brush:bash">
+$ ec2-describe-instances i-a20a871a
+RESERVATION     r-441f2d2c      107357334611    default
+INSTANCE        i-a20a871a      ami-155b3811                    stopped mykeypair 0               m1.small        2010-03-01T07:26:57+0000        us-east-1a              monitoring-disabled                                      ebs
+BLOCKDEVICE     /dev/sda1       vol-242e0c1a    2010-03-01T08:04:09.000Z
+</pre>
+
+
+<p>然後對那個舊的volume作snapshot, <code>-d "description"</code> 記得要寫得易懂一些.</p>
+
+<pre class="brush:bash">
+$ ec2-create-snapshot vol-242e0c1a -d "Ubuntu 8.04 20100607"
+SNAPSHOT        snap-1a73348a   vol-242e0c1a    pending 2010-06-07T07:55:59+0000                107357334611    20      Ubuntu 8.04 20100607
+</pre>
+
+
+<p>等snapshot的狀態是completed</p>
+
+<pre class="brush:bash">
+$ ec2-describe-snapshots snap-1a73348a
+SNAPSHOT        snap-1a73348a   vol-242e0c1a    completed       2010-06-07T07:55:59+0000        100%    107357334611    20      Ubuntu 8.04 20100607
+</pre>
+
+
+<p>現在把這個新的snapshot註冊為AMI, 同樣的, <code>-d "description"</code> 也是要寫得descriptive一點, 自己以後才看得懂是什麼image咩!</p>
+
+<pre class="brush:bash">
+$ ec2-register -s snap-1a73348a -a i386 -n "ebs-ubuntu-8.04-i386-20100607" -d "EBS Ubuntu 8.04 i386 20100607" -b /dev/sda2=ephemeral0 --root-device-name /dev/sda1
+IMAGE   ami-c4b65e31
+</pre>
+
+
+<p>用新的AMI來開instance吧!</p>
+
+<pre class="brush:bash">
+$ ec2-run-instances ami-c4b65e31 -k mykeypair -g default -z us-east-1a -t m1.small --instance-initiated-shutdown-behavior stop --disable-api-termination
+RESERVATION     r-4ac31021      107357334611    default
+INSTANCE        i-949c91ef      ami-c4b65e31                    pending mykeypair 0               m1.small        2010-06-07T08:01:21+0000        us-east-1a             monitoring-disabled  
+</pre>
+
+
+<p>等新的instance的狀態是running, 就可以連進去看看</p>
+
+<pre class="brush:bash">
+$ ec2-describe-instances i-949c91ef
+RESERVATION     r-4ac31021      107357334611    default
+INSTANCE        i-949c91ef      ami-c4b65e31    ec2-174-129-101-39.compute-1.amazonaws.com      domU-12-31-38-00-40-22.compute-1.internal       running mykeypair 0      m1.small 2010-06-07T08:01:21+0000        us-east-1a                              monitoring-disabled     174.129.101.39  10.252.71.208                   ebs
+BLOCKDEVICE     /dev/sda1       vol-a1179d66    2010-06-07T08:01:25.000Z
+
+$ ssh -i mykeypair.pem root@174.129.101.39
+</pre>
+
+
+
+
+<h2>Clean Up</h2>
+
+
+<p>確認新的instance工作一切正常之後, 就可以把之前舊的instance, volume, snapshot清乾淨了. 首先, 把舊的instance給砍了.</p>
+
+<pre class="brush:bash">
+$ ec2-terminate-instances i-a20a871a
+Client.OperationNotPermitted: The instance 'i-a20a871a' may not be terminated. Modify its 'disableApiTermination' instance attribute and try again.
+</pre>
+
+
+<p>哈哈! 如果你和我一樣, 都習慣在run instance時加了<code>--disable-api-termination</code>, 或是用</p>
+
+<pre class="brush:bash">
+$ ec2-modify-instance-attribute --disable-api-termination true $instanceId
+</pre>
+
+
+<p>把API termination 給disabled的話, 就可以避免不小心把instance給砍了, 一失足成千古恨咩! 現在確定要砍了的話, 就把API termination enable:</p>
+
+<pre class="brush:bash">
+$ ec2-modify-instance-attribute i-a20a871a --disable-api-termination false
+disableApiTermination   i-a20a871a      false
+</pre>
+
+
+<p>現在可以terminate了.</p>
+
+<pre class="brush:bash">
+$ ec2-terminate-instances i-a20a871a
+INSTANCE        i-a20a871a      stopped terminated
+</pre>
+
+
+<p>然後看一下舊的instance的AMI的資料, 記下snapshot ID.</p>
+
+<pre class="brush:bash">
+$ ec2-describe-images ami-155b3811
+IMAGE   ami-155b3811    107357334611/ebs-ubuntu-8.04-32b-20100301  107357334611    available       private         i386    machine                         ebs
+BLOCKDEVICEMAPPING      /dev/sda1               snap-e13ab246   20
+</pre>
+
+
+<p>先把舊的AMI deregister:</p>
+
+<pre class="brush:bash">
+$ ec2-deregister ami-155b3811
+IMAGE   ami-155b3811
+</pre>
+
+
+<p>再把舊的snapshot給砍了</p>
+
+<pre class="brush:bash">
+$ ec2-delete-snapshot snap-e13ab246
+SNAPSHOT        snap-e13ab246
+</pre>
+
+
+<p>最後可以把舊的volume 給砍了</p>
+
+<pre class="brush:bash">
+$ ec2-delete-volume vol-242e0c1a
+VOLUME  vol-242e0c1a
+</pre>
+
+
+<p>完成! 坐在自己的位子就可以做好了咩!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-08T02:37:58+08:00" pubdate data-updated="true">2010-06-08</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/06/08/recovery-of-ebs-boot-ec2-instances" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/06/08/recovery-of-ebs-boot-ec2-instances" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/06/04/intro-to-aws-slides" title="Previous Post: Intro to AWS slides">&laquo; Intro to AWS slides</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/06/14/aws-news" title="Next Post: 一些AWS News">一些AWS News &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>開始用S3 - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="S3是什麼? Amazon Simple Storage Service(S3) 是Amazon Web Service (AWS) 裡最早開始的服務之一. 雖然名字裡有一個Simple, 但是S3卻是一點也不簡單的服務! S3讓你任意的從internet上儲存, 讀取資料, 不用擔心硬碟爆掉, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/01/26/start-s3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">開始用S3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-26T20:14:47+08:00" pubdate data-updated="true">2010-01-26</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>S3是什麼?</h2>
+
+
+<p>Amazon Simple Storage Service(<a title="S3" href="http://aws.amazon.com/s3/" target="_blank">S3</a>) 是Amazon Web Service (<a title="AWS" href="http://aws.amazon.com/" target="_blank">AWS</a>) 裡最早開始的服務之一. 雖然名字裡有一個Simple, 但是S3卻是一點也不簡單的服務! S3讓你任意的從internet上儲存, 讀取資料, 不用擔心硬碟爆掉, 還有server掛掉的問題. 簡單介紹完, 馬上來看看怎麼開始用S3.</p>
+
+<h2>申請AWS 帳號</h2>
+
+
+<p>因為這是有關AWS的第一篇文章, 所以我先走一次申請AWS的流程囉. 先到 <a title="aws" href="http://aws.amazon.com/" target="_blank">http://aws.amazon.com/</a> , 點選 &#8220;Sign up for a free Amazon Web Services Account&#8221;. 你應該已經有Amazon的帳號了吧? 蝦米? 還沒有? 趕快建立一個吧! 如果是公司要用的就建立一個公司的帳號吧! 有Amazon帳號就打密碼, 再按&#8221;Sign in using our secure server&#8221;. 現在可以到 http://aws.amazon.com/s3 的網頁了, 再點選 &#8220;Sign Up For Amazon S3&#8221;, 這一頁就是要你填信用卡資料而已啦, &nbsp;我知道你也是個無怨無悔為公司奉獻的員工, 但是也不要填入你的卡號啊! 公司應該有信用卡吧, 沒有的話趕快去生一張咩!</p>
+
+<h2>取得Keys</h2>
+
+
+<p>使用S3需要Access Key ID 及 Secret Access Key. 連到<a href="http://aws.amazon.com/">http://aws.amazon.com/</a>, 選&#8221;Account&#8221;, 再選&#8221;Security Credentials&#8221;, 在&#8221;Access Key&#8221; 的tab那邊, 就可以看到你的這兩個key啦! secret access key 一定要安全的保管, access key id 則是用來辦別你是用哪一個secret access key的, 所以比較沒有關係.</p>
+
+<h2>選擇client</h2>
+
+
+<p>因為是在雲端裡, AWS的服務都有提供SOAP和REST兩種界面. 所以S3的client真是<a href="http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=47" target="_blank">百百種</a>啊! 好用不好用真的參差不齊, 以下是我的經驗囉!</p>
+
+<ul>
+    <li> <a href="https://addons.mozilla.org/en-US/firefox/addon/3247">S3fox</a> 是firefox plugin, 有firefox就可以用, 方便你用GUI去操作, 最快上手.</li>
+    <li><a href="http://jets3t.s3.amazonaws.com/index.html">jets3</a> 用java寫的. 有API 也有GUI. 有完整實作S3的功能, 可是我嫌它有點肥, 好像java的library常常會這樣吼.</li>
+    <li><a href="http://s3sync.net/">s3sync</a> 用ruby寫的. 是我最常用的啦! 因為在shell 裡有時要傳個檔案還是懶得開GUI, 直接打指令就可以了, 好像很久沒更新了, 不過好用就好.</li>
+    <li><a href="http://code.google.com/p/jclouds/">jclouds</a> 也是用java寫的. 這套API是我覺得寫得最棒的! 但是這個project還很新, 很多文件都沒有, 所以我還在密切注意中!</li>
+</ul>
+
+
+<p>至於我在開發的時候, 是用自己寫的library去使用S3 REST的界面啦, 因為我覺得java 的S3 library都不是很好用吔. 也許以後jclouds更成熟, 我就會改用他囉! 以下我就用最常用的s3sync來示範啦(其實是我懶得抓圖啦!). 先下載s3sync:</p>
+
+<pre class="brush:bash">$ wget http://s3.amazonaws.com/ServEdge_pub/s3sync/s3sync.tar.gz
+$ tar zxf s3sync.tar.gz
+$ cd s3sync
+$ mv s3config.yml.example s3config.yml</pre>
+
+
+<p>編輯s3config.yml</p>
+
+<pre class="brush:bash">$ vim s3config.yml</pre>
+
+
+<p>把前兩個改成你的access key 和secret access key囉, 第3個砍掉就可以了!</p>
+
+<pre class="brush:text">aws_access_key_id: 11111111111111111111111
+aws_secret_access_key: 222222222222222222222
+ssl_cert_dir: /home/user/s3sync/certs</pre>
+
+
+<p>然後看一下README.txt 囉! 主要是告訴s3sync去哪裡找到設定, 我都是用:</p>
+
+<pre class="brush:bash">$ export S3CONF=$我的s3sync安裝目錄</pre>
+
+
+<p>當然要有ruby啦! 沒有的話就裝一下咩!</p>
+
+<pre class="brush:bash">$ sudo apt-get install ruby ruby1.8 libruby1.8 libopenssl-ruby libopenssl-ruby1.8</pre>
+
+
+<h2>操作buckets</h2>
+
+
+<p>S3的兩個組成就是bucket和object. bucket就是S3裡面的最上層分類, 所有的objects 都是放在bucket裡, 一個bucket 可以放無限個objects, bucket name 在S3裡是唯一的. 一個帳號可以建立100個buckets, 不過相信我, 你不需要那麼多, 多了反而難管理. 一般來說就是以每一個application/domain 開一個bucket就夠了. bucket name 的限制是:</p>
+
+<ul>
+    <li>3 ~ 255 個字, 可包含英文字母, 數字, periods(.), dashes(-), underscores(_)</li>
+    <li>要數字或字母開頭</li>
+    <li>不可長得像IP (192.168.1.1)</li>
+</ul>
+
+
+<p>但是為了virtual hosting 的功能, 最好是符合以下的額外條件:</p>
+
+<ul>
+    <li>3 ~ 63 個字, 可包含小寫字母,數字,&nbsp;periods(.),&nbsp;dashes(-)</li>
+    <li>不可dashes(-)結尾, eg: test-</li>
+    <li>不可兩個periods(.)相連, eg: test..test</li>
+    <li>不可periods(.)和橫線(-)相連, eg: test-.test , test.-test</li>
+</ul>
+
+
+<p>virtual hosting可以很方便的access你的object, 例如我有一個bucket叫mysecret, 裡面有一個object 叫good.avi, 那這個object的URL就是</p>
+
+<pre class="brush:text">http://mysecret.s3.amazonaws.com/good.avi</pre>
+
+
+<p>或是用SSL的</p>
+
+<pre class="brush:text">https://mysecret.s3.amazonaws.com/good.avi</pre>
+
+
+<p>如果bucket name 不符合virtual hosting 的要求就只能用下面這種URL囉!</p>
+
+<pre class="brush:text">http://s3.amazonaws.com/my(秘)/good.avi</pre>
+
+
+<p>如果你很有分享的精神的話, 把good.avi設成public read, 那我可以在browser 直接打上面的URL去讀取到, 很方便的. 和bucket有關的還有location, access control, DNS caching, redirection等議題, 以後再討論囉! 現在來建立bucket了:</p>
+
+<pre class="brush:bash">$ ./s3cmd.rb createbucket mysecret</pre>
+
+
+<p>如果你得到409 Conflict, 那就是這個bucket name已被別人用囉, 再想一個吧!</p>
+
+<p>看看自己有哪些buckets:</p>
+
+<pre class="brush:bash">$ ./s3cmd.rb listbuckets</pre>
+
+
+<p>看看mysecret裡有什麼objects?</p>
+
+<pre class="brush:bash">$ ./s3cmd.rb list mysecret</pre>
+
+
+<p>關於listing objects 這個也是可以搞得很複雜啊! 以後再討論囉!</p>
+
+<h2>操作objects</h2>
+
+
+<p>object是用key 去識別的. object key在bucket裡不重覆就可以了, object key就不像bucket name有那麼多限制了, 可以是1 ~ 1024個UTF-8字元, 但是為了管理和使用上的方便, 取名就是一門藝術了, 這個議題也先擱著. object value就是你存的東西, 大小限制是 5 GB. (不錯吧! 剛好可以讓你放一整張DVD). 和object有關的還有key listing, metadata, 和access control等議題, 也是以後再討論囉. 現在該傳些好的東西和好朋友分享了.</p>
+
+<pre class="brush:bash">$ ./s3cmd.rb put mysecret:good.avi /pathto/good.avi Content-Type:video/avi x-amz-acl:public-read</pre>
+
+
+<p>因為bucket和object 預設都是private 所以要特別說我要public read, 而為了日後自己的方便, Content-Type最好自己加上去, Content-Length則是s3sync會幫你加, 這在你只想偷窺(peek)一下這個物件是什麼的時候很好用, 而不用整個拿下來.</p>
+
+<p>現在, 可以打開你最愛的browser, 打入網址:</p>
+
+<pre class="brush:text">http://mysecret.s3.amazonaws.com/good.avi</pre>
+
+
+<p>登登! 可以看到了! 但是怕被人發現, 還是砍掉吧!</p>
+
+<pre class="brush:bash">$ ./s3cmd.rb delete mysecret:good.avi</pre>
+
+
+<p>bucket也一並砍掉重綀了, 反正只是先玩玩. bucket裡面有object的話要先砍光, 否則會失敗哦!</p>
+
+<pre class="brush:bash">$ ./s3cmd.rb deletebucket mysecret</pre>
+
+
+<h2>結語</h2>
+
+
+<p>你可能會說S3有什麼了不起? 有很多on-line storage services啊! 是沒錯, 但是跟其他付費的on-line storage比較的話:</p>
+
+<ul>
+    <li>S3有<a href="http://aws.amazon.com/s3-sla/">SLA</a>, 比較可靠.</li>
+    <li>S3的下載速度還不錯. 如果從<a title="EC2" href="http://aws.amazon.com/ec2/" target="_blank">EC2</a>讀取又更快了, 數據以後再整理上來.</li>
+    <li>一個object 大小可以到5GB</li>
+    <li>有unique URL可以直接access! 打死一堆storage services. 而且這URL還可以自定的.</li>
+    <li>可以用<a href="http://aws.amazon.com/cloudfront/">Cloud Front </a>加快client下載的速度.</li>
+    <li>有開放低階的REST, SOAP, 也有許多程式語言的API, GUI可用</li>
+    <li>有支援BT下載, 但我沒試過</li>
+</ul>
+
+
+<p>當然也不是沒有缺點啦, 最大的當然就是要花$囉! S3適合放靜態檔案, 像是圖檔, 影片檔(怎麼都是宅男的最愛), js/css/html也是不錯, 但是要處理版本的問題. 大的檔案, 文件等等都適合. 一些常改的資料就不要放在S3了, 一直讀讀寫寫效率是很差的. 善用S3的話可以解決很多資料存取的問題.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-26T20:14:47+08:00" pubdate data-updated="true">2010-01-26</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/01/26/start-s3" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/01/26/start-s3" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/02/25/start-ec2" title="Next Post: 用EC2作一朵雲">用EC2作一朵雲 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AWS新功能 Amazon Simple Notification Service - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="AWS又推出新功能了! AWS更新功能的速度真的越來越快了, 很讓人期待將來AWS能更強大. 這次推出的新功能是 Amazon Simple Notification Service (Amazon SNS), 這個SNS和之前的Amazon SQS 是互補的. 簡單來說, SQS &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/04/08/aws-amazon-simple-notification-service">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">AWS新功能 Amazon Simple Notification Service</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-08T22:11:40+08:00" pubdate data-updated="true">2010-04-08</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>AWS又推出<a href="http://aws.typepad.com/aws/2010/04/introducing-the-amazon-simple-notification-service.html">新功能了</a>! AWS更新功能的速度真的越來越快了, 很讓人期待將來AWS能更強大. 這次推出的新功能是 <a href="http://aws.amazon.com/sns/">Amazon Simple Notification Service (Amazon SNS)</a>, 這個SNS和之前的<a href="http://aws.amazon.com/sqs/">Amazon SQS</a> 是互補的. 簡單來說, SQS 是以<a href="http://en.wikipedia.org/wiki/Message_queue">message queue</a>的形式傳遞message, 例如<a href="http://en.wikipedia.org/wiki/Java_Message_Service">JMS queue</a>. 而SNS是<a href="http://en.wikipedia.org/wiki/Publish/subscribe">pub/sub</a>的形式, 例如<a href="http://en.wikipedia.org/wiki/Java_Message_Service">JMS topic</a>. 但是要不要改用SQS或SNS還是待考慮. 因為大一點的service systems 一定已經有使用了某種程度的<a href="http://en.wikipedia.org/wiki/Message-oriented_middleware">MOM</a>, 要改用SNS,SQS可能要改很大, 這是比較麻煩的地方.</p>
+
+<p>另外, <a href="http://aws.amazon.com/elasticloadbalancing/">ELB</a>也新增了<a href="http://aws.typepad.com/aws/2010/04/new-elastic-load-balancing-feature-sticky-sessions.html">Sticky Sessions</a> 的功能. Sticky Sessions 能最佳化存取local session data, 對提昇performance和scalability都有很大的幫助, 這是個很重要的功能. 之前有<a href="http://blog.rightscale.com/2010/04/01/benchmarking-load-balancers-in-the-cloud/">另一篇文章</a>, 在比較<a href="http://haproxy.1wt.eu/">HAproxy</a>, <a href="http://www.zeus.com/">Zeus</a>, <a href="http://aicache.com/">aiCache</a>, 和 ELB 的效能. 不過他沒有給數據(數據要和他們連絡), 只有說ELB大勝咩(如果ELB大敗的話也太讓人失望了). 但是畢竟ELB在AWS還是很新的功能, 所以, 其實真的很陽春. 在實用性上面還是比不上其它的產品. 像是如果我有一個load balancer 叫<code>NeverDownLoadBalancer</code>, 我register了兩個availability zone: <code>us-east-1a</code> 和<code>us-east-1b</code>. 在<code>us-east-1a</code> 裡面有2台m1.small 的機器, 在<code>us-east-1b</code> 裡面只有1台m1.small, 但是ELB還是會把requests均分給load balancer內的availability zones, 在這裡有2個availability zones, 所以是50:50. 這樣的話<code>us-east-1b</code> 就比較忙碌. 希望ELB能再加強request dispatching 的彈性, 我會想用ELB的咩!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-08T22:11:40+08:00" pubdate data-updated="true">2010-04-08</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>, <a class='category' href='/blog/categories/news/'>news</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/04/08/aws-amazon-simple-notification-service" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/04/08/aws-amazon-simple-notification-service" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/03/31/creating-ebs-backed-amis-from-running-instances" title="Previous Post: creating EBS-backed AMIs from running instances">&laquo; creating EBS-backed AMIs from running instances</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso" title="Next Post: 用Terracotta 去Distribute Objects">用Terracotta 去Distribute Objects &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

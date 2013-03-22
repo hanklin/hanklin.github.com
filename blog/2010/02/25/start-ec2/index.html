@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>用EC2作一朵雲 - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="AWS的中心: EC2 Amazon Elastic Computing Cloud (EC2), 和S3同樣是AWS裡面最早的成員, 它的複雜性和功能性都是最高的. 從EC2推出以來, 功能一直不斷更新, 變強大. 現在更是cloud computing界的領導者. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2010/02/25/start-ec2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">用EC2作一朵雲</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-25T23:56:44+08:00" pubdate data-updated="true">2010-02-25</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>AWS的中心: EC2</h2>
+
+
+<p><a title="EC2" href="http://aws.amazon.com/ec2/">Amazon Elastic Computing Cloud (EC2)</a>, 和<a title="S3" href="http://aws.amazon.com/s3/">S3</a>同樣是<a title="AWS" href="http://aws.amazon.com/">AWS</a>裡面最早的成員, 它的複雜性和功能性都是最高的. 從EC2推出以來, 功能一直不斷更新, 變強大. 現在更是cloud computing界的領導者. EC2是一種<a title="Infrastructure as a service(IaaS)" href="http://en.wikipedia.org/wiki/Infrastructure_as_a_service">Infrastructure as a service(IaaS)</a>, 提供你on-demand computing power. 當我需要10台機器時, 我只需要透過EC2的API去啟動, 沒多久(現在大多小於30 sec), 我就有10台機器可以用了. 當我只需要3台機器時, 我可以把其它7台關掉, 就不用付這7台的錢. EC2可以說是AWS的核心功能了, 直接依附在EC2上的AWS其它服務就有<a title="Amazon Elastic Block Store(EBS)" href="http://aws.amazon.com/ebs/"> Amazon Elastic Block Store(EBS)</a>, <a title="Amazon CloudWatch" href="http://aws.amazon.com/cloudwatch/">Amazon CloudWatch</a>, <a title="Amazon Auto Scaling" href="http://aws.amazon.com/autoscaling/">Amazon Auto Scaling</a>, <a title="Amazon Elastic Load Balancing" href="http://aws.amazon.com/elasticloadbalancing/">Amazon Elastic Load Balancing</a>, <a title="Amazon Elastic MapReduce" href="http://aws.amazon.com/elasticmapreduce/">Amazon Elastic MapReduce</a>, <a title="Amazon Virtual Private Cloud" href="http://aws.amazon.com/vpc/">Amazon Virtual Private Cloud(VPC)</a>. 其它的<a title="Amazon Simple Storage Service" href="http://aws.amazon.com/s3/">Amazon Simple Storage Service(S3)</a>, <a title="Amazon Simple Queue Service" href="http://aws.amazon.com/sqs/">Amazon Simple Queue Service(SQS)</a>, <a title="Amazon Relational Database Service" href="http://aws.amazon.com/rds/">Amazon Relational Database Service(RDS)</a>, <a title="Amazon SimpleDB" href="http://aws.amazon.com/simpledb/">Amazon SimpleDB</a>, 也是圍繞在EC2週圍, 和EC2高度合作. EC2現在支援Linux與Windows, 也有許多付費軟體可以使用, 還有多種 instance types, 及regions. 功能真多啊! 還在一直更新, <a href="http://aws.amazon.com/documentation/">文件</a>看都看不完! 好吧, 工程師是不會被幻覺嚇倒的, 現在來看看怎麼用EC2實現雲端運算.</p>
+
+<h2>人造雲的工具</h2>
+
+
+<p>EC2也使用REST, SOAP界面, 所以也是有很多API和GUI咩! 照例我來介紹一些工具.</p>
+
+<ul>
+    <li><a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=351&amp;categoryID=88">Amazon EC2 API Tools</a> 是Amazon出的, 可以在命令列下指令, 每當EC2有新功能時, 這個tool也會同步更新. 是我最常用的.</li>
+    <li><a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=368&amp;categoryID=88">Amazon EC2 AMI Tools</a> 是Amazon出的, 這是用來建立Amazon Machine Image(AMI)的. AMI是啟動新instances時的範本, 你可以把他想像成是整個系統備份出來的影像檔, 開instances時就是把AMI還原回去, 就是一台機器了.</li>
+    <li><a href="http://aws.amazon.com/console/">AWS Management Console</a> 是Amazon出的web application. 不用安裝東西就可以操作EC2, 幾乎所有操作都可以完成. 是不愛打字的人的福音啊!</li>
+    <li><a href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=609&amp;categoryID=88">Elasticfox</a> 是Firefox plugin, 大概從AWS Management Console出了之後就沒用過了. 如果要填secret key還是填給Amazon比較沒問題您說是吧! (前一陣子Firefox才發佈說有幾個plugin是惡意的說, 愛注意啊!)</li>
+    <li><a href="http://code.google.com/p/jclouds/">jclouds</a> 前一篇有提過的jclouds, 一樣也是再等他文件多一點再用.</li>
+</ul>
+
+
+<p>等一下我還是用EC2 API Tools來說明(沒錯!! 我還是懶得抓圖!! 本blog以圖少著稱!!). AWS的強項就是所有功能都有API, 在AWS Management Console按一按就能把機器開好, 多沒成就感! 這樣怎麼能顯得出工程師的厲害咧? 所以我們還是用command工具吧!</p>
+
+<h2>安裝EC2 API Tools</h2>
+
+
+<p>許多EC2工具都要用private key 和certificate, EC2 API Tools也是一樣. 你可以按照以下的步驟取得它們.
+先到<a href="http://aws.amazon.com/">http://aws.amazon.com/</a>, 先點選&#8221;Account&#8221;那個tab, 再點選&#8221;Security Credentials&#8221;. 如果你還沒有AWS帳號, 就先看<a href="/p/1">這一篇</a>建立一個.
+在&#8221;Access Credentials&#8221; 那一區, 點選&#8221;X.509 Certificates&#8221;那個tab, 勇敢的按下&#8221;Create a New Certificate&#8221;按鈕吧!
+分別按&#8221;Download Private Key File&#8221; 及&#8221;Download X.509 Certificate&#8221;按鈕, 下載這兩個檔案, 下載好就可以按&#8221;close&#8221;. 兩個檔案名稱會長得像這樣:
+<code>cert-AZO6NISCCNOM3FQLCJAJADEYC7HLLWH5.pem</code><br />
+<code>pk-AZO6NISCCNOM3FQLCJAJADEYC7HLLWH5.pem</code></p>
+
+<p>其中private key(pk-*.pem)那個檔案, 如果不下載就沒機會再下載了(嚇! 這是一生一次的機會啊!), 只能再產生新的啦. 這兩個檔案也是要保存好.</p>
+
+<p>現在可以下載EC2 API Tools了. 因為這是java的library, 所以裝之前要先有java哦.</p>
+
+<pre class="brush:bash">$ wget http://s3.amazonaws.com/ec2-downloads/ec2-api-tools.zip
+$ unzip ec2-api-tools.zip</pre>
+
+
+<p>解壓好出現一個目錄: <code>ec2-api-tools-1.3-46266</code>, 1.3-46266 是ec2-api-tools的 version/release numbers, 你的可能會不一樣.</p>
+
+<pre class="brush:bash">$ cd ec2-api-tools-1.3-46266</pre>
+
+
+<p>有幾個環境變數要設:</p>
+
+<pre class="brush:bash">JAVA_HOME=$java-dir
+EC2_HOME=$ec2-api-tools-dir
+PATH=$PATH:$ec2-api-tools-dir/bin
+EC2_PRIVATE_KEY=~/.ec2/pk-AZO6NISCCNOM3FQLCJAJADEYC7HLLWH5.pem
+EC2_CERT=~/.ec2/cert-AZO6NISCCNOM3FQLCJAJADEYC7HLLWH5.pem</pre>
+
+
+<p>設好了之後, 試試看有沒有動靜</p>
+
+<pre class="brush:bash">$ ec2-version
+1.3-46266 2009-11-30</pre>
+
+
+<p>EC2 instances的位置由regions與availability zones來分層. regions是由地理位置分隔, 如US, EU. availability zones是在region之內的小分區, 不會被同region內的其它availability zones失效而影嚮到. 你可以把他想成是機房代號. 同一region內的instances在network latency比較低. 現在來看看EC2有哪些regions:</p>
+
+<pre class="brush:bash">$ ec2-describe-regions
+REGION  eu-west-1       ec2.eu-west-1.amazonaws.com
+REGION  us-east-1       ec2.us-east-1.amazonaws.com
+REGION  us-west-1       ec2.us-west-1.amazonaws.com</pre>
+
+
+<p>可以看到有3個regions的名字, 以及它們的service endpoints. 那來看看有哪些availability zones:</p>
+
+<pre class="brush:bash">$ ec2-describe-availability-zones
+AVAILABILITYZONE        us-east-1a      available       us-east-1
+AVAILABILITYZONE        us-east-1b      available       us-east-1
+AVAILABILITYZONE        us-east-1c      available       us-east-1
+AVAILABILITYZONE        us-east-1d      available       us-east-1</pre>
+
+
+<p>可以看到us-east-1 下面有4個availability zones, 那我想要看看eu-west-1有哪些availability zones:</p>
+
+<pre class="brush:bash">$ ec2-describe-availability-zones -U https://eu-west-1.ec2.amazonaws.com
+AVAILABILITYZONE        eu-west-1a      available       eu-west-1
+AVAILABILITYZONE        eu-west-1b      available       eu-west-1</pre>
+
+
+<p>目前eu-west-1 下面有2個availability zones. 如果我都是一直在eu-west-1工作, 那我可以設一個環境變數</p>
+
+<pre class="brush:bash">EC2_URL=https://eu-west-1.ec2.amazonaws.com</pre>
+
+
+<p>這個service endpoint URL 的規則就是<code>https://$REGION_NAME.ec2.amazonaws.com</code>
+另外, EC2_PRIVATE_KEY, EC2_CERT, EC2_URL這三個環境變數如果不設, 也可以每次下指令時用參數去指定.</p>
+
+<pre class="brush:text">-K, --private-key
+-C, --cert CERT
+-U, --url URL</pre>
+
+
+<p>還有一個特別的參數 <code>--region</code> , 它會override -U 和 EC2_URL 環境變數. 給的方法就是:</p>
+
+<pre class="brush:text">--region $REGION_NAME</pre>
+
+
+<p>看看有開了幾個instances(當然是還沒有半個)</p>
+
+<pre class="brush:bash">$ ec2-describe-instances</pre>
+
+
+
+
+<h2>天邊的一朵雲</h2>
+
+
+<p>想要生一朵雲出來, 得先有一份可以用的AMI. 說到這個AMI啊, 也是一門藝術了(哈哈! 難的東西我都先說是藝術), 以後再提怎麼作自己的AMI啦. 我用早期的ec2-ami-tools有一些問題, 在作AMI的過程中常常會失敗(也有可能是我技術太差!@#), 現在就比較好用了. AMI有分public和private的, 還有分免費和付費的. 我就先用別人作好的AMI來造第一朵雲啦. <a href="http://aws.amazon.com/resources/">Amazon Developer Resources</a>上有很多免費的<a href="http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=171">public AMIs</a>.&nbsp;我選了Fedora Core 8, 32-bit, 有先裝 Apache的AMI, 它的AMI id是ami-60da3d09, 先把它記下來. 因為現在是第一朵雲, 為了等一下用ssh連進去, 我們要先產生ssh用的key file.</p>
+
+<pre class="brush:bash">$ ec2-add-keypair mykeypair
+KEYPAIR mykeypair   f3:10:0b:98:3c:6b:89:b1:11:51:fc:de:0f:b6:52:7c:cc:1d:53:8a
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAmdp6bIiTdZRYfB6rBx6vXYeAyNPZnZcZVGoA/zoa53cQ/G92pl4zEWzVlvyR
+.
+略...
+.
+Ot+c8poWUu7Lxvrgx9RiCtJZN1UzaCWJQqno/0ufvMUmENZXHiNWtqD4bnAV+bZN4eI=
+-----END RSA PRIVATE KEY-----</pre>
+
+
+<p>把&#8212;&#8211;BEGIN 到 &#8212;&#8211;END 那幾行存成<code>mykeypair.pem</code></p>
+
+<p>經過重重難關, 終於可以生一朵雲了!</p>
+
+<pre class="brush:bash">$ ec2-run-instances ami-60da3d09&nbsp;-k mykeypair -g default -z us-east-1a -t m1.small
+RESERVATION     r-7430c31d      924417782495    default
+INSTANCE        i-ae0bf0c7      ami-60da3d09&nbsp;pending mykeypair   0    m1.small    2008-03-21T16:19:25+0000        us-east-1a</pre>
+
+
+<p><code>-k</code> 這個選項是指定要用哪個keypair, 建議一定要給啊! 等一下就可以用key file登入這台機器.
+<code>-g</code> 這個選項是指定instances所在的security groups, 可以不給, 但是這個選項對管理instances很重要, 建議每次一定要給. 你可以把它想成是iptables. 這個選項可以指定多次, 讓這些instances 屬於多個security groups.&nbsp;這也是一生一次的機會, 指定就不能改了. 一開始會有一個security group 叫default, 所以先用它咩.
+<code>-z</code> 是指定availability zone, 也是可以不給, 但是建議每次一定要給. 如果不給的話EC2會在region內自動選一個availability zone.
+<code>-t</code> 是指定instance type, 不給就是最小的機器(m1.small), 也是建議每次寫清楚.
+如果你有看EC2的文件的話, 他的示範指令是一次開20個instances, 真是豪氣啊!! 再加上用High-Memory Quadruple Extra Large, 錢就燒得很快了.</p>
+
+<pre class="brush:bash">$ ec2-run-instances ami-60da3d09&nbsp;-k mykeypair -g default -z us-east-1a -n 20 -t m2.4xlarge</pre>
+
+
+<p>好,看一下剛剛EC2傳回的資訊: 可以看到instance-id(i-ae0bf0c7), 所用的AMI (ami-60da3d09), status (pending), key pair (mykeypair), 序號(0) 如果一次開多個instances, 序號就會遞增下去, instance type (m1.small), 開的時間, 還有所在的availability zone (us-east-1a). 現在來查看這個instance 開好了沒:</p>
+
+<pre class="brush:bash">$ ec2-describe-instances i-ae0bf0c7
+RESERVATION     r-7430c31d      924417782495    default
+INSTANCE        i-ae0bf0c7      ami-60da3d09&nbsp;ec2-67-202-7-236.compute-1.amazonaws.com        ip-10-251-31-162.ec2.internal   running mykeypair     0               m1.small        2010-02-10T16:19:25+0000  us-east-1a</pre>
+
+
+<p>好了, 狀態是running 了, 而且多了domain name的資訊. ec2-67-202-7-236.compute-1.amazonaws.com 拿去查DNS的話就是67.202.7.236 (很沒創意但是很方便), ip-10-251-31-162.ec2.internal 則是只能在EC2內查, 會得到private IP. 目前新開的instances都會有一個動態public IP, 如果要固定IP, 要用&nbsp;<a title="Elastic IP" href="http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1346">Elastic IP</a> 來解決, 這類管理的問題後以再提咩. 關於得到新開的instances的資訊(如public IP)還有別的方法, 也是可以由API得到, 也是以後再說咩.</p>
+
+<h2>胡搞瞎搞</h2>
+
+
+<p>EC2 instances開好了, 也開始扣錢了, 可是怎麼證明我有一台機器咧? 現在要開始設定security groups了. 把port 80 和世界接軌吧!</p>
+
+<pre class="brush:bash">$ ec2-authorize default -p 80 -s 0.0.0.0/0</pre>
+
+
+<p>看看目前的security group設定: (這個命令沒有s, 害我常打錯! 厚~真煩)</p>
+
+<pre class="brush:bash">$ ec2-describe-group
+GROUP   102200112200    default default group
+PERMISSION      102200112200    default ALLOWS  tcp     80      80      FROM    CIDR    0.0.0.0/0
+PERMISSION      102200112200    default ALLOWS  all                     FROM    USER    102200112200    GRPNAME default</pre>
+
+
+<p>好的, 打開chrome(Firefox也行, IE6的話&#8230;我只能說您的耐心真好啊!), 打入你的instance的IP, 應該會看到apache 的 It works! 咩. 好啦, 光明正大的從大門進去怎麼能滿足宅男工程師呢, 當然要試試走後門啦!</p>
+
+<pre class="brush:bash">$ ec2-authorize default -p 22 -s $your-public-ip-address/32
+$ ssh root@67.202.7.236 -i mykeypair.pem</pre>
+
+
+<p><code>$your-public-ip-address</code> 是你的public IP不是instance的IP, 別搞錯了.</p>
+
+<p>看看instance storage容量:</p>
+
+<pre class="brush:bash">$ df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1             8.0G  610M  7.0G   8% /
+varrun                854M   48K  854M   1% /var/run
+varlock               854M     0  854M   0% /var/lock
+udev                  854M   20K  854M   1% /dev
+devshm                854M     0  854M   0% /dev/shm
+/dev/sda2             147G   28G  112G  21% /mnt</pre>
+
+
+<p>instance storage 以前叫ephemeral store, 因為instances 一關掉, 資料就消失在空氣中了. 關於storage還有很多花樣, 也是後以再提咩.</p>
+
+<p>如果你很有四海一家的精神, 願意把錢花在 <a title="SETI" href="http://setiathome.berkeley.edu/">找外星人</a>, 幫忙<a title="Folding@home" href="http://folding.stanford.edu/">算算蛋白質</a>, 或是<a title="Climateprediction.net" href="http://climateprediction.net/">計算地球氣候變化</a>. 那你就可以把你的instances加入他們的grid了! 我沒有那麼崇高的理想咩, 因為我現在主要是作網站架構, 所以我的目標就是把系統設計成可以像他們一樣的有彈性, 這樣可以依工作量來調配系統資源. EC2給了我這個可能性! 好了! 離題了. 最後記得砍掉啊!</p>
+
+<pre class="brush:bash">$ ec2-terminate-instances i-ae0bf0c7</pre>
+
+
+
+
+<h2>每個人心中都有一朵雲</h2>
+
+
+<p>cloud computing是最近最熱門的話題, 連報紙都可以看到&#8221;台灣雲端元年&#8221;這個詞, 但這對既有的系統架構是全然不同的概念. 把現有系統搬到EC2上面是很簡單, 這看起來就像是本來是用實體機器, 現在改成用virtual machine來跑.  但是這並不代表現有系統不用作任何改變, 在雲端的系統應該有<a href="http://gojko.net/2010/01/25/designing-applications-for-cloud-deployment/">適合的系統架構</a>. 以前被視為可靠(事實上, 一掛就死得很慘)的intranet, storage, 現在在cloud computing上都變成了internet, ephemeral storage. 設計這樣的系統是一大挑戰, 但是能讓你的系統更有彈性,  不怕任何一台機器掛掉, 還可以快速的, 動態的調配資源. (哈哈, 這是最高目標啦!)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-25T23:56:44+08:00" pubdate data-updated="true">2010-02-25</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2010/02/25/start-ec2" data-via="hanklin" data-counturl="http://hanklin.com/blog/2010/02/25/start-ec2" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/01/26/start-s3" title="Previous Post: 開始用S3">&laquo; 開始用S3</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/03/16/terracotta-tomcat-session-replication" title="Next Post: 用terracotta達成tomcat session replication">用terracotta達成tomcat session replication &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

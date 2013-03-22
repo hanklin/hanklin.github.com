@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: news | Hank Lin]]></title>
+  <link href="http://hanklin.com/blog/categories/news/atom.xml" rel="self"/>
+  <link href="http://hanklin.com/"/>
+  <updated>2013-03-22T10:47:20+08:00</updated>
+  <id>http://hanklin.com/</id>
+  <author>
+    <name><![CDATA[Hank Lin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Seraph:You seek the Oracle?]]></title>
+    <link href="http://hanklin.com/blog/2011/05/25/seraphyou-seek-the-oracle"/>
+    <updated>2011-05-25T09:37:03+08:00</updated>
+    <id>http://hanklin.com/blog/2011/05/25/seraphyou-seek-the-oracle</id>
+    <content type="html"><![CDATA[<h2>RDS for Oracle Database</h2>
+
+
+<p>好的, 很冷...只有迷The Matrix的人才懂這個梗. 雖然說NoSQL很紅, 可是即使我們使用了NoSQL在系統裡, 通常還是會需要一個RDBMS. 因為太多libraries, modules, systems都使用了RDBMS, 而且RDBMS也真的好用, 成熟. Google App Engine, AWS等雲端服務提供者都有NoSQL的database, 但是和用習慣的RDBMS比起來, 真的很難用. 即使大廠都在大力的推, 一般公司也不會輕易採用.</p>
+
+<p>在RDBMS界, 除了開源界的MySQL最多網站在使用之外, 公司或大系統最受歡迎的大概就是Oracle了. 我以前使用Oracle的經驗也都是滿愉快的, 容易使用, 功能強大. 如果說有一個雲端Oracle database, 自動幫你維護管理, 你只要使用就好了, 是不是有點夢幻? (database參數和SQL要自己tune咩!) 現在Amazon的RDS就推出了Oracle Database 11g!</p>
+
+<p>我不知道有多少人在期待<a href="http://aws.amazon.com/rds/oracle/">Amazon RDS for Oracle Database</a>, 但是我知道這個一出來, 可以解決一大塊雲端系統上的空白拼圖. 使用Oracle database的系統多了一個選擇, 可以放到Amazon RDS上. 本來就買了license? 沒問題, Amazon一貫的solution就是可以使用你的license. 看一下<a href="http://aws.amazon.com/rds/pricing/">RDS的價錢頁面</a>, 當然使用Oracle會比MySQL貴一些, 但是如果你自己有買license的話, 就可以發現和MySQL的價錢是一樣的. 很合理, 也很方便, 令我很配服Amazon的整合功力.</p>
+
+<p>AWS的下一步呢? 誰知道, AWS的服務已經夠多了, 也許是擴展更多地區(region).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[cloudtw 2011-04]]></title>
+    <link href="http://hanklin.com/blog/2011/04/07/cloudtw-2011-04"/>
+    <updated>2011-04-07T23:37:12+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/07/cloudtw-2011-04</id>
+    <content type="html"><![CDATA[<p>昨天的CloudTW就在一片歡樂的氣氛中結束了, 大家還欲罷不能, 結束了還一直聊天. 謝謝Jamie熱情贊助場地和披薩飲料, 我走的時還有好多人在熱烈的討論, 讓人覺得未來充滿了希望啊! 讓我不好意思先走啊! 我想當工友來關燈的 ;o
+好啦! 以下就是slides, 本來想放幾張無名正妹在裡面的, 因為大部份內容都是code實在太無聊啦! 還是怕被抗議啦, 不過如果你是正妹, 覺得不介意被我放進slides, 可以告訴我啦! ;O</p>
+
+<div style="width:425px" id="__ss_7543966"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/multi-regionuploading" title="Multi-region uploading">Multi-region uploading</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/7543966" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[自評AWS雲端企業實戰聖經]]></title>
+    <link href="http://hanklin.com/blog/2011/03/25/aws-bible"/>
+    <updated>2011-03-25T20:23:42+08:00</updated>
+    <id>http://hanklin.com/blog/2011/03/25/aws-bible</id>
+    <content type="html"><![CDATA[<p>今天應該是正式出版日，我已經看到有很多線上通路都有出現這本書了，要接受現實的考驗啦。如果你對這本書有興趣，但是不知道內容適不適合的人，可以參考一下我對這本書的想法。
+一開始我和編輯討論了很多次，互相瞭解這本書應該的走向。編輯認為不用把每個功能、每個細節都講到，而是要注重在最重要、最有需求的AWS特色上面。而且是台灣第一本AWS的書，如果太厚或是太難，可能沒辦法推廣。我也認為是這樣，因為AWS的功能和細節真的太多啦，如果全部每個功能都說明，從我這本書的成品來推算，大概可以超過1,000頁。但是這就變成一個比較難的寫法，就是要打破依AWS服務來分別說明的方式，重新用系統架構的方式去看AWS如何使用。所以我不是把每一個AWS服務，裡面每一個功能從頭到尾教你怎麼用。而是先有一個系統的需求，依這個需求可能會用到的AWS服務去介紹。裡面當然都是我實際使用的經驗，和對系統的想法，所產生出來我認為最理想的作法。每個系統的要求不同，所以組合當然就千變萬化。實際要使用AWS的話，一定還會需要參考AWS的文件，AWS的文件的問題不是寫得不好，而是內容實在太多，又全都是英文。不過如果照這本書走過一次，再來看文件，一定可以很快就找到你要的東西。
+最後出來的成品，雖然因為篇幅太長，被刪除了不少內容和說明圖片(哈哈! 我一定要出賣編輯!)，整體的觀點還算完整。不過為了盡量塞下內容，可以看到完全沒有空白頁(驚!)。我是自我要求滿高的人，但是還是覺得有達到滿意的標準。有一些錯字、美編或排版的錯誤，就請多多包涵嘿。內容因為出版權的關係我不能自己寫，所以以下是目錄可以參考。</p>
+
+<p>第一章：誰應該使用雲端運算
+1-1 因應網路未來的雲端運算
+1-2 雲端運算的具體服務內容
+1-3 雲端運算帶來的優勢競爭力
+1-4 使用雲端運算的風險評估
+1-5 適合使用雲端運算的情境</p>
+
+<p>第二章：雲端運算領導者AWS
+2-1 AWS是什麼？
+2-2 案例：採用AWS創造更多利潤
+2-3 如何開始使用AWS
+2-4 AWS上使用的憑證和識別碼</p>
+
+<p>第三章：AWS上手必備工具
+3-1 AWS服務快速比較
+3-2 使用AWS的一般注意事項
+3-3 AWS圖形介面工具
+3-4 AWS應用程式介面
+3-5 AWS SDK（開發套件）
+3-6 AWS的其它資源</p>
+
+<p>第四章：AWS基礎：S3與雲端儲存務
+4-1 AWS的儲存功能
+4-2 一般性的儲存功能：S3
+4-3 簡單資料庫：SimpleDB
+4-4 資料庫的另一選擇：RDS</p>
+
+<p>第五章：AWS核心：EC2與其相關服務
+5-1 什麼是EC2？
+5-2 EC2虛擬機器的基礎結構
+5-3 EC2虛擬機器的延伸結構
+5-4 EC2的一些延伸問題與解決
+5-5 EC2開機操作實戰範例</p>
+
+<p>第六章：AWS進階：實作EC2佈署策略
+6-1 使用公開EBS-backed AMI
+6-2 建立S3-backed AMI
+6-3 AMI實作疑難問題解決
+6-4 AMI有效實戰策略分析
+6-5 EC2自動初始化機制</p>
+
+<p>第七章：AWS架構關鍵1：組建高延展性系統
+7-1 高延展性和雲端運算
+7-2 達成負載平衡的作法
+7-3 彈性負載平衡（ELB）
+7-4 自動延展（Auto Scaling）</p>
+
+<p>第八章：AWS架構關鍵2：非同步訊息建構策略
+8-1 什麼是非同步訊息傳遞？
+8-2 AWS的簡單佇列服務（SQS）
+8-3 AWS的簡單通知服務（SNS）</p>
+
+<p>第九章：AWS架構關鍵3：高可用性的雲端運算
+9-1 為何高可用性重要
+9-2 達成高可用性的基本AWS應用
+9-3 EC2虛擬機器掛掉了如何處理？
+9-4 CloudFront改進用戶體驗
+9-5 管理動態IP位址的方法
+9-6 用Amazon CloudWatch監視系統健康</p>
+
+<p>第十章：AWS活用策略：企業雲端優化方案
+10-1 保護你的雲端資料安全
+10-2 如何善用花在AWS每塊錢
+10-3 用分散式運算處理大量資料
+10-4 用虛擬私有雲擴張既有系統</p>
+
+<p>有什麼問題也可以留言給我啊，咱們下次見(進廣告)。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[AWS新書消息]]></title>
+    <link href="http://hanklin.com/blog/2011/03/14/%25e9%259d%259c%25e5%25a4%259c%25e6%2580%259d"/>
+    <updated>2011-03-14T09:02:13+08:00</updated>
+    <id>http://hanklin.com/blog/2011/03/14/%e9%9d%9c%e5%a4%9c%e6%80%9d</id>
+    <content type="html"><![CDATA[<p>蕭美女放首頁真是賞心悅目啊，一放就放了快二個月，捨不得擠下來啊。好啦，蕭美女放夠久了，其實是我太久沒更新了。本來以為可以好好喘口氣的，休息一下，但是我計算了一下，如果要補回之前的睡眠，必需要連續半年，每天至少睡12個小時才夠。那我看是沒辦法了。再加上各種需求，分別襲來！每天還是有做不完的事，蠟蠋多頭燒啊。<br/>
+我這個人咧，最大的問題就是廢話不多。我講的話常常和別人搭不上，但是等別人講完時，說的就是我剛剛講的話。（不過也可能是沒有人想鳥我，哼！）所以當我決定要寫blog的時候，簡直是要我的命，因為寫技術文章可不是文思泉湧就成一篇，而是要札實的理解和整體的視野，才能把一個主題有組織地寫出來。一般上班就很累了，回到家忙完生活索事，還得花時間來看書、看新消息充實知識。要有熱情才能維持下去。所以我很配服能寫技術blog文章的人。我自己是更新很慢咩，但是希望可以漸漸多產一點。<br/>
+我的新書即將在3月底出版（希望不要再延了，哈！），雖然這本書是把我的經驗整理出來，但是要在茫茫AWS海，把AWS的服務有一個系統的介紹出來，還是很難啊！AWS的文件，已經多到我不太敢看了，實在太多啦。要簡單說明一個主題，更是不容易，有一些背景知識常常不知道該不該寫。（其實常常是我懶得寫，因為我只想往後躺就睡著啊）AWS的每個主題常常互相關連，我認為對新手來說很不好理解。所以我算是用我的方式，把AWS服務作最簡明的介紹。其實要學雲端運算買我這本書就對啦，因為AWS是雲端運算的大頭目啊，AWS的服務都很不錯的。
+好啦，以上沒什麼內容，其實就是希望讀者去買我的書。希望銷售量不要太差啊...(fade out)<br/></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sleep For An Hour]]></title>
+    <link href="http://hanklin.com/blog/2011/01/25/sleep-for-an-hour"/>
+    <updated>2011-01-25T06:14:33+08:00</updated>
+    <id>http://hanklin.com/blog/2011/01/25/sleep-for-an-hour</id>
+    <content type="html"><![CDATA[<h2>每天只睡一小時</h2>
+
+
+<p><a href="http://www.youtube.com/watch?v=DyeyNaWIw-E" target="_blank"><img src="http://hanklin.com/blog/wp-content/uploads/2011/01/sk-2.png" alt="" title="sk-2" class="alignnone size-full wp-image-90" /></a>
+有一點年紀的人(自爆年紀了), 都知道蕭薔有一個SK-II的廣告, 裡面最重要的一句台詞就是: "我每天只睡一小時!", 那時年紀輕輕的我只覺得：這絕對是在唬爛! 怎麼可能有人每天只睡一小時! 就算是傳說中的拿破崙每天只睡五小時,我也覺得很不可能啊. 沒想到我一但有責任在身上的時候, 我竟然也可以逼近蕭薔的功力! 話說我在寫AWS新書的5個多月以來, 每天過得是<span style="text-decoration:line-through">魂不附體</span> 無比充實的日子, 寫稿子寫一寫就有漫步在雲端的感覺啊! 雖然說我也覺得睡覺有點浪費生命,但是有充足睡眠感覺比較能健康的活下去啊! 我在熬夜寫稿的時候, 真的有那種燃燒生命的感覺啊! 有點怕突然就倒下了, 掛掉了怎麼辦. 那時的作息是星期一到星期五是早上5點睡, 8點起來, 去上班. 星期六日則是睡8個小時, 平均每天是睡4.5小時. 雖然星期一到五是平均睡3小時, 但是和沒睡感覺差不多. 這樣子搞了幾個月, 身體覺得非常的差, 我覺得再不交稿我就要掛了. 偏偏AWS的服務越更新越快, 真的是寫了前面顧不了後面. 好在, 在5個多月的夜以繼日, 焚膏繼晷, 我終於交稿啦! 哈哈!
+不過這一個月來, 我還是沒有積極更新我的blog, 因為實在是太累啦! 好想睡它個1個月, 每天睡16個小時!! 不過現實是殘酷的啦, 面對我是窮忙一族的事實吧! 目前AWS新書正在編輯中, 希望過年後就可以接近出版的程度了. 有新的消息我會隨時更新在Blog. AWS增加新功能的速度非常的快, 所以一定有落後的資訊, 這個問題我想也是先把新的資訊更新在Blog.</p>
+
+<h2>Intro to AWS slides</h2>
+
+
+<p>前幾天, 我追隨了<a href="http://mrjamie.cc/">Mr.Jamie</a>的精神, 把"Intro to Amazon Web Services"的投影片更新了. 新的投影片沒什麼字, 可以說全部都是圖片, 所以內容全部在我的presentation裡, 沒有聽到的人就sorry啦! 有興趣可以先看一下我的新的投影片:</p>
+
+<div style="width:425px" id="__ss_4406139"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/aws-introduction" title="Intro to Amazon Web Services">Intro to Amazon Web Services</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/4406139" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

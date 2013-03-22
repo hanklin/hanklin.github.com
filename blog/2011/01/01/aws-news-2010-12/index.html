@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AWS News 2010-12 - Hank Lin</title>
+  <meta name="author" content="Hank Lin">
+
+  
+  <meta name="description" content="Auto Scaling CloudWatch monitoring 現在可以用CloudWatch去monitor AutoScalingGroup裡面的機器數目，launched和terminated機器數目，以及其它的group activities。 Percent Of Capacity &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://hanklin.com/blog/2011/01/01/aws-news-2010-12">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hanklin" rel="alternate" title="Hank Lin" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Hank Lin</a></h1>
+  
+    <h2>A new blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hanklin" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:hanklin.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">AWS News 2010-12</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-01T03:39:51+08:00" pubdate data-updated="true">2011-01-01</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Auto Scaling</h2>
+
+
+
+
+<h3>CloudWatch monitoring</h3>
+
+
+<p>現在可以用CloudWatch去monitor AutoScalingGroup裡面的機器數目，launched和terminated機器數目，以及其它的group activities。</p>
+
+<h3>Percent Of Capacity</h3>
+
+
+<p>在scaling policy多了一個屬性: AdjustmentType。原本的AdjustmentType都會是&#8221;ChangeInCapacity&#8221;，也就是ScalingAdjustment的數值是固定的數字。例如&#8221;-1&#8221;代表減少一台，&#8221;2&#8221;代表增加二台。 Type可以改用&#8221;PercentOfCapacity&#8221;，也就是相對於機器數目的百分比。例如&#8221;-10&#8221;代表減少10%的機器。&#8221;20&#8221;代表增加20%的機器。這個對設定scaling increment比較方便，因為不論是大或小的叢集，使用百分比來設定可以讓機器數目成比例增加，不必擔心設太大或太小。</p>
+
+<h3>Scheduled Update Group Action</h3>
+
+
+<p>Auto Scaling依據CloudWatch的資訊來自動scale in/out，但是這有時候不太足夠。例如，我已經知道星期一到星期五的流量是週末的三倍，或是晚上8點到12點是流量最高的時候，我希望能夠主動的scale in/out，讓使用者有更好的使用經驗，更快的符合實際的流量。現在Auto Scaling又推出了&#8221;scheduled actions&#8221;，可以讓你設定在末來的時間，叢集的&#8221;desired size&#8221;。</p>
+
+<h3>Suspend/Resume</h3>
+
+
+<p>有時候我希望Auto Scaing的trigger能夠先暫停一下，不要觸發scaling activities。例如我要佈署新版本，可能要關掉一半的機器，不希望Auto Scaling又自動幫我開一堆機器。現在Auto Scaling有Suspend/Resume功能，你可以先暫停health checking、launching、terminating、scheduled activities等等動作。</p>
+
+<h3>Health Checks</h3>
+
+
+<p>現在Auto Scaling可以利用ELB的health check結果，去做scaling activities。例如一個Load Balander發現一個EC2 instance是unhealthy，Auto Scaling可以去關掉unhealthy的機器。(還可以加上再開一台新的機器的activity)。設定方法是這個Auto Scaing Group的屬性:&#8221;HealthCheckType&#8221;，如果設成&#8221;EC2&#8221;就是原本用CloudWatch的讀數，如果設成&#8221;ELB&#8221;就是用Load Balander的health check。
+另外Auto Scaling Group還有一個新屬性:&#8221;HealthCheckGracePeriod&#8221;，代表新的機器開機以後的秒數，才會去做health check。
+你也可以自己設定某個機器的健康狀態，適合用在你自己有monitoring系統的時候。指令是&#8221;SetInstanceHealth&#8221;，傳入instanceID和HealthStatus，值可以是&#8221;Health&#8221;，或&#8221;Unhealthy&#8221;。</p>
+
+<h2>CloudWatch</h2>
+
+
+<h3>Alarms</h3>
+
+
+<p>現在CloudWatch有示警(alarming)的功能了! 你可以設定metric超過或低於一個threshold值，就發通知。一個metric可以有多個alarm，每個alarm可以有多個通知。通知的State有3種: OK、ALARM、和INSUFFICIENT_DATA。分別代表&#8221;在threshold值內&#8221;、&#8221;不在threahold值內&#8221;、和&#8221;metric值無法讀取或資訊不足&#8221;。CloudWatch的示警是發佈到SNS上面，所以要收到CloudWatch示警的地方，就去接收SNS topic。或是直接去進行Auto Scaling actions。</p>
+
+<h3>Basic Monitoring</h3>
+
+
+<p>免費啦! 又來好康了，這次是CloudWatch。其實本來CloudWatch就只有EC2的metrics才要收費，連EBS、RDS的metrics都不收費，現在更是多了Basic Monitoring。這個Basic Monitoring是EC2的CPUUtilization，Disk IO，和Network IO都不收費了，但是是5分鐘的時間間隔。如果你不需要完整的metrics和1分鐘內的取樣時間，就不需要使用收費的CloudWatch了(現在叫做Detailed Monitoring)。</p>
+
+<h2>SimpleDB</h2>
+
+
+<h3>BatchDelete</h3>
+
+
+<p>以前只有BatchPutAttributes，現在新增加了BatchDeleteAttributes，所以刪除的時候也可以用batch的作法了。</p>
+
+<h2>Amazon Route 53</h2>
+
+
+<h3>AWS的DNS</h3>
+
+
+<p>以前我就很希望AWS能夠有DNS的服務，因為動態IP實在是很麻煩啊，Elastic IP只解決了一些問題，現在Amazon推出了DNS服務&#8221;Route 53&#8221;，有AWS一慣風格，就是所有動作都有API。所以你可以在Route 53設定你的domain的records。
+不過我希望的&#8221;EC2 instances如果解析到EC2 instances的IP，可以有辦法解析成local IP addresses&#8221;，這個功能還是沒有，所以要有最大的彈性，還是得在自己在EC2裡面架一個private DNS，然後所有的EC2 instances都先用自己的DNS。(為什麼要儘量用local IP addresses? 為了省$)。</p>
+
+<h2>AWS SDK</h2>
+
+
+<h3>Android and iOS</h3>
+
+
+<p>手持裝置是未來上網成長最多的用戶，所以AWS也趕快推出了Android和iOS的SDK，就是不希望在開發新的網路應用的時候，被開發者嫌不好開發啊!</p>
+
+<h2>S3</h2>
+
+
+<h3>5 TB</h3>
+
+
+<p>夠猛了&#8230;單一物件(檔案)5TB。原本5GB對大多數的使用情境應該都夠了，但是AWS又把S3的單一物件大小限制提高到5TB! 這真是太超過了啊! (好了!可以放Bluray ISO了! )</p>
+
+<h2>EC2</h2>
+
+
+<h3>Free BSD</h3>
+
+
+<p>如果你是Free BSD的死忠用戶，要注意了! <a href="http://www.daemonology.net/blog/2010-12-13-FreeBSD-on-EC2.html">EC2現在也可以用Free BSD了!</a> 目前只能用t1.micro，不過等穩定了以後，應該可以用更多的機器類型，可以<a href="http://www.daemonology.net/freebsd-on-ec2/">到這裡選AMI</a>。</p>
+
+<h3>VM Import</h3>
+
+
+<p>現在可以用你自己的VMware的映像檔，輸入到EC2上面。</p>
+
+<p>好啦! 來不及寫了! 新年快樂，希望明年是成功的一年!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hank</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-01T03:39:51+08:00" pubdate data-updated="true">2011-01-01</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/news/'>news</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hanklin.com/blog/2011/01/01/aws-news-2010-12" data-via="hanklin" data-counturl="http://hanklin.com/blog/2011/01/01/aws-news-2010-12" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/11/30/aws-news-2010-11" title="Previous Post: AWS News 2010-11">&laquo; AWS News 2010-11</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/01/25/sleep-for-an-hour" title="Next Post: Sleep For An Hour">Sleep For An Hour &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/02/octopress-blogging">Octopress blogging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597">Jamie流行銷 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/memorize">超級記憶王 - 心得</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/21/paper-hadoop">一切從一篇paper開始 - Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/image-optimize-1">網站小圖檔的規範(1)</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hanklin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hanklin" class="twitter-follow-button" data-show-count="false">Follow @hanklin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Hank Lin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hanklin';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<!-- start Mixpanel --><script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+mixpanel.init("beb5fb64fa8eb995f72f4c037af8685c");</script><!-- end Mixpanel -->
+
+
+</body>
+</html>

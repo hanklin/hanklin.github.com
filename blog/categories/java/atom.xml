@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java | Hank Lin]]></title>
+  <link href="http://hanklin.com/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://hanklin.com/"/>
+  <updated>2013-03-22T10:47:20+08:00</updated>
+  <id>http://hanklin.com/</id>
+  <author>
+    <name><![CDATA[Hank Lin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Errata of AWS Book]]></title>
+    <link href="http://hanklin.com/blog/2011/05/20/errata-aws"/>
+    <updated>2011-05-20T07:56:06+08:00</updated>
+    <id>http://hanklin.com/blog/2011/05/20/errata-aws</id>
+    <content type="html"><![CDATA[<p>有很多圖片, 因為頁數不夠的關係, 沒有印到書上, 造成閱讀的困擾, 真的非常抱歉.
+以下是我發現的問題, 持續更新中...</p>
+
+<ul>
+<li>Page 18, 最底下的Note. 額外說明:操作成本是以單位機架來算的</li>
+<li>Page 24, L18: (註)的連結在此: <a href="http://open.blogs.nytimes.com/2008/05/21/the-new-york-times-archives-amazon-web-services-timesmachine/">The New York Times Archives + Amazon Web Services = TimesMachine</a> </li>
+<li>Page 32, L15: Newsweek用AWS開元節流 -> Newsweek用AWS開源節流</li>
+<li>Page 51, 倒數L3: 電子郵信 -> 電子郵件 <br/> 2千次封 -> 2千封</li>
+<li>Page 61, L11: 來以來 -> 來以後</li>
+<li>Page 62, L8: 介紹整合開發工具 -> 介紹軟體開發套件(SDK)</li>
+<li>Page 63, L13: C#語為主 -> C#語言為主</li>
+<li>Page 107, L15: 可以得到有「engine」 -> 可以得到有「tag」</li>
+<li>Page 108, L4: 因為「brand」可能有空值 -> 因為「name」可能有空值</li>
+<li>Page 141, L5: 內的任何一點 -> 內的任何一點來回復</li>
+<li>Page 141, L9: 可以用看AWS Management Console的 -> 可以用AWS Management Console看</li>
+<li>Page 150, 表格下Line1: 單位是每GB多少美金 -> 單位是每「機器：小時」多少美金</li>
+<li>Page 173, 倒數L3: 初使化虛擬機器 -> 初始化虛擬機器</li>
+<li>Page 196, L12: 當你把系統裝好之後, 準備開始包成AMI時 -> 當你準備建立全新的AMI時</li>
+<li>Page 218, L16: <code>$ ec2-describe-tags -F "key=env" -F "value=staging"</code></li>
+<li>Page 223, 倒數L7: 適合這個系統作法不一定適合別的作法 -> 適合這個系統的作法不一定適合別的系統</li>
+<li>Page 229, L4: EIP指向新的 -> EIP指向新的虛擬機器</li>
+<li>Page 258, 倒數L5: 系統的資料 -> 系統的資源</li>
+<li>Page 259, L5: 處理資訊傳的細節 -> 處理資訊傳遞的細節</li>
+<li>Page 267, L13: 「當事人」(Permission) -> 「當事人」(Principal) </li>
+<li>Page 319, 倒數L5: 加一行: 例如, 我在這裡選「mystatic」作為來源伺服器</li>
+<li>Page 336, 倒數L4: 拉(poll) -> 拉(pull)</li>
+<li>Page 359, 倒數L1: <code>$ ec2-describe-spot-price-history -d Linux/UNIX -s 2010-10-01T00:00:00 -e 2010-10-30T00:00:00 -H -t m2.4xlarge --region us-east-1</code></li>
+<li>Page 375, L9: 程試 -> 程式</li>
+<li>Page 385, L16: 設定你的鑰匙對-> 並設定你的鑰匙對</li>
+<li>Page 398, L3: 使用VPC需要你的還要由網路管理人員-> 使用VPC需要你提供資訊，還要由網路管理人員</li>
+
+
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Talk at NTU 2011-04-26]]></title>
+    <link href="http://hanklin.com/blog/2011/04/28/talk-at-ntu-2011-04-26"/>
+    <updated>2011-04-28T07:33:17+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/28/talk-at-ntu-2011-04-26</id>
+    <content type="html"><![CDATA[<p>最近應<a href="http://mikechen.com/">Dr. Chen</a>的邀約, 到台大資工分享我對雲端運算的想法, 照例把slides分享出來.
+最近我越來越覺得, 不能花很多時間在一件事情上, 只為了把它做得更好一點, 更接近完美一點. 不過, 事情總是沒有辦法盡善盡美, 總是有很多意外, 有很多你無法控制的事情突然跑出來, 把你之前的考量都打破, 直接超出控制. 之前我寫的AWS書是這樣, 軟體開發, 設計, 常常也是這樣. 花很多時間構思的設計, 自以為彈性佳, 容易維護和讓人理解. 但是常常很多外在因素一出現, 造成需求的改變或是系統性質的不同, 常常超出原本的構想, 然後又得砍掉重練.
+所以我最近2年來比較喜歡scripting language的原因之一, 要改, 很快, 以簡馭繁, 而且常常能寫得比compiled language還有美感, 真是一門藝術啊. 我也覺得FP比OOP有美感一些, 也更有威力.
+其實我還是比較喜歡Simplicity, 因為我覺得那是一種處理事情的極致的表現. 把所有可以丟掉的東西都去掉之後, 剩下的都是最接觸人心的. 但是我總是先盡量試試有哪些可能性, 然後再試著把比較不重要的地方省略. 也許看的東西, 學的東西多了以後, 我才能夠直接從"simple"這端開始出發!</p>
+
+<div style="width:425px" id="__ss_7749267"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/hanklin/cloud-changes-everything" title="Cloud changes everything">Cloud changes everything</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/7749267" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/hanklin">Hank Lin</a> </div> </div>
+
+
+<p>這張是我的AWS書在博客來的新書排行, 在電腦語言的分類, screen capture下來, 以後才不會看不到, 哈哈! (狀態顯示為心機重...) 下一個目標是"暢銷排行榜"!
+ <img src="http://hanklin.com/blog/wp-content/uploads/2011/04/books-new-rank.png" alt="" title="books-new-rank" width="782" height="564" class="alignnone size-full wp-image-196" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Spot EC2 Cluster Instances]]></title>
+    <link href="http://hanklin.com/blog/2011/04/08/spot-ec2-cluster-instances"/>
+    <updated>2011-04-08T19:51:26+08:00</updated>
+    <id>http://hanklin.com/blog/2011/04/08/spot-ec2-cluster-instances</id>
+    <content type="html"><![CDATA[<p>想要偷懶一下都不行, AWS新功能更新的很快, 其實我已經漏了一段時間的AWS新功能沒更新(很明顯, 大概就是之前4個月左右的新功能). 現在要來補完啦!</p>
+
+<h2>EC2 Cluster Instances can be spot instances</h2>
+
+
+<p>EC2提供的<a href="http://aws.amazon.com/hpc-applications/">HPC</a>, 如Cluster Compute 及Cluster GPU現在可以用Spot Instances計費了! 這真的很讚啊, Spot Instances一般比On-Demand便宜50%到60%, 所以想使用Cluster Compute及Cluster GPU, 又被高價嚇到的話, 可以試著結合Spot Instances來省錢! 我之前分享的<a href="http://hanklin.com/blog/p/146">"Multi-Region Uploading"</a>, 裡面的"Async. Worker"就非常適合使用Spot Instances計費啊! 完全不用怕被EC2關掉導致工作資料流失. 用這個來處理轉檔, 尤其是像CPU intensive的影片檔處理, 用Cluster Compute的instances是最適合的. 可以用很便宜的錢快速的轉好檔案, 是不是有點讓人心動了呢? 讓我也想寫個應用啊...</p>
+
+<h2>S3 Encryption Client</h2>
+
+
+<p>資料機密性, 是把資料放在服務提供者那邊最大的考量. 最簡單的作法是, 先把資料加密, 再傳到儲存服務上. 要讀取的時候, 下載好再解密, 很麻煩但是安全多了. 現在<a href="http://aws.amazon.com/sdkforjava/">AWS SDK for Java</a> 把這段也幫你作好了, 也就是改用<a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3EncryptionClient.html">AmazonS3EncryptionClient</a>這個class. 支援對稱(symmetric)和非對稱(asymmetric)兩種加密方式, 使用標準Java Cryptography Architecture (JCA)界面, 所以熟Java就可以很快上手. 不熟也沒關係, 看<a href="http://aws.amazon.com/articles/2850096021478074">這篇</a>改一改就可以了. 但是和一般資料機密性的問題一樣, 要安全, 就要帶來一些不便. 例如:</p>
+
+<ul>
+<li>AmazonS3EncryptionClient還不支援S3 Multipart upload</li>
+<li>加密的資訊, 如: symmetric key, <a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/EncryptionMaterials.html">EncryptionMaterials</a> 也要和物件一併存起來. 預設是存在這個物件的metadata裡, 所以如果你有寫物件的metadata, 要注意不要超過2KB的限制. 如果有可能超過的話, 就要改用存在另外的物件的方式. (用<a href="http://docs.amazonwebservices.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/model/CryptoStorageMode.html">CryptoStorageMode</a>選擇)</li>
+<li>自己的KeyPair, SecretKey要保管好, 不然自己都解不開</li>
+</ul>
+
+
+<p>加密之後把機密資料放在S3應該可以增加不少信心度, 但是還是回到我常說的, 要加密的資料和不加密的資料一定要分開處理, 可以放不同buckets, 或是用不同object key prefix, 這樣才方便處理.</p>
+
+<p>但是為什麼<a href="http://aws.amazon.com/sdkforjava/">AWS SDK for Java</a>始終都沒有出CloudFront的支援啦, 那個<a href="http://aws.amazon.com/sdkfornet/">AWS SDK for .NET</a>明明都有.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[AWS news 2010-10]]></title>
+    <link href="http://hanklin.com/blog/2010/10/31/aws-news-2010-10"/>
+    <updated>2010-10-31T14:08:27+08:00</updated>
+    <id>http://hanklin.com/blog/2010/10/31/aws-news-2010-10</id>
+    <content type="html"><![CDATA[<p>好啦！死撐活撐，又撐到月底了。如果要維持一個月至少一個文章，就要趕快來寫啊！這個月到底發生了什麼事，讓我們繼續看下去&hellip;</p>
+
+<h2>RDS</h2>
+
+
+<h3>RDS read replicas</h3>
+
+
+<p>最早RDS是只有一個instance，後來出現了多所在地（Availability Zone）的佈署方式，提供不中斷的服務。但是多所在地的佈署，雖然多開了一倍的機器，但是卻不能對額外的資料庫機器去讀寫。只有在一個所在地的機房掛掉的時候，RDS會切換到另一個所在地的RDS instances。雖然這就是HA的代價，不過還是會覺得有點不甘心吶！<a href="http://aws.amazon.com/rds/#Read_Replica">Amazon RDS read replicas</a>讓你可以分散讀取的流量，其實就是我們熟悉的MySQL replication的功能。所以用RDS read replicas和MySQL replications一樣，都有資料不一致的風險，在應用層要注意處理唄。</p>
+
+<h3>降價</h3>
+
+
+<p>又降了又降了，Amazon是嫌賺太多了嗎？看一下<a href="http://aws.typepad.com/aws/2010/10/amazon-rds-price-reduction.html">AWS blog</a>就知道降的比例還滿大的。</p>
+
+<h2>AWS Management Console</h2>
+
+
+<h3>支援SNS</h3>
+
+
+<p>AWS Management Console可以玩SNS了，但是還沒支援SQS。</p>
+
+<h3>設定RDS的MySQL版本</h3>
+
+
+<p>如果你需要確定的一版MySQL的話，可以在AWS Management Console裡設定了。</p>
+
+<h2>ELB支援SSL了</h2>
+
+
+<p>以前ELB把SSL連線送到你的EC2 instances，所以你所有收SSL連線的EC2 instances都要裝SSL certificates。裝的effort是還好，但是SSL連線是很花運算資源的。所以一般都是在LB上面收SSL，轉發的時候就是一般的TCP連線了。畢竟到了自己家比較不怕人偷看了。設定的步驟要先把你的SSL certificate上傳到你的AWS帳號，會產生一個ID，然後在建立ELB的時候，把這個ID設定上去。這樣就只剩一個問題了，如果我的伺服器希望知道用戶端是HTTP還是SSL連線的話，要怎麼知道？AWS會在這個request的header加上<code>X-Forwarded-Proto: https</code>，這樣如果你需要分辨使用不同protocol的用戶端，就可以辦到了。
+AWS真是揪甘心蛤！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用Terracotta 去Distribute Objects]]></title>
+    <link href="http://hanklin.com/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso"/>
+    <updated>2010-04-21T02:02:19+08:00</updated>
+    <id>http://hanklin.com/blog/2010/04/21/terracotta-distributed-shared-objects-terracotta-dso</id>
+    <content type="html"><![CDATA[<h2>Terracotta DSO</h2>
+
+
+<p>
+Terracotta又來啦! 這次是講所謂的Terracotta Distributed Shared Object(DSO). <a href="http://hanklin.com/blog/p/6">上次</a>有提到用terracotta去作tomcat cluster, 把HttpSession裡的東西在cluster間分享, 不過在一般Java application也想有這種distributed objects要怎麼作?  上一篇畢竟是初次體驗, 對terracotta有什麼本事還沒有說得很完整. 這次我要比較詳細的說明terracotta的架構和原理, 將來如果要開始設計一個distributed applications時, 可以試著用terracotta的programming model去看問題. 不一定要用terracotta, 但是多瞭解一種clustering的方法總是好的. 如果還沒裝terracotta, 可以看上一篇把terracotta裝起來. 先來看一個很簡單的例子:</p>
+
+<p><code>DsoMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.util.Random;
+
+public class DsoMain {
+    private Integer number = new Random().nextInt();
+
+    public static void main(String[] args) {
+        DsoMain tc1 = new DsoMain();
+        DsoMain tc2 = new DsoMain();
+        print(tc1.number, tc2.number);
+        tc1.number = new Integer(tc2.number);
+        print(tc1.number, tc2.number);
+    }
+
+    private static void print(Integer n1, Integer n2) {
+        System.out.println("n1=" + n1 + ", n2=" + n2);
+        System.out.println("n1==n2 ? " + (n1 == n2));
+        System.out.println("n1.equals(n2)? " + (n1.equals(n2)));
+    }
+}</pre>
+
+
+<p>看起來是再簡單不過了, 執行看看:</p>
+
+<pre class="brush:bash">$ java -cp . com.hanklin.DsoMain
+n1=174724645, n2=1254665546
+n1==n2 ? false
+n1.equals(n2)? false
+n1=1254665546, n2=1254665546
+n1==n2 ? false
+n1.equals(n2)? true</pre>
+
+
+<p>好咩, 一切都在你的預料之中. 但是這一切在terracotta加入後就會改變了. 先來看terracotta configuration xml:
+<code>tc-dso.xml</code></p>
+
+<pre class="brush:xml;light:false"><?xml version="1.0" encoding="UTF-8"?>
+<tc:tc-config xsi:schemaLocation="http://www.terracotta.org/schema/terracotta-5.xsd" 
+xmlns:tc="http://www.terracotta.org/config" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <servers>
+    <server host="localhost">
+      <data>%(user.home)/terracotta/server-data</data>
+      <logs>%(user.home)/terracotta/server-logs</logs>
+    </server>
+  </servers>
+
+  <clients>
+    <logs>%(user.home)/terracotta/client-logs</logs> 
+  </clients>
+  
+  <application>
+    <dso>
+      <instrumented-classes>
+        <include>
+          <class-expression>com.hanklin.*..*</class-expression>
+        </include>
+      </instrumented-classes>
+      <roots>
+        <root>
+          <field-name>com.hanklin.DsoMain.number</field-name>
+          <root-name>number</root-name>
+        </root>
+      </roots>
+    </dso>
+  </application>  
+</tc:tc-config></pre>
+
+
+<p>上面的設定檔最重要的地方是<code><root></code>區塊, 在這邊設定<code>com.hanklin.DsoMain.number</code>是terracotta root, terracotta root 下的所有objects都會被distributed. 存好了之後, 再來開terracotta server:</p>
+
+<pre class="brush:bash">$ start-tc-server.sh -f /opt/tc/tc-dso.xml
+2010-04-18 18:45:06,485 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-04-18 18:45:06,878 INFO - Configuration loaded from the file at '/opt/tc/tc-config.xml'.
+2010-04-18 18:45:07,058 INFO - Log file: '/root/terracotta/server-logs/terracotta-server.log'.
+2010-04-18 18:45:09,473 INFO - Available Max Runtime Memory: 490MB
+2010-04-18 18:45:11,903 INFO - JMX Server started. Available at URL[service:jmx:jmxmp://0.0.0.0:9520]
+2010-04-18 18:45:12,470 INFO - Terracotta Server instance has started up as ACTIVE node on 0.0.0.0:9510 successfully, and is now ready for work.</pre>
+
+
+<p>一樣, 最好每次都用<code>-f</code>明確指定configuration file. 現在來看看distributed 版本要怎麼run. 一樣是用java, 但是主要多了3個參數<code>-Xbootclasspath/p:</code>, <code>-Dtc.config</code>,  <code>-Dtc.install-root</code>. terracotta的文件是用<code>dso-java.sh</code> 去執行. 例如:</p>
+
+<pre class="brush:bash">$ dso-java.sh -cp . com.hanklin.DsoMain</pre>
+
+
+<p>但是之前的經驗是它在處理command line arguments內含空白會有問題, 所以我都沒有用它, 看了一下<code>dso-java.sh</code>的內容, 其實就是給這3個參數而已, 所以後來我就都手動給這3個參數, 如果嫌麻煩就設定環境變數吧:
+Linux版:</p>
+
+<pre class="brush:bash">$ export my_tc_setting="-Xbootclasspath/p:/opt/tc/lib/dso-boot/dso-boot-hotspot_linux_160_18.jar -Dtc.install-root=/opt/tc  -Dtc.config=localhost:9510"</pre>
+
+
+<p>Windows版:</p>
+
+<pre class="brush:bash">$ set my_tc_setting=-Xbootclasspath/p:C:libterracotta-3.2.1libdso-bootdso-boot-hotspot_win32_160_18.jar -Dtc.install-root=C:libterracotta-3.2.1  -Dtc.config=localhost:9510</pre>
+
+
+<p>好的, 執行看看咩:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoMain
+2010-04-18 18:49:08,635 INFO - Terracotta 3.2.1, as of 20100302-130324 (Revision 14673 by cruise@su10mo5 from 3.2)
+2010-04-18 18:49:09,138 INFO - Configuration loaded from the server at 'localhost:9510'.
+2010-04-18 18:49:09,413 INFO - Log file: '/root/terracotta/client-logs/terracotta-client.log'.
+2010-04-18 18:49:10,933 INFO - Connection successfully established to server at 127.0.0.1:9510
+n1=1220249279, n2=1220249279
+n1==n2 ? true
+n1.equals(n2)? true
+n1=1220249279, n2=1220249279
+n1==n2 ? true
+n1.equals(n2)? true</pre>
+
+
+<p>結果好像令人大吃一驚! 而且再invoke一次也是一樣, 這是為啥咪咧? 以下就要講解一下Terracotta 的實際作法了.</p>
+
+<h2>解說terracotta</h2>
+
+
+<p>要在cluster內share objects一直是個難題. Java一般的作法是RMI, JMS, 或是distributed caches. 由於network與memory相比是慢非常多的, 所以儘量減少network traffic是增進效能和scalability的作法. 不過一般的framework都是要靠Java Serialization, 所以沒有辦法作fine-grained optimize. Terracotta不是把objects serialize後再傳來傳去, 而是有兩種作法: physically和logically.</p>
+
+<ul>
+    <li>physically managed: terracotta 記錄object的fields 的變化, 然後在其它clustered objects寫入. </li>
+
+    <li>logically managed: terracotta 記錄method calls 及參數, 在clustered objects "replay". logically managed 一般來說效能較好, 而且不會和不同版本的Java 的實作細節綁死. 如<code>java.util.HashMap</code>等collections就是logically managed.</li>
+</ul>
+
+
+<p> 另外, 所有terracotta applications(L1)都只和terracotta server(L2)溝通, network traffic不會成指數上昇. (岔題一下, L2 server要達成HA/scalability又是另一個大問題了, 以後再討論.) terracotta application 可以得知fine-grained 改變(到byte-level), 把這資訊送到terracotta server(L2), L2再決定要通知哪些L1. 如果L2的memory放不下shared objects的話會寫到file system. 所以Java heap size可以馬上從1,2G提昇了一檔次到1,200G! 在<a href="http://www.theserverside.com/news/1320914/Scaling-Your-Java-EE-Applications-Part-2">Scaling Your Java EE Applications -- Part 2</a>裡有提到terracotta在10個nodes以下時有很好的scalability. 不過那是有一點久以前的文章了, terracotta針對L2 write files, network transfer有作很多optimizations, 以後我有空也會來測測, 要自己親身體驗一下才算數, 您說是吧!</p>
+
+<p>雖然說Terracotta號稱是a transparent clustering service. 但是transparent是指沒有API侵入的transparent(如: Serializable, RMI, JMS...), 在programming model上還是要確實瞭解terracotta的行為, 才不會有像上面一樣令人驚訝的事發生. Terracotta的transparency是由class loading 時, 對需要的classes作instrumentation達成的. 所以是用<a href="http://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a>去實作的. Terracotta在選擇<a href="http://en.wikipedia.org/wiki/Join_point">join point</a>的地方是用<a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a> 的<a href="http://open.terracottatech.com/confluence/display/docs/AspectWerkz+Pattern+Language">語法</a>. 而且不但要改client code(也就是我們的code)的行為, 連JRE library也要改, 所以這也就是為什麼一定要給bootstrap classpath(<code>-Xbootclasspath/p:</code>)的原因了. 在各種bytecode instructions中, terracotta會改的最多的地方就是read/write to memory這兩類instructions, read就是找accessor(<code>.</code>), write就是assignment(<code>=</code>). 另外還有constructor instructions, threading instructions(lock, unlock)等也是terracotta要處理的. 有寫過AOP程式的人就知道, 如果要weaving的code base很大的話, 有可能會作很久(看是在什麼時候作weaving). 所以<code><instrumented-classes></code>最好是只寫有需要被instrumented就好, 可以的話用package來分是最好的, 也能加快weaving的速度.</p>
+
+<p>在上面的例子有看到<code><root></code>區塊, 告訴terracotta我們要cluster什麼classes. Terracotta roots的定義是: A top-level object in a clustered object graph. root object graph 內不可以有<a href="http://open.terracottatech.com/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>, 否則就會造成這個root也是Non-portable. Terracotta就會給你一缸子的Exceptions. 解決方法是改用portable class, 或是標成terracotta transient. Terracotta transient和Java transient 不太一樣. Java source code 裡的transient keyword不會自動被terracotta 視為transient, 所以要用以下的設定:</p>
+
+<pre class="brush:xml;light:false"><instrumented-classes>
+  <include>
+    <honor-transient>true</honor-transient>
+    <class-expression>com.company.pckg.*</class-expression>
+  </include>
+  ...
+</instrumented-classes></pre>
+
+
+<p>或是直接標示transient:</p>
+
+<pre class="brush:xml;light:false"><dso>
+  <transient-fields>
+    <field-name>com.company.ClassA.fieldA</field-name>
+    <field-name>com.company.pckg.ClassB.fieldB</field-name>
+  </transient-fields>
+  ...
+</dso></pre>
+
+
+<p>roots的初始化行為很特別, 會受到terracotta的特別照顧:</p>
+
+<ul>
+<li>當JVM第一次assign值給root的時候, terracotta在cluster內依據assign的值建立這個root object.</li>
+
+    <li>一但root建立好了之後, 之後所有root的assignment都會被忽略. 如果root是<a href="http://open.terracottatech.com/confluence/display/docs/Concept+and+Architecture+Guide#ConceptandArchitectureGuide-Literals">Terracotta literals</a>的話, 值可以變, 但是其它的class 的root reference則不可改變.</li>
+
+    <li>root 的top-level object不會被terracotta distributed GC所回收.</li>
+</ul>
+
+
+<p>所以這就是在上面的例子裡, 為什麼改不動一個instance field的原因了. 在實務上, 通常都是用<code>Map</code>或是<code>Collection</code>來作root, 不過要注意有一些collections是不支援的(<a href="http://open.terracottatech.com/confluence/display/docs/Non-Portable+Classes">Non-Portable Classes</a>)
+ 另外, 應該shared objects是data而不是application logic, 如果你需要用很多transient field, 可能就是share了不合適的objects.</p>
+
+<h2>Terracotta常見的用途</h2>
+
+
+<ul>
+    <li>distributed cache: 不受memory大小的限制, 而是由L2 的disk 大小限制. 還有因為<code>Map</code>類的key不會被faulted out of the JVM, 所以keys 一定要放得進memory才行.(通常可以咩! 又不是facebook, twitter)</li>
+
+    <li>session replication: <a href="http://hanklin.com/blog/p/6">上次那一篇</a>有提到這個用法.</li>
+
+    <li>workload partitioning: 這一篇<a href="http://www.infoq.com/articles/master-worker-terracotta">老文章: Implementing Master-Worker with Terracotta</a>, 有提到這個用法.</li>
+</ul>
+
+
+<p>我在這邊作一個超簡單的workload partitioning 的POC, 先來一個Master:
+<code>DsoMasterMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+public class DsoMasterMain {
+    static BlockingQueue<String> queue = new LinkedBlockingQueue<String>(3);
+
+    public static void main(String[] args) {
+        String[] works = { "A", "B", "C", "D", "E", "F", "G", "H", "0", "0"};
+        for (String work : works) {
+            try {
+                System.out.println("put work " + work);
+                queue.put(work);
+                Thread.sleep(999);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</pre>
+
+
+<p>用一個<code>LinkedBlockingQueue</code>作為work queue, 在這邊就是我們的terracotta root. 再來是Worker:
+<code>DsoWorkerMain.java</code></p>
+
+<pre class="brush:java;light:false">package com.hanklin;
+
+public class DsoWorkerMain {
+    public static void main(String[] args) {
+        String work = null;
+        while (!"0".equals(work = DsoMasterMain.queue.poll())) {
+            try {
+                if (work == null) {
+                    Thread.sleep(350);
+                } else {
+                    System.out.println("doing work " + work);
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+}</pre>
+
+
+<p>worker收到"<code>0</code>"則代表沒有work了. 然後是terracotta configuration xml, 只要改<code><roots></code>那邊就好:</p>
+
+<pre class="brush:xml;light:false"><root>
+    <field-name>com.hanklin.DsoMasterMain.queue</field-name>
+    <root-name>queue</root-name>
+</root></pre>
+
+
+<p>改好了之後, 先重開terracotta server:</p>
+
+<pre class="brush:bash">$ start-tc-server.sh -f /opt/tc/tc-dso.xml</pre>
+
+
+<p>然後, 我是先開2個worker啦:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoWorkerMain</pre>
+
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoWorkerMain</pre>
+
+
+<p>最後, 開個master來看看:</p>
+
+<pre class="brush:bash">$ java -cp . $my_tc_setting com.hanklin.DsoMasterMain</pre>
+
+
+<p>我的結果是第一個worker:</p>
+
+<pre class="brush:bash">doing work A
+doing work G</pre>
+
+
+<p>第二個worker:</p>
+
+<pre class="brush:bash">doing work B
+doing work C
+doing work D
+doing work E
+doing work F
+doing work H</pre>
+
+
+<p>的確有簡單咩, 您說是吧?</p>
+]]></content>
+  </entry>
+  
+</feed>
